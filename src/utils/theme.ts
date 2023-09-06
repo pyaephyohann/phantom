@@ -5,10 +5,11 @@ export const theme = createTheme({
     primary: {
       // pink
       main: "#FFB6D9",
+      contrastText: "#fff",
     },
     secondary: {
       // green
-      main: "#45FFCA",
+      main: "#00DFA2",
     },
     info: {
       // yellow
