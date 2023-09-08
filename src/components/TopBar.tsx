@@ -1,0 +1,85 @@
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Box, IconButton } from "@mui/material";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useState } from "react";
+import SideBarDrawer from "./SideBarDrawer";
+
+const TopBar = () => {
+  const { data } = useSession();
+  const user = data?.user;
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Box>
+      <AppBar sx={{ p: "0.5rem" }} color="secondary" position="static">
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {user && (
+              <Box>
+                <IconButton
+                  onClick={() => setOpen(true)}
+                  sx={{ mr: "2rem", display: { sm: "block", md: "none" } }}
+                >
+                  <MenuIcon sx={{ fontSize: "2rem" }} color="primary" />
+                </IconButton>
+                <SideBarDrawer open={open} setOpen={setOpen} />
+              </Box>
+            )}
+            <Box>
+              <Link
+                style={{ textDecoration: "none", color: "#fff" }}
+                href={"/backoffice"}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "'Dancing Script', cursive",
+                    fontSize: "2rem",
+                  }}
+                >
+                  Shwe Myint Mol
+                </Typography>
+              </Link>
+            </Box>
+          </Box>
+          {data ? (
+            <Typography
+              sx={{
+                fontSize: "1.5rem",
+                color: "text.primary",
+                display: { xs: "none", md: "block" },
+              }}
+            >
+              Title
+            </Typography>
+          ) : (
+            ""
+          )}
+          {user ? (
+            <Image
+              alt={user.name as string}
+              src={user.image as string}
+              width={50}
+              height={50}
+              style={{ borderRadius: "5rem" }}
+            />
+          ) : (
+            <Typography></Typography>
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
+
+export default TopBar;
