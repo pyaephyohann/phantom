@@ -27,7 +27,9 @@ const BackofficeLayout = ({ children }: Props) => {
       <TopBar />
       <Box sx={{ display: "flex" }}>
         {data && <SideBar />}
-        <Box sx={{ p: "1.5rem" }}>{children}</Box>
+        <Box sx={{ p: "1.5rem", width: "100%", height: "100%" }}>
+          {children}
+        </Box>
       </Box>
     </Box>
   );

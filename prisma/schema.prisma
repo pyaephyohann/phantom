@@ -14,7 +14,8 @@ model User {
   password String?
   imageUrl String?
   nickname String?
-  gender   Gender?
+  genderId Int?
+  gender   Gender? @relation(fields: [genderId], references: [id])
 }
 
 model Product {
@@ -27,7 +28,8 @@ model Product {
   size            Size              @relation(fields: [sizeId], references: [id])
   colorId         Int
   color           Color             @relation(fields: [colorId], references: [id])
-  gender Gender
+  genderId        Int
+  gender          Gender            @relation(fields: [genderId], references: [id])
 }
 
 model Category {
@@ -56,8 +58,9 @@ model Color {
   Product Product[]
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
+model Gender {
+  id      Int       @id @default(autoincrement())
+  name    String
+  User    User[]
+  Product Product[]
 }

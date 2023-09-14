@@ -15,37 +15,38 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const SideBar = () => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <BookmarkBorderIcon sx={{ color: "text.primary" }} />,
+      icon: <BookmarkBorderIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/orders",
     },
     {
       name: "Products",
-      icon: <InventoryIcon sx={{ color: "text.primary" }} />,
+      icon: <InventoryIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/products",
     },
     {
       name: "Categories",
-      icon: <CategoryIcon sx={{ color: "text.primary" }} />,
+      icon: <CategoryIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/categories",
     },
     {
       name: "Sizes",
-      icon: <AnimationIcon sx={{ color: "text.primary" }} />,
+      icon: <AnimationIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/sizes",
     },
     {
       name: "Colors",
-      icon: <PaletteIcon sx={{ color: "text.primary" }} />,
+      icon: <PaletteIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/colors",
     },
     {
       name: "Settings",
-      icon: <SettingsIcon sx={{ color: "text.primary" }} />,
+      icon: <SettingsIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/settings",
     },
   ];
@@ -58,42 +59,55 @@ const SideBar = () => {
         bgcolor: "secondary.main",
         color: "text.primary",
         pt: "0.8rem",
-        pl: "0.4rem",
+        p: "1rem",
         borderTopRightRadius: "2rem",
         display: { xs: "none", md: "block" },
       }}
     >
       <List>
         {sideBarItems.splice(0, 5).map((item, index) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            key={item.name}
+            href={item.route}
+          >
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
       <List>
         {sideBarItems.splice(-1).map((item, index) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            key={item.name}
+            href={item.route}
+          >
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Box sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
         <Button
           onClick={() => signOut({ callbackUrl: "/auth/backoffice/signin" })}
-          variant="contained"
+          variant="text"
         >
           <Typography
             sx={{
               textAlign: "center",
               px: "1.5rem",
               width: "fit-content",
+              color: "white",
             }}
           >
             Log out

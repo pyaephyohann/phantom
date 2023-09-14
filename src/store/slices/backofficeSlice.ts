@@ -44,7 +44,7 @@ export const fetchBackofficeData = createAsyncThunk(
 
 export const selectBackoffice = (state: RootState) => state.backoffice;
 export const selectUsers = (state: RootState) => state.users.items;
-export const selectProducts = (state: RootState) => state.users.items;
+export const selectProducts = (state: RootState) => state.products.items;
 export const selectCategories = (state: RootState) => state.categories.items;
 export const selectProductsCategories = (state: RootState) =>
   state.productsCategories.items;
