@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import NewProduct from "./NewProduct";
 import { useState } from "react";
@@ -19,6 +19,17 @@ const Products = () => {
         >
           New Product
         </Button>
+      </Box>
+      <Box>
+        {products.length ? (
+          ""
+        ) : (
+          <Typography
+            sx={{ fontSize: "2rem", textAlign: "center", mt: "3rem" }}
+          >
+            Go create your first product
+          </Typography>
+        )}
       </Box>
       <Box>
         {products.map((product) => {

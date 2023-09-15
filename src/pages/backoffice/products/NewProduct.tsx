@@ -2,7 +2,7 @@ import FileDropZone from "@/components/FileDropZone";
 import ItemSelector from "@/components/ItemSelector";
 import ItemsSelector from "@/components/ItemsSelector";
 import WarningAlert from "@/components/WarningAlert";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
 import {
   Box,
@@ -15,6 +15,11 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "@/firebaseConfig";
+import { config } from "@/config";
+import { Category, Color, Gender, Size } from "@prisma/client";
+import { addProduct } from "@/store/slices/productsSlice";
 
 interface Props {
   open: boolean;
@@ -22,7 +27,8 @@ interface Props {
 }
 
 const NewProduct = ({ open, setOpen }: Props) => {
-  const { categories, colors, sizes } = useAppSelector(backofficeAppDatas);
+  const { categories, colors, sizes, genders } =
+    useAppSelector(backofficeAppDatas);
 
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
 
@@ -30,14 +36,41 @@ const NewProduct = ({ open, setOpen }: Props) => {
 
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
-  const mappedCategories = categories.map((item) => ({
+  const dispatch = useAppDispatch();
+
+  const mappedCategories = categories.map((item: Category) => ({
     id: item.id,
     name: item.name,
   }));
 
-  const mappedSizes = sizes.map((item) => ({ id: item.id, name: item.name }));
+  const mappedSizes = sizes.map((item: Size) => ({
+    id: item.id,
+    name: item.name,
+  }));
 
-  const mappedColors = colors.map((item) => ({ id: item.id, name: item.name }));
+  const mappedColors = colors.map((item: Color) => ({
+    id: item.id,
+    name: item.name,
+  }));
+
+  const mappedGenders = genders.map((item: Gender) => ({
+    id: item.id,
+    name: item.name,
+  }));
+
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    price: 0,
+    imageUrl: "",
+    categoryIds: [] as number[],
+    sizeId: 0,
+    colorId: 0,
+    genderId: 0,
+  });
+
+  const isDisabled =
+    !newProduct.name || !newProduct.price || !newProduct.categoryIds.length;
+  !newProduct.sizeId || !newProduct.colorId || !newProduct.genderId;
 
   const onSelectFile = (acceptedFiles: File[]) => {
     if (selectedFile.length) {
@@ -56,42 +89,114 @@ const NewProduct = ({ open, setOpen }: Props) => {
     setSelectedFile(acceptedFiles);
   };
 
+  const handleCreateNewProduct = async () => {
+    // upload product photo
+    if (selectedFile.length) {
+      const name = `/products/${selectedFile[0].name}`;
+      const storageRef = ref(storage, `products/${name}`);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile[0]);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setNewProduct({ ...newProduct, imageUrl: url });
+          });
+        }
+      );
+    }
+    // create new product
+    const response = await fetch(`${config.apiBaseUrl}/backoffice/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProduct),
+    });
+    const createdProduct = await response.json();
+    dispatch(addProduct(createdProduct));
+    setOpen(false);
+  };
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <DialogTitle sx={{ my: "0.5rem", textAlign: "center" }}>
         Create New Product
       </DialogTitle>
       <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
-        <TextField label="Name" placeholder="Name" />
         <TextField
+          onChange={(event) =>
+            setNewProduct({ ...newProduct, name: event.target.value })
+          }
+          label="Name"
+          placeholder="Name"
+        />
+        <TextField
+          onChange={(event) =>
+            setNewProduct({ ...newProduct, price: Number(event.target.value) })
+          }
           sx={{ my: "1.5rem" }}
           type="number"
           label="Price"
           placeholder="Price"
         />
-        <ItemsSelector
-          options={mappedCategories}
-          onChange={(values) => {
-            console.log(values);
-          }}
-          label="Categories"
-          placeholder="Categories"
-        />
+        <Box>
+          <ItemsSelector
+            options={mappedCategories}
+            onChange={(values) => {
+              setNewProduct({
+                ...newProduct,
+                categoryIds: values.map((item) => item.id),
+              });
+            }}
+            label="Categories"
+            placeholder="Categories"
+          />
+        </Box>
         <Box sx={{ my: "1.5rem" }}>
           <ItemSelector
             options={mappedSizes}
-            label="Sizes"
-            onChange={(value) => console.log(value)}
+            label="Size"
+            onChange={(value) =>
+              setNewProduct({ ...newProduct, sizeId: value })
+            }
           />
         </Box>
         <Box>
           <ItemSelector
             options={mappedColors}
-            label="Colors"
-            onChange={(value) => console.log(value)}
+            label="Color"
+            onChange={(value) =>
+              setNewProduct({ ...newProduct, colorId: value })
+            }
           />
         </Box>
         <Box sx={{ my: "1.5rem" }}>
+          <ItemSelector
+            options={mappedGenders}
+            label="Gender"
+            onChange={(value) =>
+              setNewProduct({ ...newProduct, genderId: value })
+            }
+          />
+        </Box>
+        <Box sx={{ mb: "1.5rem" }}>
           <FileDropZone onSelectFile={onSelectFile} />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -108,7 +213,12 @@ const NewProduct = ({ open, setOpen }: Props) => {
         </Box>
       </DialogContent>
       <DialogActions sx={{ p: "1.5rem" }}>
-        <Button sx={{ mx: "auto" }} variant="contained">
+        <Button
+          disabled={isDisabled}
+          onClick={handleCreateNewProduct}
+          sx={{ mx: "auto" }}
+          variant="contained"
+        >
           Create
         </Button>
       </DialogActions>

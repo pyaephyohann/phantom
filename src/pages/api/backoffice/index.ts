@@ -26,6 +26,16 @@ export default async function handler(
     await prisma.size.createMany({
       data: defaultSizeDatas,
     });
+
+    const defaultGenderDatas = [
+      { name: "Male" },
+      { name: "Female" },
+      { name: "Other" },
+    ];
+
+    await prisma.gender.createMany({
+      data: defaultGenderDatas,
+    });
   }
 
   const userFromDB = await prisma.user.findFirst({
@@ -49,6 +59,7 @@ export default async function handler(
   const productsCategories = await prisma.productCategory.findMany();
   const sizes = await prisma.size.findMany();
   const colors = await prisma.color.findMany();
+  const genders = await prisma.gender.findMany();
 
   res.status(200).json({
     users,
@@ -57,5 +68,6 @@ export default async function handler(
     productsCategories,
     sizes,
     colors,
+    genders,
   });
 }
