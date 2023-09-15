@@ -31,9 +31,23 @@ const Products = () => {
           </Typography>
         )}
       </Box>
-      <Box>
+      <Box sx={{ display: "flex" }}>
         {products.map((product) => {
-          return <Box key={product.id}>{product.name}</Box>;
+          return (
+            <Box
+              sx={{
+                p: "1rem",
+                bgcolor: "purple",
+                m: "1rem",
+                width: "fit-content",
+                color: "white",
+              }}
+              key={product.id}
+            >
+              <Typography>{product.name}</Typography>
+              <Typography>{product.price}</Typography>
+            </Box>
+          );
         })}
       </Box>
       <NewProduct open={open} setOpen={setOpen} />

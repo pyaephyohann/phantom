@@ -20,6 +20,7 @@ import { storage } from "@/firebaseConfig";
 import { config } from "@/config";
 import { Category, Color, Gender, Size } from "@prisma/client";
 import { addProduct } from "@/store/slices/productsSlice";
+import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
 
 interface Props {
   open: boolean;
@@ -131,6 +132,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
     });
     const createdProduct = await response.json();
     dispatch(addProduct(createdProduct));
+    dispatch(fetchProductsCategories());
     setOpen(false);
   };
 
