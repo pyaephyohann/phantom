@@ -79,7 +79,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
       return setOpenWarningAlert(true);
     }
 
-    const acceptedFileExtensions = ["jpg", "png", "svg", "jpeg"];
+    const acceptedFileExtensions = ["jpg", "png", "svg", "jpeg", "jfif"];
     const selectedFileExtension = acceptedFiles[0].name.split(".")[1];
 
     if (!acceptedFileExtensions.includes(selectedFileExtension)) {
@@ -117,7 +117,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            setNewProduct({ ...newProduct, imageUrl: url });
+            newProduct.imageUrl = url;
           });
         }
       );
@@ -134,6 +134,16 @@ const NewProduct = ({ open, setOpen }: Props) => {
     dispatch(addProduct(createdProduct));
     dispatch(fetchProductsCategories());
     setOpen(false);
+    setSelectedFile([]);
+    setNewProduct({
+      name: "",
+      price: 0,
+      imageUrl: "",
+      categoryIds: [] as number[],
+      sizeId: 0,
+      colorId: 0,
+      genderId: 0,
+    });
   };
 
   return (

@@ -4,6 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import NewProduct from "./NewProduct";
 import { useState } from "react";
+import BackofficeProductCard from "@/components/BackofficeProductCard";
 
 const Products = () => {
   const { products } = useAppSelector(backofficeAppDatas);
@@ -31,21 +32,22 @@ const Products = () => {
           </Typography>
         )}
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          mt: "1rem",
+        }}
+      >
         {products.map((product) => {
           return (
-            <Box
-              sx={{
-                p: "1rem",
-                bgcolor: "purple",
-                m: "1rem",
-                width: "fit-content",
-                color: "white",
-              }}
-              key={product.id}
-            >
-              <Typography>{product.name}</Typography>
-              <Typography>{product.price}</Typography>
+            <Box sx={{ m: "1rem" }} key={product.id}>
+              <BackofficeProductCard
+                name={product.name}
+                imageUrl={product.imageUrl as string}
+                price={product.price}
+                genderId={product.genderId}
+              />
             </Box>
           );
         })}
