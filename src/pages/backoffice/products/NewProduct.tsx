@@ -8,11 +8,13 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -21,6 +23,7 @@ import { config } from "@/config";
 import { Category, Color, Gender, Size } from "@prisma/client";
 import { addProduct } from "@/store/slices/productsSlice";
 import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
+import InformationAlert from "@/components/InformationAlert";
 
 interface Props {
   open: boolean;
@@ -36,6 +39,12 @@ const NewProduct = ({ open, setOpen }: Props) => {
   const [warningMessage, setWarningMessage] = useState("");
 
   const [openWarningAlert, setOpenWarningAlert] = useState(false);
+
+  const [isFileUploading, setIsFileUploading] = useState(false);
+
+  const [creating, setCreating] = useState(false);
+
+  const [fileUploadMessage, setFileUploadMessage] = useState("");
 
   const dispatch = useAppDispatch();
 
@@ -71,7 +80,10 @@ const NewProduct = ({ open, setOpen }: Props) => {
 
   const isDisabled =
     !newProduct.name || !newProduct.price || !newProduct.categoryIds.length;
-  !newProduct.sizeId || !newProduct.colorId || !newProduct.genderId;
+  !newProduct.sizeId ||
+    !newProduct.colorId ||
+    !newProduct.genderId ||
+    isFileUploading;
 
   const onSelectFile = (acceptedFiles: File[]) => {
     if (selectedFile.length) {
@@ -88,41 +100,44 @@ const NewProduct = ({ open, setOpen }: Props) => {
     }
 
     setSelectedFile(acceptedFiles);
+
+    const name = `/products/${acceptedFiles[0].name}`;
+    const storageRef = ref(storage, `products/${name}`);
+    const uploadTask = uploadBytesResumable(storageRef, acceptedFiles[0]);
+
+    setFileUploadMessage("Your File is Uploading");
+    setIsFileUploading(true);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          newProduct.imageUrl = url;
+          setFileUploadMessage("File Uploaded");
+          setIsFileUploading(false);
+        });
+      }
+    );
   };
 
   const handleCreateNewProduct = async () => {
-    // upload product photo
-    if (selectedFile.length) {
-      const name = `/products/${selectedFile[0].name}`;
-      const storageRef = ref(storage, `products/${name}`);
-      const uploadTask = uploadBytesResumable(storageRef, selectedFile[0]);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.log(error.message);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            newProduct.imageUrl = url;
-          });
-        }
-      );
-    }
-    // create new product
+    setCreating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/products`, {
       method: "POST",
       headers: {
@@ -144,6 +159,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
       colorId: 0,
       genderId: 0,
     });
+    setCreating(false);
   };
 
   return (
@@ -216,6 +232,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
             <Chip
               label={selectedFile[0].name}
               onDelete={() => {
+                newProduct.imageUrl = "";
                 setSelectedFile([]);
               }}
             />
@@ -231,13 +248,31 @@ const NewProduct = ({ open, setOpen }: Props) => {
           sx={{ mx: "auto" }}
           variant="contained"
         >
-          Create
+          {creating ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ mr: "0.8rem" }}>Creating</Typography>
+              <CircularProgress size="2rem" />
+            </Box>
+          ) : (
+            "Create"
+          )}
         </Button>
       </DialogActions>
       <WarningAlert
         open={openWarningAlert}
         setOpen={setOpenWarningAlert}
         message={warningMessage}
+      />
+      <InformationAlert
+        open={isFileUploading}
+        setOpen={setIsFileUploading}
+        message={fileUploadMessage}
       />
     </Dialog>
   );

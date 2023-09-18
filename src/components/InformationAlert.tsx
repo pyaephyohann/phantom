@@ -8,7 +8,7 @@ interface Props {
   message: string;
 }
 
-const WarningAlert = ({ open, setOpen, message }: Props) => {
+const InformationAlert = ({ open, setOpen, message }: Props) => {
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -22,7 +22,7 @@ const WarningAlert = ({ open, setOpen, message }: Props) => {
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="warning">
+        <Alert onClose={handleClose} severity="info">
           {message}
         </Alert>
       </Snackbar>
@@ -30,4 +30,4 @@ const WarningAlert = ({ open, setOpen, message }: Props) => {
   );
 };
 
-export default WarningAlert;
+export default InformationAlert;
