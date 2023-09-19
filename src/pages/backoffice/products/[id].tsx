@@ -11,6 +11,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useEffect, useState } from "react";
+import FileDropZoneForProductUpdate from "@/components/FileDropZoneForProductUpdate";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "@/firebaseConfig";
+import { config } from "@/config";
+import DeleteDialog from "@/components/DeleteDialog";
+import SaveAlert from "@/components/SaveAlert";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -20,6 +26,48 @@ const EditProducts = () => {
     useAppSelector(backofficeAppDatas);
 
   const product = products.find((item) => item.id === Number(productId));
+
+  const [updatedProduct, setUpdatedProduct] = useState<Product>();
+
+  const [updatedProductImageUrl, setUpdatedProductImageUrl] = useState("");
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const [deleteDialogMessage, setDeleteDialogMessage] = useState("");
+
+  const [openSaveAlert, setOpenSaveAlert] = useState(false);
+
+  const onFileSelect = (acceptedFiles: File[]) => {
+    const name = `/products/${acceptedFiles[0].name}`;
+    const storageRef = ref(storage, `products/${name}`);
+    const uploadTask = uploadBytesResumable(storageRef, acceptedFiles[0]);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setUpdatedProductImageUrl(url);
+          setOpenSaveAlert(true);
+        });
+      }
+    );
+  };
 
   const validCategories = getCategoriesByProductId(
     productId,
@@ -32,8 +80,6 @@ const EditProducts = () => {
     name: item.name,
   }));
 
-  const validCategoryIds = validCategories.map((item) => item.id);
-
   const productSize = sizes.find((item) => item.id === product?.sizeId) as Size;
 
   const productColor = colors.find(
@@ -43,8 +89,6 @@ const EditProducts = () => {
   const productGender = genders.find(
     (item) => item.id === product?.genderId
   ) as Gender;
-
-  const [updatedProduct, setUpdatedProduct] = useState<Product>();
 
   const [selectedCategoryIdsToUpdate, setSelectedCategoryIsToUpdate] = useState<
     number[]
@@ -89,16 +133,26 @@ const EditProducts = () => {
         >
           <Image
             alt={product.name}
-            src={product.imageUrl as string}
+            src={
+              updatedProductImageUrl
+                ? updatedProductImageUrl
+                : (product.imageUrl as string)
+            }
             width={200}
             height={200}
             style={{ borderRadius: "0.5rem" }}
           />
-          <Box sx={{ mt: "1rem" }}>
-            <IconButton sx={{ bgcolor: "primary.main", mr: "5rem" }}>
-              <EditIcon sx={{ color: "#fff" }} />
-            </IconButton>
-            <IconButton sx={{ bgcolor: "primary.main" }}>
+          <Box sx={{ mt: "1rem", display: "flex" }}>
+            <FileDropZoneForProductUpdate onSelectFile={onFileSelect} />
+            <IconButton
+              onClick={() => {
+                setDeleteDialogMessage(
+                  "Are you sure you want to remove this photo"
+                );
+                setOpenDeleteDialog(true);
+              }}
+              sx={{ bgcolor: "primary.main" }}
+            >
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
@@ -177,7 +231,7 @@ const EditProducts = () => {
               }}
             />
           </Box>
-          <Button variant="contained">Update</Button>
+          <Button variant="contained">Save</Button>
         </Box>
       </Box>
       <Box>
@@ -189,6 +243,24 @@ const EditProducts = () => {
           ></path>
         </svg>
       </Box>
+      <DeleteDialog
+        open={openDeleteDialog}
+        setOpen={setOpenDeleteDialog}
+        title={deleteDialogMessage}
+        callBack={() => {
+          setOpenSaveAlert(true);
+          setUpdatedProductImageUrl(
+            "https://i.pinimg.com/236x/50/6e/dd/506eddb8f3d3e511c470f87d5880b6e3.jpg"
+          );
+        }}
+      />
+      <SaveAlert
+        open={openSaveAlert}
+        setOpen={setOpenSaveAlert}
+        callBack={() => {
+          // update product
+        }}
+      />
     </Box>
   );
 };
