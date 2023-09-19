@@ -43,6 +43,7 @@ const Products = () => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
               <BackofficeProductCard
+                href={`/backoffice/products/${product.id}`}
                 name={product.name}
                 imageUrl={product.imageUrl as string}
                 price={product.price}

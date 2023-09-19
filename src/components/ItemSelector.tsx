@@ -12,16 +12,18 @@ interface Option {
 
 interface Props {
   options: Option[];
+  defaultValue?: Option;
   label: string;
   onChange: (value: number) => void;
 }
 
-const ItemSelector = ({ options, label, onChange }: Props) => {
+const ItemSelector = ({ options, label, onChange, defaultValue }: Props) => {
   return (
     <Box sx={{ minWidth: "20rem" }}>
       <FormControl fullWidth>
         <InputLabel>{label}</InputLabel>
         <Select
+          value={defaultValue?.id}
           label={label}
           onChange={(event) => onChange(event.target.value as number)}
         >
