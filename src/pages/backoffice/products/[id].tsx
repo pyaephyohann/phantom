@@ -1,6 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import ItemsSelector from "@/components/ItemsSelector";
@@ -45,6 +52,8 @@ const EditProducts = () => {
   const [openInformationAlert, setOpenInformationAlert] = useState(false);
 
   const [informationMessage, setInformationMessage] = useState("");
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const onFileSelect = (acceptedFiles: File[]) => {
     const name = `/products/${acceptedFiles[0].name}`;
@@ -118,6 +127,7 @@ const EditProducts = () => {
   }, [product]);
 
   const handleUpdateProduct = async () => {
+    setIsUpdating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/products`, {
       method: "PUT",
       headers: {
@@ -132,6 +142,7 @@ const EditProducts = () => {
     const updatedProduct = await response.json();
     dispatch(updateProduct(updatedProduct));
     dispatch(fetchProductsCategories());
+    setIsUpdating(false);
     setOpenSuccessAlert(true);
   };
 
@@ -277,7 +288,7 @@ const EditProducts = () => {
             disabled={isDisabled}
             variant="contained"
           >
-            Save
+            {isUpdating ? <CircularProgress size="1.7rem" /> : "Save"}
           </Button>
         </Box>
       </Box>
