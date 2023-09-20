@@ -194,7 +194,6 @@ const NewProduct = ({ open, setOpen }: Props) => {
               });
             }}
             label="Categories"
-            placeholder="Categories"
           />
         </Box>
         <Box sx={{ my: "1.5rem" }}>

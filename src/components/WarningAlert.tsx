@@ -1,12 +1,20 @@
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React from "react";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
   message: string;
 }
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const WarningAlert = ({ open, setOpen, message }: Props) => {
   const handleClose = (

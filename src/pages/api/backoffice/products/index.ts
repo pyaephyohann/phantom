@@ -43,6 +43,74 @@ export default async function handler(
       });
     }
     return res.status(200).send(newProduct);
+  } else if (method === "PUT") {
+    const { productToUpdate, categoryIds, updatedImageUrl } = req.body;
+    const { id, name, price, sizeId, colorId, genderId } = productToUpdate;
+    const isValid = id && sizeId && colorId && genderId;
+    if (!isValid) return res.status(400).send("Bad Request");
+    const updatedPrice = price ? price : 0;
+    const existingProduct = await prisma.product.findFirst({
+      where: { id },
+    });
+    if (!existingProduct) return res.status(400).send("Bad Request");
+    let updatedProduct = {};
+    if (name) {
+      updatedProduct = await prisma.product.update({
+        where: { id },
+        data: { name },
+      });
+    }
+    if (updatedPrice) {
+      updatedProduct = await prisma.product.update({
+        where: { id },
+        data: { price: updatedPrice },
+      });
+    }
+    updatedProduct = await prisma.product.update({
+      where: { id },
+      data: { sizeId, colorId, genderId },
+    });
+    if (updatedImageUrl) {
+      updatedProduct = await prisma.product.update({
+        where: { id },
+        data: { imageUrl: updatedImageUrl },
+      });
+    }
+    if (categoryIds.length) {
+      const existingProductsCategories = await prisma.productCategory.findMany({
+        where: { productId: id },
+      });
+      const existingCategoryIds = existingProductsCategories.map(
+        (item) => item.categoryId
+      );
+      // db [1,2] --> paylod [1]
+      const removedCategoryIds = existingCategoryIds.filter(
+        (id) => !categoryIds.includes(id)
+      );
+      if (removedCategoryIds.length) {
+        await prisma.productCategory.deleteMany({
+          where: {
+            productId: id,
+            categoryId: {
+              in: removedCategoryIds,
+            },
+          },
+        });
+      }
+      // db [1,2] --> payload [1,2,3]
+      const addedCategoryIds = categoryIds.filter(
+        (id: number) => !existingCategoryIds.includes(id)
+      );
+      if (addedCategoryIds.length) {
+        const newProductsCategories = addedCategoryIds.map(
+          (categoryId: number) => ({ productId: id, categoryId })
+        );
+        await prisma.productCategory.createMany({
+          data: newProductsCategories,
+        });
+      }
+    }
+    return res.status(200).send(updatedProduct);
   }
   res.status(405).send("Method not allowed");
 }

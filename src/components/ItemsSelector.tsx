@@ -15,16 +15,9 @@ interface Props {
   defaultValue?: Option[];
   onChange: (options: Option[]) => void;
   label: string;
-  placeholder: string;
 }
 
-const ItemsSelector = ({
-  options,
-  defaultValue,
-  onChange,
-  label,
-  placeholder,
-}: Props) => {
+const ItemsSelector = ({ options, defaultValue, onChange, label }: Props) => {
   return (
     <Autocomplete
       multiple
@@ -47,9 +40,7 @@ const ItemsSelector = ({
         </li>
       )}
       style={{ width: "20rem" }}
-      renderInput={(params) => (
-        <TextField {...params} label={label} placeholder={placeholder} />
-      )}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -16,7 +16,10 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/firebaseConfig";
 import { config } from "@/config";
 import DeleteDialog from "@/components/DeleteDialog";
-import SaveAlert from "@/components/SaveAlert";
+import { updateProduct } from "@/store/slices/productsSlice";
+import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
+import SuccessAlert from "@/components/SuccessAlert";
+import InformationAlert from "@/components/InformationAlert";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -25,9 +28,11 @@ const EditProducts = () => {
   const { products, categories, productsCategories, sizes, colors, genders } =
     useAppSelector(backofficeAppDatas);
 
+  const dispatch = useAppDispatch();
+
   const product = products.find((item) => item.id === Number(productId));
 
-  const [updatedProduct, setUpdatedProduct] = useState<Product>();
+  const [productToUpdate, setProductToUpdate] = useState<Product>();
 
   const [updatedProductImageUrl, setUpdatedProductImageUrl] = useState("");
 
@@ -35,7 +40,11 @@ const EditProducts = () => {
 
   const [deleteDialogMessage, setDeleteDialogMessage] = useState("");
 
-  const [openSaveAlert, setOpenSaveAlert] = useState(false);
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+
+  const [openInformationAlert, setOpenInformationAlert] = useState(false);
+
+  const [informationMessage, setInformationMessage] = useState("");
 
   const onFileSelect = (acceptedFiles: File[]) => {
     const name = `/products/${acceptedFiles[0].name}`;
@@ -63,7 +72,8 @@ const EditProducts = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           setUpdatedProductImageUrl(url);
-          setOpenSaveAlert(true);
+          setInformationMessage("Careful - You have unsaved changes!");
+          setOpenInformationAlert(true);
         });
       }
     );
@@ -94,11 +104,36 @@ const EditProducts = () => {
     number[]
   >([]);
 
+  const isDisabled =
+    !productToUpdate?.name ||
+    !productToUpdate?.price ||
+    !productToUpdate.sizeId ||
+    !productToUpdate.colorId ||
+    !productToUpdate.genderId;
+
   useEffect(() => {
     if (product) {
-      setUpdatedProduct(product);
+      setProductToUpdate(product);
     }
   }, [product]);
+
+  const handleUpdateProduct = async () => {
+    const response = await fetch(`${config.apiBaseUrl}/backoffice/products`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productToUpdate,
+        categoryIds: selectedCategoryIdsToUpdate,
+        updatedImageUrl: updatedProductImageUrl,
+      }),
+    });
+    const updatedProduct = await response.json();
+    dispatch(updateProduct(updatedProduct));
+    dispatch(fetchProductsCategories());
+    setOpenSuccessAlert(true);
+  };
 
   if (!product)
     return (
@@ -121,7 +156,7 @@ const EditProducts = () => {
         <ModeEditOutlineIcon sx={{ fontSize: "1.5rem", mr: "0.5rem" }} />
         <Typography variant="h5">Edit Your Product</Typography>
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: { xs: "block", sm: "block", md: "flex" } }}>
         {/* left side */}
         <Box
           sx={{
@@ -129,6 +164,7 @@ const EditProducts = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            mx: { xs: "auto", sm: "auto", md: "0" },
           }}
         >
           <Image
@@ -157,19 +193,23 @@ const EditProducts = () => {
             </IconButton>
           </Box>
           <TextField
-            sx={{ my: "2rem" }}
+            sx={{ my: "2rem", width: "20rem" }}
             label="Name"
             defaultValue={product.name}
             onChange={(event) =>
-              updatedProduct &&
-              setUpdatedProduct({ ...updatedProduct, name: event.target.value })
+              productToUpdate &&
+              setProductToUpdate({
+                ...productToUpdate,
+                name: event.target.value,
+              })
             }
           />
           <TextField
+            sx={{ width: "20rem" }}
             onChange={(event) =>
-              updatedProduct &&
-              setUpdatedProduct({
-                ...updatedProduct,
+              productToUpdate &&
+              setProductToUpdate({
+                ...productToUpdate,
                 price: Number(event.target.value),
               })
             }
@@ -185,6 +225,8 @@ const EditProducts = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            mx: { xs: "auto", sm: "auto", md: "0" },
+            mt: { xs: "2.5rem", sm: "2.5rem", md: "0" },
           }}
         >
           {/* Categories */}
@@ -195,7 +237,6 @@ const EditProducts = () => {
               setSelectedCategoryIsToUpdate(values.map((item) => item.id));
             }}
             label="Categories"
-            placeholder="Categories"
           />
           {/* Size */}
           <Box sx={{ my: "2.5rem" }}>
@@ -204,8 +245,8 @@ const EditProducts = () => {
               defaultValue={productSize}
               label="Size"
               onChange={(value) => {
-                updatedProduct &&
-                  setUpdatedProduct({ ...updatedProduct, sizeId: value });
+                productToUpdate &&
+                  setProductToUpdate({ ...productToUpdate, sizeId: value });
               }}
             />
           </Box>
@@ -215,8 +256,8 @@ const EditProducts = () => {
             defaultValue={productColor}
             label="Color"
             onChange={(value) => {
-              updatedProduct &&
-                setUpdatedProduct({ ...updatedProduct, colorId: value });
+              productToUpdate &&
+                setProductToUpdate({ ...productToUpdate, colorId: value });
             }}
           />
           {/* Gender */}
@@ -226,12 +267,18 @@ const EditProducts = () => {
               defaultValue={productGender}
               label="Gender"
               onChange={(value) => {
-                updatedProduct &&
-                  setUpdatedProduct({ ...updatedProduct, genderId: value });
+                productToUpdate &&
+                  setProductToUpdate({ ...productToUpdate, genderId: value });
               }}
             />
           </Box>
-          <Button variant="contained">Save</Button>
+          <Button
+            onClick={handleUpdateProduct}
+            disabled={isDisabled}
+            variant="contained"
+          >
+            Save
+          </Button>
         </Box>
       </Box>
       <Box>
@@ -248,18 +295,22 @@ const EditProducts = () => {
         setOpen={setOpenDeleteDialog}
         title={deleteDialogMessage}
         callBack={() => {
-          setOpenSaveAlert(true);
+          setInformationMessage("Careful - You have unsaved changes!");
+          setOpenInformationAlert(true);
           setUpdatedProductImageUrl(
             "https://i.pinimg.com/236x/50/6e/dd/506eddb8f3d3e511c470f87d5880b6e3.jpg"
           );
         }}
       />
-      <SaveAlert
-        open={openSaveAlert}
-        setOpen={setOpenSaveAlert}
-        callBack={() => {
-          // update product
-        }}
+      <InformationAlert
+        open={openInformationAlert}
+        setOpen={setOpenInformationAlert}
+        message={informationMessage}
+      />
+      <SuccessAlert
+        open={openSuccessAlert}
+        setOpen={setOpenSuccessAlert}
+        message="Updated Product Successfully"
       />
     </Box>
   );

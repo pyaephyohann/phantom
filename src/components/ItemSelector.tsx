@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 interface Option {
   id: number;
@@ -23,7 +23,7 @@ const ItemSelector = ({ options, label, onChange, defaultValue }: Props) => {
       <FormControl fullWidth>
         <InputLabel>{label}</InputLabel>
         <Select
-          value={defaultValue?.id}
+          defaultValue={defaultValue?.id}
           label={label}
           onChange={(event) => onChange(event.target.value as number)}
         >
