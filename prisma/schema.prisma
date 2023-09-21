@@ -26,6 +26,7 @@ model Product {
   name            String
   imageUrl        String?
   price           Int
+  discountPrice Int? @default(0)
   ProductCategory ProductCategory[]
   sizeId          Int
   size            Size              @relation(fields: [sizeId], references: [id])

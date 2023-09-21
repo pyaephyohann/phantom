@@ -28,6 +28,7 @@ import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice"
 import SuccessAlert from "@/components/SuccessAlert";
 import InformationAlert from "@/components/InformationAlert";
 import DangerZone from "@/components/DangerZone";
+import ProductDiscount from "@/components/ProductDiscount";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -312,6 +313,9 @@ const EditProducts = () => {
             d="M0,224L48,192C96,160,192,96,288,80C384,64,480,96,576,128C672,160,768,192,864,176C960,160,1056,96,1152,85.3C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
         </svg>
+      </Box>
+      <Box sx={{ my: "3rem" }}>
+        <ProductDiscount productId={Number(productId)} />
       </Box>
       <Box sx={{ my: "2rem" }}>
         <DangerZone
