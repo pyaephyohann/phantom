@@ -35,7 +35,6 @@ const DeleteDialog = ({ open, setOpen, title, callBack }: Props) => {
             callBack();
             setOpen(false);
           }}
-          color="error"
           variant="contained"
         >
           Confirm

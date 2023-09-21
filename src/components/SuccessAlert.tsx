@@ -24,7 +24,6 @@ const SuccessAlert = ({ open, setOpen, message }: Props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 

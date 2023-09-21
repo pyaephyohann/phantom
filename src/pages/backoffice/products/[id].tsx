@@ -23,10 +23,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/firebaseConfig";
 import { config } from "@/config";
 import DeleteDialog from "@/components/DeleteDialog";
-import { updateProduct } from "@/store/slices/productsSlice";
+import { deleteProduct, updateProduct } from "@/store/slices/productsSlice";
 import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
 import SuccessAlert from "@/components/SuccessAlert";
 import InformationAlert from "@/components/InformationAlert";
+import DangerZone from "@/components/DangerZone";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -37,7 +38,9 @@ const EditProducts = () => {
 
   const dispatch = useAppDispatch();
 
-  const product = products.find((item) => item.id === Number(productId));
+  const product = products.find(
+    (item) => item.id === Number(productId)
+  ) as Product;
 
   const [productToUpdate, setProductToUpdate] = useState<Product>();
 
@@ -146,6 +149,15 @@ const EditProducts = () => {
     setOpenSuccessAlert(true);
   };
 
+  const handleDeleteProduct = async () => {
+    await fetch(`${config.apiBaseUrl}/backoffice/products?id=${productId}`, {
+      method: "DELETE",
+    });
+    dispatch(deleteProduct(product));
+    dispatch(fetchProductsCategories());
+    router.push("/backoffice/products");
+  };
+
   if (!product)
     return (
       <Typography variant="h5" sx={{ mt: "2rem", textAlign: "center" }}>
@@ -194,7 +206,7 @@ const EditProducts = () => {
             <IconButton
               onClick={() => {
                 setDeleteDialogMessage(
-                  "Are you sure you want to remove this photo"
+                  "Are you sure you want to remove this photo?"
                 );
                 setOpenDeleteDialog(true);
               }}
@@ -300,6 +312,13 @@ const EditProducts = () => {
             d="M0,224L48,192C96,160,192,96,288,80C384,64,480,96,576,128C672,160,768,192,864,176C960,160,1056,96,1152,85.3C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
         </svg>
+      </Box>
+      <Box sx={{ my: "2rem" }}>
+        <DangerZone
+          id={Number(productId)}
+          handleDelete={handleDeleteProduct}
+          deleteDialogTitle="Are you sure you want to delete this product?"
+        />
       </Box>
       <DeleteDialog
         open={openDeleteDialog}

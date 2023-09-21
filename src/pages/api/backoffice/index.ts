@@ -13,7 +13,7 @@ export default async function handler(
   const email = user?.email as string;
   const image = user?.image as string;
 
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({ where: { isArchived: false } });
 
   if (!users.length) {
     const defaultSizeDatas = [
@@ -54,12 +54,24 @@ export default async function handler(
     });
   }
 
-  const products = await prisma.product.findMany();
-  const categories = await prisma.category.findMany();
-  const productsCategories = await prisma.productCategory.findMany();
-  const sizes = await prisma.size.findMany();
-  const colors = await prisma.color.findMany();
-  const genders = await prisma.gender.findMany();
+  const products = await prisma.product.findMany({
+    where: { isArchived: false },
+  });
+  const categories = await prisma.category.findMany({
+    where: { isArchived: false },
+  });
+  const productsCategories = await prisma.productCategory.findMany({
+    where: { isArchived: false },
+  });
+  const sizes = await prisma.size.findMany({
+    where: { isArchived: false },
+  });
+  const colors = await prisma.color.findMany({
+    where: { isArchived: false },
+  });
+  const genders = await prisma.gender.findMany({
+    where: { isArchived: false },
+  });
 
   res.status(200).json({
     users,

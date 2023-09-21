@@ -111,6 +111,36 @@ export default async function handler(
       }
     }
     return res.status(200).send(updatedProduct);
+  } else if (method === "DELETE") {
+    const id = Number(req.query.id);
+    const isValid = id;
+    if (!isValid) return res.status(400).send("Bad Request");
+    const existingProduct = await prisma.product.findFirst({
+      where: { id },
+    });
+    if (!existingProduct) return res.status(404).send("Product not found");
+    await prisma.product.update({
+      where: { id },
+      data: { isArchived: true },
+    });
+    const productsCategoriesByProductId = await prisma.productCategory.findMany(
+      {
+        where: {
+          productId: id,
+        },
+      }
+    );
+    await prisma.$transaction(
+      productsCategoriesByProductId.map((item) =>
+        prisma.productCategory.update({
+          where: { id: item.id },
+          data: {
+            isArchived: true,
+          },
+        })
+      )
+    );
+    return res.status(200).send("Ok");
   }
   res.status(405).send("Method not allowed");
 }
