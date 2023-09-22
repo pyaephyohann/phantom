@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Chip, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,6 +8,7 @@ interface Props {
   price: number;
   genderId: number;
   href: string;
+  discountPrice: number;
 }
 
 const BackofficeProductCard = ({
@@ -16,6 +17,7 @@ const BackofficeProductCard = ({
   price,
   genderId,
   href,
+  discountPrice,
 }: Props) => {
   return (
     <Link href={href} style={{ textDecoration: "none" }}>
@@ -24,8 +26,18 @@ const BackofficeProductCard = ({
           py: "1rem",
           px: "1.5rem",
           borderRadius: "0.5rem",
+          position: "relative",
         }}
       >
+        {discountPrice ? (
+          <Chip
+            sx={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
+            label="Discount"
+            color="primary"
+          />
+        ) : (
+          ""
+        )}
         <Image
           style={{ borderRadius: "0.5rem", marginBottom: "0.5rem" }}
           alt={name}
@@ -35,7 +47,20 @@ const BackofficeProductCard = ({
         />
         <Box sx={{ pl: "0.2rem" }}>
           <Typography sx={{ my: "0.7rem" }}>{name}</Typography>
-          <Typography sx={{ mb: "0.7rem" }}>{price} Ks</Typography>
+          <Box sx={{ mb: "0.5rem" }}>
+            {discountPrice ? (
+              <Box sx={{ display: "flex" }}>
+                <Typography
+                  sx={{ textDecoration: "line-through", mr: "0.5rem" }}
+                >
+                  {price} Ks
+                </Typography>
+                <Typography>{discountPrice} Ks</Typography>
+              </Box>
+            ) : (
+              <Typography>{price} Ks</Typography>
+            )}
+          </Box>
           <Box>
             {genderId === 4 && <Typography>For Male</Typography>}
             {genderId === 5 && <Typography>For Female</Typography>}

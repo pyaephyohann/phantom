@@ -314,7 +314,7 @@ const EditProducts = () => {
           ></path>
         </svg>
       </Box>
-      <Box sx={{ my: "3rem" }}>
+      <Box sx={{ width: "fit-content", my: "3rem", mx: "auto" }}>
         <ProductDiscount productId={Number(productId)} />
       </Box>
       <Box sx={{ my: "2rem" }}>

@@ -62,7 +62,7 @@ const ProductDiscount = ({ productId }: Props) => {
   };
 
   return (
-    <Box sx={{ width: "fit-content", mx: "auto" }}>
+    <Box>
       <Box sx={{ textAlign: "center" }}>
         {product.discountPrice ? (
           ""
