@@ -22,7 +22,7 @@ const TopBar = () => {
 
   return (
     <Box>
-      <AppBar sx={{ p: "0.5rem" }} color="secondary" position="static">
+      <AppBar sx={{ p: "0.5rem", bgcolor: "primary.main" }} position="static">
         <Toolbar
           sx={{
             display: "flex",
@@ -37,7 +37,10 @@ const TopBar = () => {
                   onClick={() => setOpen(true)}
                   sx={{ mr: "2rem", display: { sm: "block", md: "none" } }}
                 >
-                  <MenuIcon sx={{ fontSize: "2rem" }} color="primary" />
+                  <MenuIcon
+                    sx={{ fontSize: "2rem", color: "white" }}
+                    color="primary"
+                  />
                 </IconButton>
                 <SideBarDrawer open={open} setOpen={setOpen} />
               </Box>

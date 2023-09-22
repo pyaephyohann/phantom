@@ -56,8 +56,7 @@ const SideBar = () => {
       sx={{
         width: "13rem",
         height: "100vh",
-        bgcolor: "secondary.main",
-        color: "text.primary",
+        bgcolor: "primary.main",
         pt: "0.8rem",
         p: "1rem",
         borderTopRightRadius: "2rem",
@@ -67,7 +66,7 @@ const SideBar = () => {
       <List>
         {sideBarItems.splice(0, 5).map((item, index) => (
           <Link
-            style={{ textDecoration: "none", color: "white" }}
+            style={{ textDecoration: "none", color: "#fff" }}
             key={item.name}
             href={item.route}
           >
@@ -84,7 +83,7 @@ const SideBar = () => {
       <List>
         {sideBarItems.splice(-1).map((item, index) => (
           <Link
-            style={{ textDecoration: "none", color: "white" }}
+            style={{ textDecoration: "none", color: "#fff" }}
             key={item.name}
             href={item.route}
           >

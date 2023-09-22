@@ -17,6 +17,7 @@ import { Drawer, IconButton, Typography } from "@mui/material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Link from "next/link";
 
 interface Props {
   open: boolean;
@@ -30,32 +31,32 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <BookmarkBorderIcon sx={{ color: "text.primary" }} />,
+      icon: <BookmarkBorderIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/orders",
     },
     {
       name: "Products",
-      icon: <InventoryIcon sx={{ color: "text.primary" }} />,
+      icon: <InventoryIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/products",
     },
     {
       name: "Categories",
-      icon: <CategoryIcon sx={{ color: "text.primary" }} />,
+      icon: <CategoryIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/categories",
     },
     {
       name: "Sizes",
-      icon: <AnimationIcon sx={{ color: "text.primary" }} />,
+      icon: <AnimationIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/sizes",
     },
     {
       name: "Colors",
-      icon: <PaletteIcon sx={{ color: "text.primary" }} />,
+      icon: <PaletteIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/colors",
     },
     {
       name: "Settings",
-      icon: <SettingsIcon sx={{ color: "text.primary" }} />,
+      icon: <SettingsIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/settings",
     },
   ];
@@ -65,7 +66,7 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
       <Box
         sx={{
           height: "100vh",
-          bgcolor: "secondary.main",
+          bgcolor: "primary.main",
           color: "text.primary",
           px: "1rem",
           pt: "1.2rem",
@@ -84,45 +85,58 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
               style={{ borderRadius: "5rem" }}
               src={user.image as string}
               alt={user.name as string}
-              width={35}
-              height={35}
+              width={40}
+              height={40}
             />
           )}
           <IconButton onClick={() => setOpen(false)}>
-            <CancelIcon color="primary" sx={{ fontSize: "1.8rem" }} />
+            <CancelIcon sx={{ fontSize: "1.8rem", color: "white" }} />
           </IconButton>
         </Box>
         <List>
           {sideBarItems.splice(0, 5).map((item, index) => (
-            <ListItem key={item.name} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href={item.route}
+              key={item.name}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
         <List>
           {sideBarItems.splice(-1).map((item, index) => (
-            <ListItem key={item.name} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href={item.route}
+              key={item.name}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Box sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
           <Button
             onClick={() => signOut({ callbackUrl: "/auth/backoffice/signin" })}
-            variant="contained"
+            variant="text"
           >
             <Typography
               sx={{
                 textAlign: "center",
                 px: "1.5rem",
                 width: "fit-content",
+                color: "white",
               }}
             >
               Log out
