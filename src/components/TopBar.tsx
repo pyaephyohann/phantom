@@ -8,11 +8,17 @@ import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import SideBarDrawer from "./SideBarDrawer";
+import { useRouter } from "next/router";
 
 const TopBar = () => {
+  const router = useRouter();
   const { data } = useSession();
   const user = data?.user;
   const [open, setOpen] = useState(false);
+
+  const getTitle = () => {
+    if (router.pathname.includes("products")) return "Products";
+  };
 
   return (
     <Box>
@@ -56,11 +62,11 @@ const TopBar = () => {
             <Typography
               sx={{
                 fontSize: "1.5rem",
-                color: "text.primary",
                 display: { xs: "none", md: "block" },
+                color: "#fff",
               }}
             >
-              Title
+              {getTitle()}
             </Typography>
           ) : (
             ""

@@ -4,7 +4,7 @@ export const theme = createTheme({
   palette: {
     primary: {
       // pink
-      main: "#FFB6D9",
+      main: "#FFA1F5",
       contrastText: "#fff",
     },
     secondary: {
@@ -14,10 +14,6 @@ export const theme = createTheme({
     info: {
       // yellow
       main: "#FEFFAC",
-    },
-    text: {
-      primary: "#fff",
-      secondary: "#E4E4D0",
     },
   },
 });

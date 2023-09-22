@@ -14,7 +14,11 @@ model User {
   password String?
   imageUrl String?
   nickname String?
-  gender   Gender?
+  genderId Int?
+  gender   Gender? @relation(fields: [genderId], references: [id])
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Product {
@@ -22,18 +26,26 @@ model Product {
   name            String
   imageUrl        String?
   price           Int
+  discountPrice Int? @default(0)
   ProductCategory ProductCategory[]
   sizeId          Int
   size            Size              @relation(fields: [sizeId], references: [id])
   colorId         Int
   color           Color             @relation(fields: [colorId], references: [id])
-  gender Gender
+  genderId        Int
+  gender          Gender            @relation(fields: [genderId], references: [id])
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Category {
   id              Int               @id @default(autoincrement())
   name            String
   ProductCategory ProductCategory[]
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model ProductCategory {
@@ -42,22 +54,35 @@ model ProductCategory {
   categoryId Int
   product    Product  @relation(fields: [productId], references: [id])
   category   Category @relation(fields: [categoryId], references: [id])
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Size {
   id      Int       @id @default(autoincrement())
   name    String
   Product Product[]
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Color {
   id      Int       @id @default(autoincrement())
   name    String
   Product Product[]
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
+model Gender {
+  id      Int       @id @default(autoincrement())
+  name    String
+  User    User[]
+  Product Product[]
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
