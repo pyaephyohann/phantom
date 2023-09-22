@@ -24,8 +24,8 @@ const Products = () => {
         }}
       >
         <Chip
-          sx={{ mr: "1.5rem" }}
-          color="primary"
+          sx={{ mr: "1.5rem", color: "white" }}
+          color="secondary"
           label="Discounted Products"
           onClick={() => {
             router.push("/backoffice/products/discountedProducts");

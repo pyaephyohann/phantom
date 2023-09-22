@@ -31,9 +31,14 @@ const BackofficeProductCard = ({
       >
         {discountPrice ? (
           <Chip
-            sx={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
+            sx={{
+              position: "absolute",
+              top: "0.5rem",
+              right: "0.5rem",
+              color: "white",
+            }}
             label="Discount"
-            color="primary"
+            color="secondary"
           />
         ) : (
           ""
