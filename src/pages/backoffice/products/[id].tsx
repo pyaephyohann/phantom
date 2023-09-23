@@ -14,7 +14,6 @@ import ItemsSelector from "@/components/ItemsSelector";
 import { getCategoriesByProductId } from "@/utils/client";
 import { Color, Gender, Product, Size } from "@prisma/client";
 import ItemSelector from "@/components/ItemSelector";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useEffect, useState } from "react";

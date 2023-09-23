@@ -21,9 +21,15 @@ export const categoriesSlice = createSlice({
     addCategory: (state, action: PayloadAction<Category>) => {
       state.items = [...state.items, action.payload];
     },
+    updateCategory: (state, action: PayloadAction<Category>) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
   },
 });
 
-export const { setCategories, addCategory } = categoriesSlice.actions;
+export const { setCategories, addCategory, updateCategory } =
+  categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

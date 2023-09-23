@@ -16,6 +16,19 @@ export default async function handler(
       },
     });
     return res.status(200).send(newCategory);
+  } else if (method === "PUT") {
+    const { id, name } = req.body;
+    const isValid = id && name;
+    if (!isValid) return res.status(400).send("Bad Request");
+    const existingCategory = await prisma.category.findFirst({
+      where: { id },
+    });
+    if (!existingCategory) return res.status(400).send("Bad Request");
+    const updatedCategory = await prisma.category.update({
+      where: { id },
+      data: { name },
+    });
+    return res.status(200).send(updatedCategory);
   }
   res.status(405).send("Method not allowed");
 }
