@@ -8,12 +8,17 @@ import { useState } from "react";
 import { config } from "@/config";
 import SuccessAlert from "@/components/SuccessAlert";
 import { updateCategory } from "@/store/slices/categoriesSlice";
+import { getProductsByCategoryId } from "@/utils/client";
+import BackofficeProductCard from "@/components/BackofficeProductCard";
+import AddIcon from "@mui/icons-material/Add";
+import AddProduct from "./AddProduct";
 
 const EditCategory = () => {
   const router = useRouter();
   const categoryId = router.query.id;
 
-  const { categories } = useAppSelector(backofficeAppDatas);
+  const { categories, products, productsCategories } =
+    useAppSelector(backofficeAppDatas);
 
   const dispatch = useAppDispatch();
 
@@ -22,6 +27,14 @@ const EditCategory = () => {
   const [successAlertMessage, setSuccessAlertMessage] = useState("");
 
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+
+  const [openAddProduct, setOpenAddProduct] = useState(false);
+
+  const validProducts = getProductsByCategoryId(
+    Number(categoryId),
+    products,
+    productsCategories
+  );
 
   const isDisabled = !updatedCategoryName;
 
@@ -82,10 +95,74 @@ const EditCategory = () => {
           Save
         </Button>
       </Box>
+      {/* title and add product */}
+      <Box
+        sx={{
+          mt: "3rem",
+          display: "flex",
+          justifyContent: "space-between",
+          px: "2rem",
+        }}
+      >
+        <Box>
+          {validProducts.length === 0 ? (
+            ""
+          ) : (
+            <Typography variant="h5">Products</Typography>
+          )}
+        </Box>
+        <Button
+          onClick={() => setOpenAddProduct(true)}
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add Product
+        </Button>
+      </Box>
+      {/* show connected products */}
+      <Box
+        sx={{
+          mt: "1.5rem",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+          },
+        }}
+      >
+        {validProducts.map((product) => {
+          return (
+            <Box sx={{ m: "1rem" }} key={product.id}>
+              <BackofficeProductCard
+                name={product.name}
+                imageUrl={product.imageUrl as string}
+                price={product.price}
+                genderId={product.genderId}
+                href={`/backoffice/products/${product.id}`}
+                discountPrice={
+                  product.discountPrice ? product.discountPrice : 0
+                }
+              />
+            </Box>
+          );
+        })}
+      </Box>
       <SuccessAlert
         open={openSuccessAlert}
         setOpen={setOpenSuccessAlert}
         message={successAlertMessage}
+      />
+      <AddProduct
+        joinedProducts={validProducts}
+        categoryId={Number(categoryId)}
+        open={openAddProduct}
+        setOpen={setOpenAddProduct}
+        callBack={() => {
+          setSuccessAlertMessage("Added Successfully");
+          setOpenSuccessAlert(true);
+        }}
       />
     </Box>
   );
