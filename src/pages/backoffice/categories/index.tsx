@@ -28,7 +28,7 @@ const Categories = () => {
           New Category
         </Button>
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         {categories.map((category) => {
           return (
             <Box sx={{ m: "1rem" }} key={category.id}>
