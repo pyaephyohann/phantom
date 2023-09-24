@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Chip, TextField, Typography } from "@mui/material";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -9,9 +9,14 @@ import { config } from "@/config";
 import SuccessAlert from "@/components/SuccessAlert";
 import { updateCategory } from "@/store/slices/categoriesSlice";
 import { getProductsByCategoryId } from "@/utils/client";
-import BackofficeProductCard from "@/components/BackofficeProductCard";
 import AddIcon from "@mui/icons-material/Add";
 import AddProduct from "./AddProduct";
+import Link from "next/link";
+import Image from "next/image";
+import EditIcon from "@mui/icons-material/Edit";
+import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
+import DeleteDialog from "@/components/DeleteDialog";
+import RemoveDialog from "@/components/RemoveDialog";
 
 const EditCategory = () => {
   const router = useRouter();
@@ -27,6 +32,10 @@ const EditCategory = () => {
   const [successAlertMessage, setSuccessAlertMessage] = useState("");
 
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+
+  const [removeDialogMessage, setRemoveDialogMessage] = useState("");
+
+  const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
 
   const [openAddProduct, setOpenAddProduct] = useState(false);
 
@@ -53,6 +62,19 @@ const EditCategory = () => {
     const updatedCategory = await response.json();
     dispatch(updateCategory(updatedCategory));
     setSuccessAlertMessage("Updated Successfully");
+    setOpenSuccessAlert(true);
+  };
+
+  const handleRemoveProduct = async (productId: number) => {
+    await fetch(`${config.apiBaseUrl}/backoffice/categories/removeProduct`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, categoryId: Number(categoryId) }),
+    });
+    dispatch(fetchProductsCategories());
+    setSuccessAlertMessage("Removed Successfully");
     setOpenSuccessAlert(true);
   };
 
@@ -135,16 +157,98 @@ const EditCategory = () => {
         {validProducts.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
-              <BackofficeProductCard
-                name={product.name}
-                imageUrl={product.imageUrl as string}
-                price={product.price}
-                genderId={product.genderId}
-                href={`/backoffice/products/${product.id}`}
-                discountPrice={
-                  product.discountPrice ? product.discountPrice : 0
-                }
-              />
+              <Card
+                sx={{
+                  py: "1rem",
+                  px: "1.5rem",
+                  borderRadius: "0.5rem",
+                  position: "relative",
+                }}
+              >
+                {product.discountPrice ? (
+                  <Chip
+                    sx={{
+                      position: "absolute",
+                      top: "0.5rem",
+                      right: "0.5rem",
+                      color: "white",
+                    }}
+                    label="Discount"
+                    color="secondary"
+                  />
+                ) : (
+                  ""
+                )}
+                <Image
+                  style={{ borderRadius: "0.5rem", marginBottom: "0.5rem" }}
+                  alt={product.name}
+                  src={product.imageUrl as string}
+                  width={180}
+                  height={180}
+                />
+                <Box sx={{ pl: "0.2rem" }}>
+                  <Typography sx={{ my: "0.7rem" }}>{product.name}</Typography>
+                  <Box sx={{ mb: "0.5rem" }}>
+                    {product.discountPrice ? (
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          sx={{
+                            textDecoration: "line-through",
+                            mr: "0.5rem",
+                          }}
+                        >
+                          {product.price} Ks
+                        </Typography>
+                        <Typography>{product.discountPrice} Ks</Typography>
+                      </Box>
+                    ) : (
+                      <Typography>{product.price} Ks</Typography>
+                    )}
+                  </Box>
+                  <Box>
+                    {product.genderId === 4 && (
+                      <Typography>For Male</Typography>
+                    )}
+                    {product.genderId === 5 && (
+                      <Typography>For Female</Typography>
+                    )}
+                    {product.genderId === 6 && (
+                      <Typography>Non-binary</Typography>
+                    )}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mt: "1rem",
+                  }}
+                >
+                  <Chip
+                    color="primary"
+                    label="Edit"
+                    onClick={() => {
+                      router.push(`/backoffice/products/${product.id}`);
+                    }}
+                  />
+                  <Chip
+                    color="primary"
+                    label="Remove"
+                    onClick={() => {
+                      setRemoveDialogMessage(
+                        `Are you sure you want to remove ${product.name} from this category`
+                      );
+                      setOpenRemoveDialog(true);
+                    }}
+                  />
+                </Box>
+                <RemoveDialog
+                  open={openRemoveDialog}
+                  setOpen={setOpenRemoveDialog}
+                  title={removeDialogMessage}
+                  callBack={() => handleRemoveProduct(product.id)}
+                />
+              </Card>
             </Box>
           );
         })}
