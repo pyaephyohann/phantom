@@ -6,6 +6,7 @@ import NewProduct from "./NewProduct";
 import { useState } from "react";
 import BackofficeProductCard from "@/components/BackofficeProductCard";
 import { useRouter } from "next/router";
+import SuccessAlert from "@/components/SuccessAlert";
 
 const Products = () => {
   const { products } = useAppSelector(backofficeAppDatas);
@@ -13,6 +14,8 @@ const Products = () => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   return (
     <Box>
@@ -79,7 +82,16 @@ const Products = () => {
           );
         })}
       </Box>
-      <NewProduct open={open} setOpen={setOpen} />
+      <NewProduct
+        open={open}
+        setOpen={setOpen}
+        callBack={() => setOpenSuccessAlert(true)}
+      />
+      <SuccessAlert
+        open={openSuccessAlert}
+        setOpen={setOpenSuccessAlert}
+        message="New Product Created Successfully"
+      />
     </Box>
   );
 };

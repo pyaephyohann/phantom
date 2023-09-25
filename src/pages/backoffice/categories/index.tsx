@@ -6,11 +6,14 @@ import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import NewCategory from "./NewCategory";
+import SuccessAlert from "@/components/SuccessAlert";
 
 const Categories = () => {
   const { categories, productsCategories } = useAppSelector(backofficeAppDatas);
 
   const [open, setOpen] = useState(false);
+
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   const getProductCount = (categoryId: number) => {
     return productsCategories.filter((item) => item.categoryId === categoryId)
@@ -44,7 +47,16 @@ const Categories = () => {
           );
         })}
       </Box>
-      <NewCategory open={open} setOpen={setOpen} />
+      <NewCategory
+        open={open}
+        setOpen={setOpen}
+        callBack={() => setOpenSuccessAlert(true)}
+      />
+      <SuccessAlert
+        open={openSuccessAlert}
+        setOpen={setOpenSuccessAlert}
+        message="New Category Created Successfully"
+      />
     </Box>
   );
 };

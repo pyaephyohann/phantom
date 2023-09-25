@@ -15,9 +15,10 @@ import { useState } from "react";
 interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
+  callBack: () => void;
 }
 
-const NewCategory = ({ open, setOpen }: Props) => {
+const NewCategory = ({ open, setOpen, callBack }: Props) => {
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ const NewCategory = ({ open, setOpen }: Props) => {
     });
     const createdCategory = await response.json();
     dispatch(addCategory(createdCategory));
+    callBack();
     setOpen(false);
   };
 

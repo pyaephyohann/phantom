@@ -21,9 +21,14 @@ export const sizesSlice = createSlice({
     addSize: (state, action: PayloadAction<Size>) => {
       state.items = [...state.items, action.payload];
     },
+    updateSize: (state, action: PayloadAction<Size>) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
   },
 });
 
-export const { setSizes, addSize } = sizesSlice.actions;
+export const { setSizes, addSize, updateSize } = sizesSlice.actions;
 
 export default sizesSlice.reducer;
