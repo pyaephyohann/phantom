@@ -18,6 +18,7 @@ const TopBar = () => {
 
   const getTitle = () => {
     if (router.pathname.includes("products")) return "Products";
+    if (router.pathname.includes("categories")) return "Categories";
   };
 
   return (

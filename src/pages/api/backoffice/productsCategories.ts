@@ -7,7 +7,11 @@ export default async function handler(
 ) {
   const method = req.method;
   if (method === "GET") {
-    const productsCategories = await prisma.productCategory.findMany();
+    const productsCategories = await prisma.productCategory.findMany({
+      where: {
+        isArchived: false,
+      },
+    });
     return res.status(200).send(productsCategories);
   }
   res.status(405).send("Method not allowed");

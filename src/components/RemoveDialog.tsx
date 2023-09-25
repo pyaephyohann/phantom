@@ -13,7 +13,7 @@ interface Props {
   callBack: () => void;
 }
 
-const DeleteDialog = ({ open, setOpen, title, callBack }: Props) => {
+const RemoveDialog = ({ open, setOpen, title, callBack }: Props) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <DialogTitle sx={{ textAlign: "center", pt: "1rem" }}>
@@ -44,4 +44,4 @@ const DeleteDialog = ({ open, setOpen, title, callBack }: Props) => {
   );
 };
 
-export default DeleteDialog;
+export default RemoveDialog;
