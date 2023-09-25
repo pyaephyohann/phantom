@@ -28,9 +28,10 @@ import InformationAlert from "@/components/InformationAlert";
 interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
+  callBack: () => void;
 }
 
-const NewProduct = ({ open, setOpen }: Props) => {
+const NewProduct = ({ open, setOpen, callBack }: Props) => {
   const { categories, colors, sizes, genders } =
     useAppSelector(backofficeAppDatas);
 
@@ -148,6 +149,7 @@ const NewProduct = ({ open, setOpen }: Props) => {
     const createdProduct = await response.json();
     dispatch(addProduct(createdProduct));
     dispatch(fetchProductsCategories());
+    callBack();
     setOpen(false);
     setSelectedFile([]);
     setNewProduct({
