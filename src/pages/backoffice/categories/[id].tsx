@@ -7,16 +7,14 @@ import { Category } from "@prisma/client";
 import { useState } from "react";
 import { config } from "@/config";
 import SuccessAlert from "@/components/SuccessAlert";
-import { updateCategory } from "@/store/slices/categoriesSlice";
+import { deleteCategory, updateCategory } from "@/store/slices/categoriesSlice";
 import { getProductsByCategoryId } from "@/utils/client";
 import AddIcon from "@mui/icons-material/Add";
 import AddProduct from "./AddProduct";
-import Link from "next/link";
 import Image from "next/image";
-import EditIcon from "@mui/icons-material/Edit";
 import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
-import DeleteDialog from "@/components/DeleteDialog";
 import RemoveDialog from "@/components/RemoveDialog";
+import DangerZone from "@/components/DangerZone";
 
 const EditCategory = () => {
   const router = useRouter();
@@ -76,6 +74,15 @@ const EditCategory = () => {
     dispatch(fetchProductsCategories());
     setSuccessAlertMessage("Removed Successfully");
     setOpenSuccessAlert(true);
+  };
+
+  const handleDeleteCategory = async () => {
+    await fetch(`${config.apiBaseUrl}/backoffice/categories?id=${categoryId}`, {
+      method: "DELETE",
+    });
+    dispatch(deleteCategory(category));
+    dispatch(fetchProductsCategories());
+    router.push("/backoffice/categories");
   };
 
   if (!category)
@@ -252,6 +259,13 @@ const EditCategory = () => {
             </Box>
           );
         })}
+      </Box>
+      <Box sx={{ mb: "3rem" }}>
+        <DangerZone
+          id={Number(categoryId)}
+          handleDelete={handleDeleteCategory}
+          deleteDialogTitle="Are you sure you want to delete this category"
+        />
       </Box>
       <SuccessAlert
         open={openSuccessAlert}

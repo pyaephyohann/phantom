@@ -36,8 +36,7 @@ const DangerZone = ({ id, handleDelete, deleteDialogTitle }: Props) => {
             Delete Your Product
           </Typography>
           <Typography>
-            If you are wrong deleted, Dont worry you can find it in deleted
-            products
+            If you are wrong deleted, Dont worry you can find it in trash
           </Typography>
         </Box>
         <Button
