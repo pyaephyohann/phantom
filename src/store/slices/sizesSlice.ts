@@ -18,9 +18,12 @@ export const sizesSlice = createSlice({
     setSizes: (state, action: PayloadAction<Size[]>) => {
       state.items = action.payload;
     },
+    addSize: (state, action: PayloadAction<Size>) => {
+      state.items = [...state.items, action.payload];
+    },
   },
 });
 
-export const { setSizes } = sizesSlice.actions;
+export const { setSizes, addSize } = sizesSlice.actions;
 
 export default sizesSlice.reducer;
