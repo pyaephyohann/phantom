@@ -134,9 +134,7 @@ export default async function handler(
       productsCategoriesByProductId.map((item) =>
         prisma.productCategory.update({
           where: { id: item.id },
-          data: {
-            isArchived: true,
-          },
+          data: { isArchived: true },
         })
       )
     );
