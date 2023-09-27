@@ -11,9 +11,15 @@ const DiscountedProducts = () => {
 
   return (
     <Box>
-      <Typography sx={{ mb: "1rem", mt: "0.5rem" }} variant="h5">
-        Discounted Products
-      </Typography>
+      {discountedProducts.length > 0 ? (
+        <Typography sx={{ mb: "1rem", mt: "0.5rem" }} variant="h5">
+          Discounted Products
+        </Typography>
+      ) : (
+        <Typography sx={{ mt: "2rem", textAlign: "center" }} variant="h5">
+          You dont have any discounted projects
+        </Typography>
+      )}
       <Box
         sx={{
           display: "flex",

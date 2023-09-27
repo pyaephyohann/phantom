@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import SideBarDrawer from "./SideBarDrawer";
 import { useRouter } from "next/router";
+import ProfilePopOver from "./ProfilePopOver";
 
 const TopBar = () => {
   const router = useRouter();
@@ -16,13 +17,21 @@ const TopBar = () => {
   const user = data?.user;
   const [open, setOpen] = useState(false);
 
+  const [openProfile, setOpenProfile] = useState(false);
+
   const getTitle = () => {
+    if (router.pathname === "/backoffice/products/[id]") return "Edit Product";
+    if (router.pathname.includes("discountedProducts"))
+      return "Discounted Products";
     if (router.pathname.includes("products")) return "Products";
+    if (router.pathname === "/backoffice/categories/[id]")
+      return "Edit Categories";
     if (router.pathname.includes("categories")) return "Categories";
     if (router.pathname === "/backoffice/sizes/[id]") return "Edit Size";
     if (router.pathname.includes("sizes")) return "Sizes";
     if (router.pathname === "/backoffice/colors/[id]") return "Edit Color";
     if (router.pathname.includes("colors")) return "Colors";
+    if (router.pathname.includes("settings")) return "Settings";
   };
 
   return (
@@ -81,17 +90,19 @@ const TopBar = () => {
           )}
           {user ? (
             <Image
+              onClick={() => setOpenProfile(true)}
               alt={user.name as string}
               src={user.image as string}
               width={50}
               height={50}
-              style={{ borderRadius: "5rem" }}
+              style={{ borderRadius: "5rem", cursor: "pointer" }}
             />
           ) : (
             <Typography></Typography>
           )}
         </Toolbar>
       </AppBar>
+      <ProfilePopOver open={openProfile} setOpen={setOpenProfile} />
     </Box>
   );
 };
