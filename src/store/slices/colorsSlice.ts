@@ -21,9 +21,14 @@ export const colorsSlice = createSlice({
     addColor: (state, action: PayloadAction<Color>) => {
       state.items = [...state.items, action.payload];
     },
+    updateColor: (state, action: PayloadAction<Color>) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
   },
 });
 
-export const { setColors, addColor } = colorsSlice.actions;
+export const { setColors, addColor, updateColor } = colorsSlice.actions;
 
 export default colorsSlice.reducer;
