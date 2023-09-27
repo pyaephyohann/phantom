@@ -21,6 +21,7 @@ const BackofficeLayout = ({ children }: Props) => {
   const waveSupportedPages = [
     "/backoffice/products/[id]",
     "/backoffice/sizes/[id]",
+    "/backoffice/colors/[id]",
   ];
 
   const isWaveSupportedPage = waveSupportedPages.includes(router.pathname);

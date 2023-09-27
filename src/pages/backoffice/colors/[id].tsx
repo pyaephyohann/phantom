@@ -8,6 +8,7 @@ import { useState } from "react";
 import { config } from "@/config";
 import { updateColor } from "@/store/slices/colorsSlice";
 import SuccessAlert from "@/components/SuccessAlert";
+import Wave from "@/components/Wave";
 
 const EditColor = () => {
   const router = useRouter();
@@ -46,33 +47,42 @@ const EditColor = () => {
     );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        mt: "1rem",
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontSize: "1.3rem", mr: "0.7rem" }}>
-          Edit your color
-        </Typography>
-        <EditIcon />
-      </Box>
-      <TextField
-        onChange={(event) => setName(event.target.value)}
-        sx={{ my: "2rem" }}
-        defaultValue={color.name}
-        label="Name"
-      />
-      <Button
-        onClick={handleUpdateColor}
-        disabled={isDisabled}
-        variant="contained"
+    <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: "1rem",
+        }}
       >
-        Save
-      </Button>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography sx={{ fontSize: "1.3rem", mr: "0.7rem" }}>
+            Edit your color
+          </Typography>
+          <EditIcon />
+        </Box>
+        <TextField
+          onChange={(event) => setName(event.target.value)}
+          sx={{ my: "2rem" }}
+          defaultValue={color.name}
+          label="Name"
+        />
+        <Button
+          onClick={handleUpdateColor}
+          disabled={isDisabled}
+          variant="contained"
+        >
+          Save
+        </Button>
+      </Box>
+      <Box sx={{ mt: "3rem", ml: "2.5rem" }}>
+        <Typography sx={{ mb: "1rem" }} variant="h5">
+          Note!
+        </Typography>
+        <Typography>You cannot delete color</Typography>
+      </Box>
+      <Wave />
       <SuccessAlert
         open={openSuccessAlert}
         setOpen={setOpenSuccessAlert}
