@@ -13,6 +13,8 @@ import { setSizes } from "./sizesSlice";
 import { setColors } from "./colorsSlice";
 import { RootState } from "..";
 import { setGenders } from "./gendersSlice";
+import { setDeletedProducts } from "./deletedProductsSlice";
+import { setDeletedCategories } from "./deletedCategoriesSlice";
 
 interface BackofficeState {
   init: boolean;
@@ -33,7 +35,9 @@ export const fetchBackofficeData = createAsyncThunk(
     const {
       users,
       products,
+      deletedProducts,
       categories,
+      deletedCategories,
       productsCategories,
       sizes,
       colors,
@@ -41,7 +45,9 @@ export const fetchBackofficeData = createAsyncThunk(
     } = responseJson;
     thunkAPI.dispatch(setUsers(users));
     thunkAPI.dispatch(setProducts(products));
+    thunkAPI.dispatch(setDeletedProducts(deletedProducts));
     thunkAPI.dispatch(setCategories(categories));
+    thunkAPI.dispatch(setDeletedCategories(deletedCategories));
     thunkAPI.dispatch(setProductsCategories(productsCategories));
     thunkAPI.dispatch(setSizes(sizes));
     thunkAPI.dispatch(setColors(colors));
@@ -54,7 +60,11 @@ export const fetchBackofficeData = createAsyncThunk(
 export const selectBackoffice = (state: RootState) => state.backoffice;
 export const selectUsers = (state: RootState) => state.users.items;
 export const selectProducts = (state: RootState) => state.products.items;
+export const selectDeletedProducts = (state: RootState) =>
+  state.deletedProducts.items;
 export const selectCategories = (state: RootState) => state.categories.items;
+export const selectDeletedCategories = (state: RootState) =>
+  state.deletedCategories.items;
 export const selectProductsCategories = (state: RootState) =>
   state.productsCategories.items;
 export const selectSizes = (state: RootState) => state.sizes.items;
@@ -66,7 +76,9 @@ export const backofficeAppDatas = createSelector(
     selectBackoffice,
     selectUsers,
     selectProducts,
+    selectDeletedProducts,
     selectCategories,
+    selectDeletedCategories,
     selectProductsCategories,
     selectSizes,
     selectColors,
@@ -76,7 +88,9 @@ export const backofficeAppDatas = createSelector(
     backoffice,
     users,
     products,
+    deletedProducts,
     categories,
+    deletedCategories,
     productsCategories,
     sizes,
     colors,
@@ -86,7 +100,9 @@ export const backofficeAppDatas = createSelector(
       isLoading: backoffice.isLoading,
       users,
       products,
+      deletedProducts,
       categories,
+      deletedCategories,
       productsCategories,
       sizes,
       colors,

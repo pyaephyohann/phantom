@@ -29,6 +29,7 @@ import InformationAlert from "@/components/InformationAlert";
 import DangerZone from "@/components/DangerZone";
 import ProductDiscount from "@/components/ProductDiscount";
 import Wave from "@/components/Wave";
+import { addDeletedProduct } from "@/store/slices/deletedProductsSlice";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -155,6 +156,7 @@ const EditProducts = () => {
       method: "DELETE",
     });
     dispatch(deleteProduct(product));
+    dispatch(addDeletedProduct(product));
     dispatch(fetchProductsCategories());
     router.push("/backoffice/products");
   };

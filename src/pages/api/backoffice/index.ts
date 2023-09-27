@@ -57,8 +57,14 @@ export default async function handler(
   const products = await prisma.product.findMany({
     where: { isArchived: false },
   });
+  const deletedProducts = await prisma.product.findMany({
+    where: { isArchived: true },
+  });
   const categories = await prisma.category.findMany({
     where: { isArchived: false },
+  });
+  const deletedCategories = await prisma.category.findMany({
+    where: { isArchived: true },
   });
   const productsCategories = await prisma.productCategory.findMany({
     where: { isArchived: false },
@@ -76,7 +82,9 @@ export default async function handler(
   res.status(200).json({
     users,
     products,
+    deletedProducts,
     categories,
+    deletedCategories,
     productsCategories,
     sizes,
     colors,
