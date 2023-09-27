@@ -19,6 +19,10 @@ const TopBar = () => {
   const getTitle = () => {
     if (router.pathname.includes("products")) return "Products";
     if (router.pathname.includes("categories")) return "Categories";
+    if (router.pathname === "/backoffice/sizes/[id]") return "Edit Size";
+    if (router.pathname.includes("sizes")) return "Sizes";
+    if (router.pathname === "/backoffice/colors/[id]") return "Edit Color";
+    if (router.pathname.includes("colors")) return "Colors";
   };
 
   return (
