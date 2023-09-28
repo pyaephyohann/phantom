@@ -1,19 +1,25 @@
 import { Box, Typography } from "@mui/material";
-import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import CategoryIcon from "@mui/icons-material/Category";
 import Link from "next/link";
 
-const Settings = () => {
-  const settingItems = [
+const Trash = () => {
+  const trashItems = [
     {
-      name: "Trash",
-      icon: <DeleteSweepIcon sx={{ color: "#fff" }} />,
-      href: "/backoffice/settings/trash",
+      name: "Products",
+      icon: <InventoryIcon sx={{ color: "#fff" }} />,
+      href: "/backoffice/settings/trash/products",
+    },
+    {
+      name: "Categories",
+      icon: <CategoryIcon sx={{ color: "#fff" }} />,
+      href: "/backoffice/settings/trash/categories",
     },
   ];
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-      {settingItems.map((item) => {
+      {trashItems.map((item) => {
         return (
           <Link
             style={{ textDecoration: "none" }}
@@ -21,7 +27,6 @@ const Settings = () => {
             key={item.name}
           >
             <Box
-              key={item.name}
               sx={{
                 display: "flex",
                 bgcolor: "primary.main",
@@ -44,4 +49,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Trash;

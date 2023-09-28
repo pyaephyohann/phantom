@@ -22,7 +22,7 @@ const RemoveDialog = ({ open, setOpen, title, callBack }: Props) => {
       <DialogContent sx={{ my: "0.5rem" }}>
         This action cannot be undone
       </DialogContent>
-      <DialogActions sx={{ pb: "1.5rem", pr: "1.5rem" }}>
+      <DialogActions sx={{ mb: "1.5rem", mr: "1.5rem" }}>
         <Button
           sx={{ mr: "2rem" }}
           onClick={() => setOpen(false)}
