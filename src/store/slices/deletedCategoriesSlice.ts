@@ -18,9 +18,19 @@ export const deletedCategoriesSlice = createSlice({
     setDeletedCategories: (state, action: PayloadAction<Category[]>) => {
       state.items = action.payload;
     },
+    addDeletedCategory: (state, action: PayloadAction<Category>) => {
+      state.items = [...state.items, action.payload];
+    },
+    removeDeletedCategory: (state, action: PayloadAction<Category>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
+    },
   },
 });
 
-export const { setDeletedCategories } = deletedCategoriesSlice.actions;
+export const {
+  setDeletedCategories,
+  addDeletedCategory,
+  removeDeletedCategory,
+} = deletedCategoriesSlice.actions;
 
 export default deletedCategoriesSlice.reducer;

@@ -15,6 +15,7 @@ import Image from "next/image";
 import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
 import RemoveDialog from "@/components/RemoveDialog";
 import DangerZone from "@/components/DangerZone";
+import { addDeletedCategory } from "@/store/slices/deletedCategoriesSlice";
 
 const EditCategory = () => {
   const router = useRouter();
@@ -81,6 +82,7 @@ const EditCategory = () => {
       method: "DELETE",
     });
     dispatch(deleteCategory(category));
+    dispatch(addDeletedCategory(category));
     dispatch(fetchProductsCategories());
     router.push("/backoffice/categories");
   };

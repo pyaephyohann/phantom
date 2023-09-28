@@ -42,20 +42,6 @@ export default async function handler(
       where: { id },
       data: { isArchived: true },
     });
-    const productsCategoriesByCategoryId =
-      await prisma.productCategory.findMany({
-        where: {
-          categoryId: id,
-        },
-      });
-    await prisma.$transaction(
-      productsCategoriesByCategoryId.map((item) =>
-        prisma.productCategory.update({
-          where: { id: item.id },
-          data: { isArchived: true },
-        })
-      )
-    );
     return res.status(200).send("Ok");
   }
   res.status(405).send("Method not allowed");

@@ -4,6 +4,7 @@ import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
 import { removeDeletedProduct } from "@/store/slices/deletedProductsSlice";
+import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice";
 import { addProduct } from "@/store/slices/productsSlice";
 import { Box, Button, Card, Chip, Typography } from "@mui/material";
 import Image from "next/image";
@@ -18,9 +19,11 @@ const DeletedProducts = () => {
 
   const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
 
-  const handleUndoProduct = async (productId: number) => {
+  const [productIdToUndo, setProductIdToUndo] = useState(0);
+
+  const handleUndoProduct = async () => {
     const response = await fetch(
-      `${config.apiBaseUrl}/backoffice/trash/products?id=${productId}`,
+      `${config.apiBaseUrl}/backoffice/trash/products?id=${productIdToUndo}`,
       {
         method: "PUT",
       }
@@ -28,12 +31,34 @@ const DeletedProducts = () => {
     const unDidProduct = await response.json();
     dispatch(removeDeletedProduct(unDidProduct));
     dispatch(addProduct(unDidProduct));
+    dispatch(fetchProductsCategories());
     setOpenSuccessAlert(true);
   };
 
   return (
     <Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box>
+        {deletedProducts.length ? (
+          <Typography sx={{ my: "0.5rem" }} variant="h5">
+            Deleted Products
+          </Typography>
+        ) : (
+          <Typography sx={{ mt: "1rem", textAlign: "center" }} variant="h5">
+            You dont have any deleted products
+          </Typography>
+        )}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+          },
+        }}
+      >
         {deletedProducts.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
@@ -102,7 +127,10 @@ const DeletedProducts = () => {
                   }}
                 >
                   <Button
-                    onClick={() => setOpenRemoveDialog(true)}
+                    onClick={() => {
+                      setProductIdToUndo(product.id);
+                      setOpenRemoveDialog(true);
+                    }}
                     variant="contained"
                   >
                     Undo
@@ -111,7 +139,7 @@ const DeletedProducts = () => {
                     open={openRemoveDialog}
                     setOpen={setOpenRemoveDialog}
                     title="Are you sure you want to undo this product?"
-                    callBack={() => handleUndoProduct(product.id)}
+                    callBack={handleUndoProduct}
                   />
                 </Box>
               </Card>

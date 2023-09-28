@@ -6,12 +6,12 @@ interface Props {
   name: string;
   icon: ReactNode;
   subtitle?: string;
-  href: string;
+  href?: string;
 }
 
 const ItemCard = ({ icon, name, subtitle, href }: Props) => {
   return (
-    <Link style={{ textDecoration: "none" }} href={href}>
+    <Link style={{ textDecoration: "none" }} href={href ? href : ""}>
       <Paper
         sx={{
           width: "11rem",
