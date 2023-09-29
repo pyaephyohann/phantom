@@ -10,10 +10,13 @@ import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice"
 import { useState } from "react";
 import SuccessAlert from "@/components/SuccessAlert";
 import RemoveDialog from "@/components/RemoveDialog";
+import { useRouter } from "next/router";
 
 const DeletedCategories = () => {
   const { deletedCategories, productsCategories } =
     useAppSelector(backofficeAppDatas);
+
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
 
@@ -50,9 +53,22 @@ const DeletedCategories = () => {
             Deleted Categories
           </Typography>
         ) : (
-          <Typography sx={{ mt: "1rem", textAlign: "center" }} variant="h5">
-            You dont have any deleted categories
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}>
+            <Typography sx={{ mt: "1rem" }} variant="h5">
+              You dont have any deleted categories currently!
+            </Typography>
+            <Button
+              onClick={() => router.push("/backoffice/settings/trash")}
+              sx={{ mt: "2rem" }}
+              variant="contained">
+              Go Back
+            </Button>
+          </Box>
         )}
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
@@ -68,8 +84,7 @@ const DeletedCategories = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   position: "relative",
-                }}
-              >
+                }}>
                 <RemoveDialog
                   open={openRemoveDialog}
                   setOpen={setOpenRemoveDialog}

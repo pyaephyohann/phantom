@@ -26,12 +26,11 @@ const Categories = () => {
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
-          startIcon={<AddIcon />}
-        >
+          startIcon={<AddIcon />}>
           New Category
         </Button>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", mt: "1rem" }}>
         {categories.map((category) => {
           return (
             <Box sx={{ m: "1rem" }} key={category.id}>

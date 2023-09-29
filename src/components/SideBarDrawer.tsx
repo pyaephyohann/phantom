@@ -70,16 +70,14 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
           color: "text.primary",
           px: "1rem",
           pt: "1.2rem",
-        }}
-      >
+        }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             pb: "0.5rem",
-          }}
-        >
+          }}>
           {user && (
             <Image
               style={{ borderRadius: "5rem" }}
@@ -96,10 +94,10 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
         <List>
           {sideBarItems.splice(0, 5).map((item, index) => (
             <Link
+              onClick={() => setOpen(false)}
               style={{ textDecoration: "none", color: "white" }}
               href={item.route}
-              key={item.name}
-            >
+              key={item.name}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
@@ -113,10 +111,10 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
         <List>
           {sideBarItems.splice(-1).map((item, index) => (
             <Link
+              onClick={() => setOpen(false)}
               style={{ textDecoration: "none", color: "white" }}
               href={item.route}
-              key={item.name}
-            >
+              key={item.name}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
@@ -129,16 +127,14 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
         <Box sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
           <Button
             onClick={() => signOut({ callbackUrl: "/auth/backoffice/signin" })}
-            variant="text"
-          >
+            variant="text">
             <Typography
               sx={{
                 textAlign: "center",
                 px: "1.5rem",
                 width: "fit-content",
                 color: "white",
-              }}
-            >
+              }}>
               Log out
             </Typography>
           </Button>

@@ -215,13 +215,13 @@ const EditCategory = () => {
                     )}
                   </Box>
                   <Box>
-                    {product.genderId === 4 && (
+                    {product.genderId === 1 && (
                       <Typography>For Male</Typography>
                     )}
-                    {product.genderId === 5 && (
+                    {product.genderId === 2 && (
                       <Typography>For Female</Typography>
                     )}
-                    {product.genderId === 6 && (
+                    {product.genderId === 3 && (
                       <Typography>Non-binary</Typography>
                     )}
                   </Box>

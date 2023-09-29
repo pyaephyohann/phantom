@@ -8,10 +8,13 @@ import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice"
 import { addProduct } from "@/store/slices/productsSlice";
 import { Box, Button, Card, Chip, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const DeletedProducts = () => {
   const { deletedProducts } = useAppSelector(backofficeAppDatas);
+
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
 
@@ -43,9 +46,22 @@ const DeletedProducts = () => {
             Deleted Products
           </Typography>
         ) : (
-          <Typography sx={{ mt: "1rem", textAlign: "center" }} variant="h5">
-            You dont have any deleted products
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}>
+            <Typography sx={{ mt: "1rem" }} variant="h5">
+              You dont have any deleted products currently!
+            </Typography>
+            <Button
+              onClick={() => router.push("/backoffice/settings/trash")}
+              sx={{ mt: "2rem" }}
+              variant="contained">
+              Go Back
+            </Button>
+          </Box>
         )}
       </Box>
       <Box
@@ -57,8 +73,7 @@ const DeletedProducts = () => {
             sm: "center",
             md: "flex-start",
           },
-        }}
-      >
+        }}>
         {deletedProducts.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
@@ -68,8 +83,7 @@ const DeletedProducts = () => {
                   px: "1.5rem",
                   borderRadius: "0.5rem",
                   position: "relative",
-                }}
-              >
+                }}>
                 {product.discountPrice ? (
                   <Chip
                     sx={{
@@ -97,8 +111,7 @@ const DeletedProducts = () => {
                     {product.discountPrice ? (
                       <Box sx={{ display: "flex" }}>
                         <Typography
-                          sx={{ textDecoration: "line-through", mr: "0.5rem" }}
-                        >
+                          sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
                           {product.price} Ks
                         </Typography>
                         <Typography>{product.discountPrice} Ks</Typography>
@@ -108,13 +121,13 @@ const DeletedProducts = () => {
                     )}
                   </Box>
                   <Box>
-                    {product.genderId === 4 && (
+                    {product.genderId === 1 && (
                       <Typography>For Male</Typography>
                     )}
-                    {product.genderId === 5 && (
+                    {product.genderId === 2 && (
                       <Typography>For Female</Typography>
                     )}
-                    {product.genderId === 6 && (
+                    {product.genderId === 3 && (
                       <Typography>Non-binary</Typography>
                     )}
                   </Box>
@@ -124,15 +137,13 @@ const DeletedProducts = () => {
                     display: "flex",
                     justifyContent: "flex-end",
                     mt: "1rem",
-                  }}
-                >
+                  }}>
                   <Button
                     onClick={() => {
                       setProductIdToUndo(product.id);
                       setOpenRemoveDialog(true);
                     }}
-                    variant="contained"
-                  >
+                    variant="contained">
                     Undo
                   </Button>
                   <RemoveDialog
