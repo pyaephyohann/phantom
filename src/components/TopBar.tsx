@@ -21,16 +21,23 @@ const TopBar = () => {
 
   const getTitle = () => {
     if (router.pathname === "/backoffice/products/[id]") return "Edit Product";
+    if (router.pathname === "/backoffice/products/discountedProducts/[id]")
+      return "Edit DiscountedProducts";
     if (router.pathname.includes("discountedProducts"))
       return "Discounted Products";
+    if (router.pathname.includes("trash/products"))
+      return "Settings/Trash/Products";
     if (router.pathname.includes("products")) return "Products";
     if (router.pathname === "/backoffice/categories/[id]")
       return "Edit Categories";
+    if (router.pathname.includes("trash/categories"))
+      return "Settings/Trash/Categories";
     if (router.pathname.includes("categories")) return "Categories";
     if (router.pathname === "/backoffice/sizes/[id]") return "Edit Size";
     if (router.pathname.includes("sizes")) return "Sizes";
     if (router.pathname === "/backoffice/colors/[id]") return "Edit Color";
     if (router.pathname.includes("colors")) return "Colors";
+    if (router.pathname.includes("trash")) return "Settings/Trash";
     if (router.pathname.includes("settings")) return "Settings";
   };
 
