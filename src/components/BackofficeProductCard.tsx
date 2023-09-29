@@ -67,9 +67,9 @@ const BackofficeProductCard = ({
             )}
           </Box>
           <Box>
-            {genderId === 4 && <Typography>For Male</Typography>}
-            {genderId === 5 && <Typography>For Female</Typography>}
-            {genderId === 6 && <Typography>Non-binary</Typography>}
+            {genderId === 1 && <Typography>For Male</Typography>}
+            {genderId === 2 && <Typography>For Female</Typography>}
+            {genderId === 3 && <Typography>Non-binary</Typography>}
           </Box>
         </Box>
       </Card>
