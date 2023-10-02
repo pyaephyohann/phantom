@@ -1,10 +1,14 @@
 import BackofficeProductCard from "@/components/BackofficeProductCard";
 import { useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 const DiscountedProducts = () => {
   const { products } = useAppSelector(backofficeAppDatas);
+
+  const router = useRouter();
+
   const discountedProducts = products.filter(
     (product) => product.discountPrice !== 0
   );
@@ -16,9 +20,22 @@ const DiscountedProducts = () => {
           Discounted Products
         </Typography>
       ) : (
-        <Typography sx={{ mt: "2rem", textAlign: "center" }} variant="h5">
-          You dont have any discounted projects
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}>
+          <Typography sx={{ mt: "2rem" }} variant="h5">
+            You dont have any discoutned products currently!
+          </Typography>
+          <Button
+            onClick={() => router.push("/backoffice/products")}
+            sx={{ mt: "2rem" }}
+            variant="contained">
+            Go Back
+          </Button>
+        </Box>
       )}
       <Box
         sx={{
@@ -29,8 +46,7 @@ const DiscountedProducts = () => {
             sm: "center",
             md: "flex-start",
           },
-        }}
-      >
+        }}>
         {discountedProducts.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>

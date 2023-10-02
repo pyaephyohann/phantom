@@ -24,8 +24,7 @@ const Products = () => {
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-        }}
-      >
+        }}>
         <Chip
           sx={{ mr: "1.5rem", color: "white" }}
           color="secondary"
@@ -37,8 +36,7 @@ const Products = () => {
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
-          startIcon={<AddIcon />}
-        >
+          startIcon={<AddIcon />}>
           New Product
         </Button>
       </Box>
@@ -47,8 +45,7 @@ const Products = () => {
           ""
         ) : (
           <Typography
-            sx={{ fontSize: "2rem", textAlign: "center", mt: "3rem" }}
-          >
+            sx={{ fontSize: "2rem", textAlign: "center", mt: "3rem" }}>
             Go create your first product
           </Typography>
         )}
@@ -63,8 +60,7 @@ const Products = () => {
             sm: "center",
             md: "flex-start",
           },
-        }}
-      >
+        }}>
         {products.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
