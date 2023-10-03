@@ -1,6 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Color } from "@prisma/client";
 import { useRouter } from "next/router";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,11 +26,14 @@ const EditColor = () => {
 
   const [name, setName] = useState("");
 
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   const isDisabled = !name;
 
   const handleUpdateColor = async () => {
+    setIsUpdating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/colors`, {
       method: "PUT",
       headers: {
@@ -34,6 +43,8 @@ const EditColor = () => {
     });
     const updatedColor = await response.json();
     dispatch(updateColor(updatedColor));
+    setIsUpdating(false);
+    setName("");
     setOpenSuccessAlert(true);
   };
 
@@ -54,8 +65,7 @@ const EditColor = () => {
           flexDirection: "column",
           alignItems: "center",
           mt: "1rem",
-        }}
-      >
+        }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "1.3rem", mr: "0.7rem" }}>
             Edit your color
@@ -71,9 +81,12 @@ const EditColor = () => {
         <Button
           onClick={handleUpdateColor}
           disabled={isDisabled}
-          variant="contained"
-        >
-          Save
+          variant="contained">
+          {isUpdating ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Save"
+          )}
         </Button>
       </Box>
       <Box sx={{ mt: "3rem", ml: "2.5rem" }}>

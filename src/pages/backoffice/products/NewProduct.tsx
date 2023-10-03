@@ -80,8 +80,10 @@ const NewProduct = ({ open, setOpen, callBack }: Props) => {
   });
 
   const isDisabled =
-    !newProduct.name || !newProduct.price || !newProduct.categoryIds.length;
-  !newProduct.sizeId ||
+    !newProduct.name ||
+    !newProduct.price ||
+    !newProduct.categoryIds.length ||
+    !newProduct.sizeId ||
     !newProduct.colorId ||
     !newProduct.genderId ||
     isFileUploading;
@@ -247,18 +249,16 @@ const NewProduct = ({ open, setOpen, callBack }: Props) => {
           disabled={isDisabled}
           onClick={handleCreateNewProduct}
           sx={{ mx: "auto" }}
-          variant="contained"
-        >
+          variant="contained">
           {creating ? (
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-              }}
-            >
+              }}>
               <Typography sx={{ mr: "0.8rem" }}>Creating</Typography>
-              <CircularProgress size="2rem" />
+              <CircularProgress sx={{ color: "#fff" }} size="2rem" />
             </Box>
           ) : (
             "Create"

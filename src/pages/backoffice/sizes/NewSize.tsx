@@ -4,6 +4,7 @@ import { addSize } from "@/store/slices/sizesSlice";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,9 +24,12 @@ const NewSize = ({ open, setOpen, callBack }: Props) => {
 
   const dispatch = useAppDispatch();
 
+  const [isCreating, setIsCreating] = useState(false);
+
   const isDisabled = !name;
 
   const handleCreateNewSize = async () => {
+    setIsCreating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/sizes`, {
       method: "POST",
       headers: {
@@ -36,6 +40,8 @@ const NewSize = ({ open, setOpen, callBack }: Props) => {
     const createdSize = await response.json();
     dispatch(addSize(createdSize));
     callBack();
+    setIsCreating(false);
+    setName("");
     setOpen(false);
   };
 
@@ -49,14 +55,16 @@ const NewSize = ({ open, setOpen, callBack }: Props) => {
         />
       </DialogContent>
       <DialogActions
-        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}
-      >
+        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}>
         <Button
           onClick={handleCreateNewSize}
           disabled={isDisabled}
-          variant="contained"
-        >
-          Create
+          variant="contained">
+          {isCreating ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Create"
+          )}
         </Button>
       </DialogActions>
     </Dialog>
