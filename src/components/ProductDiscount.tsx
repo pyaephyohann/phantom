@@ -2,11 +2,19 @@ import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { backofficeAppDatas } from "@/store/slices/backofficeSlice";
 import { updateProduct } from "@/store/slices/productsSlice";
-import { Box, Button, Chip, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Product } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SuccessAlert from "./SuccessAlert";
 import DeleteDialog from "./DeleteDialog";
+import { useRouter } from "next/router";
 
 interface Props {
   productId: number;
@@ -14,7 +22,9 @@ interface Props {
 
 const ProductDiscount = ({ productId }: Props) => {
   const { products } = useAppSelector(backofficeAppDatas);
+
   const dispatch = useAppDispatch();
+
   const product = products.find((item) => item.id === productId) as Product;
 
   const [discountPrice, setDiscountPrice] = useState(0);
@@ -25,9 +35,12 @@ const ProductDiscount = ({ productId }: Props) => {
 
   const [successAlertMessage, setSuccessAlertMessage] = useState("");
 
+  const [isDiscounting, setIsDiscounting] = useState(false);
+
   const isDisabled = !discountPrice;
 
   const handleUpdateDiscountPrice = async () => {
+    setIsDiscounting(true);
     const response = await fetch(
       `${config.apiBaseUrl}/backoffice/products/discount`,
       {
@@ -44,6 +57,7 @@ const ProductDiscount = ({ productId }: Props) => {
     } else {
       setSuccessAlertMessage("Added Discount Price");
     }
+    setIsDiscounting(false);
     setOpenSuccessAlert(true);
     dispatch(updateProduct(discountedProduct));
   };
@@ -78,8 +92,7 @@ const ProductDiscount = ({ productId }: Props) => {
           mx: "auto",
           display: "flex",
           alignItems: "center ",
-        }}
-      >
+        }}>
         <TextField
           onChange={(event) => setDiscountPrice(Number(event.target.value))}
           sx={
@@ -107,9 +120,12 @@ const ProductDiscount = ({ productId }: Props) => {
             <Button
               onClick={handleUpdateDiscountPrice}
               disabled={isDisabled}
-              variant="contained"
-            >
-              Update
+              variant="contained">
+              {isDiscounting ? (
+                <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+              ) : (
+                "Update"
+              )}
             </Button>
           </Box>
         ) : (
@@ -117,9 +133,12 @@ const ProductDiscount = ({ productId }: Props) => {
             <Button
               onClick={handleUpdateDiscountPrice}
               disabled={isDisabled}
-              variant="contained"
-            >
-              Add
+              variant="contained">
+              {isDiscounting ? (
+                <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+              ) : (
+                "Add"
+              )}
             </Button>
           </Box>
         )}

@@ -7,6 +7,7 @@ import { fetchProductsCategories } from "@/store/slices/productsCategoriesSlice"
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -45,11 +46,14 @@ const AddNewProduct = ({
     name: product.name,
   }));
 
+  const [isAdding, setIsAdding] = useState(false);
+
   const [productIdsToAdd, setProductIdsToAdd] = useState([] as number[]);
 
   const isDisabled = !productIdsToAdd.length;
 
   const handleAddProduct = async () => {
+    setIsAdding(true);
     await fetch(`${config.apiBaseUrl}/backoffice/categories/addProduct`, {
       method: "POST",
       headers: {
@@ -58,6 +62,7 @@ const AddNewProduct = ({
       body: JSON.stringify({ categoryId, productIds: productIdsToAdd }),
     });
     dispatch(fetchProductsCategories());
+    setIsAdding(false);
     setOpen(false);
     callBack();
   };
@@ -75,14 +80,16 @@ const AddNewProduct = ({
         />
       </DialogContent>
       <DialogActions
-        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}
-      >
+        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}>
         <Button
           onClick={handleAddProduct}
           disabled={isDisabled}
-          variant="contained"
-        >
-          Add
+          variant="contained">
+          {isAdding ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Add"
+          )}
         </Button>
       </DialogActions>
     </Dialog>

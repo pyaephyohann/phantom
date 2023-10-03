@@ -4,6 +4,7 @@ import { addCategory } from "@/store/slices/categoriesSlice";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,7 +24,12 @@ const NewCategory = ({ open, setOpen, callBack }: Props) => {
 
   const dispatch = useAppDispatch();
 
+  const [isCreating, setIsCreating] = useState(false);
+
+  const isDisabled = !newCategoryName;
+
   const handleCreateNewCategory = async () => {
+    setIsCreating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/categories`, {
       method: "POST",
       headers: {
@@ -34,6 +40,7 @@ const NewCategory = ({ open, setOpen, callBack }: Props) => {
     const createdCategory = await response.json();
     dispatch(addCategory(createdCategory));
     callBack();
+    setIsCreating(false);
     setOpen(false);
   };
 
@@ -51,11 +58,15 @@ const NewCategory = ({ open, setOpen, callBack }: Props) => {
       </DialogContent>
       <DialogActions sx={{ mb: "1rem" }}>
         <Button
+          disabled={isDisabled}
           onClick={handleCreateNewCategory}
           sx={{ mx: "auto" }}
-          variant="contained"
-        >
-          Create
+          variant="contained">
+          {isCreating ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Create"
+          )}
         </Button>
       </DialogActions>
     </Dialog>

@@ -177,8 +177,7 @@ const EditProducts = () => {
           alignItems: "center",
           mt: "1.8rem",
           mb: "2.5rem",
-        }}
-      >
+        }}>
         <ModeEditOutlineIcon sx={{ fontSize: "1.5rem", mr: "0.5rem" }} />
         <Typography variant="h5">Edit Your Product</Typography>
       </Box>
@@ -191,8 +190,7 @@ const EditProducts = () => {
             flexDirection: "column",
             alignItems: "center",
             mx: { xs: "auto", sm: "auto", md: "0" },
-          }}
-        >
+          }}>
           <Image
             alt={product.name}
             src={
@@ -213,8 +211,7 @@ const EditProducts = () => {
                 );
                 setOpenDeleteDialog(true);
               }}
-              sx={{ bgcolor: "primary.main" }}
-            >
+              sx={{ bgcolor: "primary.main" }}>
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
@@ -253,8 +250,7 @@ const EditProducts = () => {
             alignItems: "center",
             mx: { xs: "auto", sm: "auto", md: "0" },
             mt: { xs: "2.5rem", sm: "2.5rem", md: "0" },
-          }}
-        >
+          }}>
           {/* Categories */}
           <ItemsSelector
             options={categories}
@@ -301,8 +297,7 @@ const EditProducts = () => {
           <Button
             onClick={handleUpdateProduct}
             disabled={isDisabled}
-            variant="contained"
-          >
+            variant="contained">
             {isUpdating ? <CircularProgress size="1.7rem" /> : "Save"}
           </Button>
         </Box>

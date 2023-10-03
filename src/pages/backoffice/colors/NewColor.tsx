@@ -4,6 +4,7 @@ import { addColor } from "@/store/slices/colorsSlice";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,9 +24,12 @@ const NewColor = ({ open, setOpen, callBack }: Props) => {
 
   const dispatch = useAppDispatch();
 
+  const [isCreating, setIsCreating] = useState(false);
+
   const isDisabled = !name;
 
   const handleCreateNewColor = async () => {
+    setIsCreating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/colors`, {
       method: "POST",
       headers: {
@@ -36,6 +40,8 @@ const NewColor = ({ open, setOpen, callBack }: Props) => {
     const createdColor = await response.json();
     dispatch(addColor(createdColor));
     callBack();
+    setIsCreating(false);
+    setName("");
     setOpen(false);
   };
 
@@ -49,14 +55,16 @@ const NewColor = ({ open, setOpen, callBack }: Props) => {
         />
       </DialogContent>
       <DialogActions
-        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}
-      >
+        sx={{ mb: "1rem", display: "flex", justifyContent: "center" }}>
         <Button
           onClick={handleCreateNewColor}
           disabled={isDisabled}
-          variant="contained"
-        >
-          Create
+          variant="contained">
+          {isCreating ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Create"
+          )}
         </Button>
       </DialogActions>
     </Dialog>

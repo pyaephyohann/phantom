@@ -1,4 +1,12 @@
-import { Box, Button, Card, Chip, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Chip,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -38,6 +46,8 @@ const EditCategory = () => {
 
   const [openAddProduct, setOpenAddProduct] = useState(false);
 
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const validProducts = getProductsByCategoryId(
     Number(categoryId),
     products,
@@ -51,6 +61,7 @@ const EditCategory = () => {
   ) as Category;
 
   const handleUpdateCategory = async () => {
+    setIsUpdating(true);
     const response = await fetch(`${config.apiBaseUrl}/backoffice/categories`, {
       method: "PUT",
       headers: {
@@ -60,6 +71,7 @@ const EditCategory = () => {
     });
     const updatedCategory = await response.json();
     dispatch(updateCategory(updatedCategory));
+    setIsUpdating(false);
     setSuccessAlertMessage("Updated Successfully");
     setOpenSuccessAlert(true);
   };
@@ -73,6 +85,7 @@ const EditCategory = () => {
       body: JSON.stringify({ productId, categoryId: Number(categoryId) }),
     });
     dispatch(fetchProductsCategories());
+
     setSuccessAlertMessage("Removed Successfully");
     setOpenSuccessAlert(true);
   };
@@ -104,8 +117,7 @@ const EditCategory = () => {
           flexDirection: "column",
           alignItems: "center",
           mt: "1rem",
-        }}
-      >
+        }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "1.3rem", mr: "0.5rem" }}>
             Edit Category Name
@@ -121,9 +133,12 @@ const EditCategory = () => {
         <Button
           disabled={isDisabled}
           onClick={handleUpdateCategory}
-          variant="contained"
-        >
-          Save
+          variant="contained">
+          {isUpdating ? (
+            <CircularProgress sx={{ color: "#fff" }} size="2rem" />
+          ) : (
+            "Save"
+          )}
         </Button>
       </Box>
       {/* title and add product */}
@@ -133,8 +148,7 @@ const EditCategory = () => {
           display: "flex",
           justifyContent: "space-between",
           px: "2rem",
-        }}
-      >
+        }}>
         <Box>
           {validProducts.length === 0 ? (
             ""
@@ -145,8 +159,7 @@ const EditCategory = () => {
         <Button
           onClick={() => setOpenAddProduct(true)}
           variant="contained"
-          startIcon={<AddIcon />}
-        >
+          startIcon={<AddIcon />}>
           Add Product
         </Button>
       </Box>
@@ -161,8 +174,7 @@ const EditCategory = () => {
             sm: "center",
             md: "flex-start",
           },
-        }}
-      >
+        }}>
         {validProducts.map((product) => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
@@ -172,8 +184,7 @@ const EditCategory = () => {
                   px: "1.5rem",
                   borderRadius: "0.5rem",
                   position: "relative",
-                }}
-              >
+                }}>
                 {product.discountPrice ? (
                   <Chip
                     sx={{
@@ -204,8 +215,7 @@ const EditCategory = () => {
                           sx={{
                             textDecoration: "line-through",
                             mr: "0.5rem",
-                          }}
-                        >
+                          }}>
                           {product.price} Ks
                         </Typography>
                         <Typography>{product.discountPrice} Ks</Typography>
@@ -231,8 +241,7 @@ const EditCategory = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     mt: "1rem",
-                  }}
-                >
+                  }}>
                   <Chip
                     color="primary"
                     label="Edit"
