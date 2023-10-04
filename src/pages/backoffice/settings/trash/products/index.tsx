@@ -1,3 +1,4 @@
+import ProductSkeleton from "@/components/ProductSkeleton";
 import RemoveDialog from "@/components/RemoveDialog";
 import SuccessAlert from "@/components/SuccessAlert";
 import { config } from "@/config";
@@ -12,7 +13,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const DeletedProducts = () => {
-  const { deletedProducts } = useAppSelector(backofficeAppDatas);
+  const { deletedProducts, isLoading } = useAppSelector(backofficeAppDatas);
 
   const router = useRouter();
 
@@ -64,99 +65,131 @@ const DeletedProducts = () => {
           </Box>
         )}
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: {
-            xs: "center",
-            sm: "center",
-            md: "flex-start",
-          },
-        }}>
-        {deletedProducts.map((product) => {
-          return (
-            <Box sx={{ m: "1rem" }} key={product.id}>
-              <Card
-                sx={{
-                  py: "1rem",
-                  px: "1.5rem",
-                  borderRadius: "0.5rem",
-                  position: "relative",
-                }}>
-                {product.discountPrice ? (
-                  <Chip
+      <Box>
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              mt: "1rem",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
+            {[
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20,
+            ].map((index) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={index}>
+                  <ProductSkeleton />
+                </Box>
+              );
+            })}
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
+            {deletedProducts.map((product) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={product.id}>
+                  <Card
                     sx={{
-                      position: "absolute",
-                      top: "0.5rem",
-                      right: "0.5rem",
-                      color: "white",
-                    }}
-                    label="Discount"
-                    color="secondary"
-                  />
-                ) : (
-                  ""
-                )}
-                <Image
-                  style={{ borderRadius: "0.5rem", marginBottom: "0.5rem" }}
-                  alt={product.name as string}
-                  src={product.imageUrl as string}
-                  width={180}
-                  height={180}
-                />
-                <Box sx={{ pl: "0.2rem" }}>
-                  <Typography sx={{ my: "0.7rem" }}>{product.name}</Typography>
-                  <Box sx={{ mb: "0.5rem" }}>
+                      py: "1rem",
+                      px: "1.5rem",
+                      borderRadius: "0.5rem",
+                      position: "relative",
+                    }}>
                     {product.discountPrice ? (
-                      <Box sx={{ display: "flex" }}>
-                        <Typography
-                          sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
-                          {product.price} Ks
-                        </Typography>
-                        <Typography>{product.discountPrice} Ks</Typography>
-                      </Box>
+                      <Chip
+                        sx={{
+                          position: "absolute",
+                          top: "0.5rem",
+                          right: "0.5rem",
+                          color: "white",
+                        }}
+                        label="Discount"
+                        color="secondary"
+                      />
                     ) : (
-                      <Typography>{product.price} Ks</Typography>
+                      ""
                     )}
-                  </Box>
-                  <Box>
-                    {product.genderId === 1 && (
-                      <Typography>For Male</Typography>
-                    )}
-                    {product.genderId === 2 && (
-                      <Typography>For Female</Typography>
-                    )}
-                    {product.genderId === 3 && (
-                      <Typography>Non-binary</Typography>
-                    )}
-                  </Box>
+                    <Image
+                      style={{ borderRadius: "0.5rem", marginBottom: "0.5rem" }}
+                      alt={product.name as string}
+                      src={product.imageUrl as string}
+                      width={180}
+                      height={180}
+                    />
+                    <Box sx={{ pl: "0.2rem" }}>
+                      <Typography sx={{ my: "0.7rem" }}>
+                        {product.name}
+                      </Typography>
+                      <Box sx={{ mb: "0.5rem" }}>
+                        {product.discountPrice ? (
+                          <Box sx={{ display: "flex" }}>
+                            <Typography
+                              sx={{
+                                textDecoration: "line-through",
+                                mr: "0.5rem",
+                              }}>
+                              {product.price} Ks
+                            </Typography>
+                            <Typography>{product.discountPrice} Ks</Typography>
+                          </Box>
+                        ) : (
+                          <Typography>{product.price} Ks</Typography>
+                        )}
+                      </Box>
+                      <Box>
+                        {product.genderId === 1 && (
+                          <Typography>For Male</Typography>
+                        )}
+                        {product.genderId === 2 && (
+                          <Typography>For Female</Typography>
+                        )}
+                        {product.genderId === 3 && (
+                          <Typography>Non-binary</Typography>
+                        )}
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        mt: "1rem",
+                      }}>
+                      <Button
+                        onClick={() => {
+                          setProductIdToUndo(product.id);
+                          setOpenRemoveDialog(true);
+                        }}
+                        variant="contained">
+                        Undo
+                      </Button>
+                      <RemoveDialog
+                        open={openRemoveDialog}
+                        setOpen={setOpenRemoveDialog}
+                        title="Are you sure you want to undo this product?"
+                        callBack={handleUndoProduct}
+                      />
+                    </Box>
+                  </Card>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    mt: "1rem",
-                  }}>
-                  <Button
-                    onClick={() => {
-                      setProductIdToUndo(product.id);
-                      setOpenRemoveDialog(true);
-                    }}
-                    variant="contained">
-                    Undo
-                  </Button>
-                  <RemoveDialog
-                    open={openRemoveDialog}
-                    setOpen={setOpenRemoveDialog}
-                    title="Are you sure you want to undo this product?"
-                    callBack={handleUndoProduct}
-                  />
-                </Box>
-              </Card>
-            </Box>
-          );
-        })}
+              );
+            })}
+          </Box>
+        )}
       </Box>
       <SuccessAlert
         open={openSuccessAlert}

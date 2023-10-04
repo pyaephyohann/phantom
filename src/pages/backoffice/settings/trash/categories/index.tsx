@@ -11,9 +11,10 @@ import { useState } from "react";
 import SuccessAlert from "@/components/SuccessAlert";
 import RemoveDialog from "@/components/RemoveDialog";
 import { useRouter } from "next/router";
+import ItemSkeleton from "@/components/ItemSkeleton";
 
 const DeletedCategories = () => {
-  const { deletedCategories, productsCategories } =
+  const { deletedCategories, productsCategories, isLoading } =
     useAppSelector(backofficeAppDatas);
 
   const router = useRouter();
@@ -48,11 +49,7 @@ const DeletedCategories = () => {
   return (
     <Box>
       <Box>
-        {deletedCategories.length ? (
-          <Typography sx={{ my: "0.5rem" }} variant="h5">
-            Deleted Categories
-          </Typography>
-        ) : (
+        {!deletedCategories.length && isLoading === false ? (
           <Box
             sx={{
               display: "flex",
@@ -69,47 +66,76 @@ const DeletedCategories = () => {
               Go Back
             </Button>
           </Box>
+        ) : (
+          <Typography sx={{ my: "0.5rem" }} variant="h5">
+            Deleted Categories
+          </Typography>
         )}
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {deletedCategories.map((category) => {
-          return (
-            <Box sx={{ m: "1rem" }} key={category.id}>
-              <Paper
-                sx={{
-                  width: "11rem",
-                  py: "1.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                }}>
-                <RemoveDialog
-                  open={openRemoveDialog}
-                  setOpen={setOpenRemoveDialog}
-                  title="Are you sure you want to undo this category?"
-                  callBack={handleUndoCategory}
-                />
-                <Chip
-                  sx={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
-                  color="primary"
-                  label="Undo"
-                  onClick={() => {
-                    setCategoryIdToUndo(category.id);
-                    setOpenRemoveDialog(true);
-                  }}
-                />
-                <CategoryIcon
-                  color="primary"
-                  sx={{ fontSize: "2.3rem", mt: "1.5rem" }}
-                />
-                <Typography sx={{ my: "1.5rem" }}>{category.name}</Typography>
-                <Typography>{getProductCount(category.id)} Products</Typography>
-              </Paper>
-            </Box>
-          );
-        })}
+      <Box>
+        {isLoading ? (
+          <Box sx={{ display: "flex", flexWrap: "wrap", mt: "1rem" }}>
+            {[
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20,
+            ].map((index) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={index}>
+                  <ItemSkeleton />
+                </Box>
+              );
+            })}
+          </Box>
+        ) : (
+          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+            {deletedCategories.map((category) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={category.id}>
+                  <Paper
+                    sx={{
+                      width: "11rem",
+                      py: "1.5rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      position: "relative",
+                    }}>
+                    <RemoveDialog
+                      open={openRemoveDialog}
+                      setOpen={setOpenRemoveDialog}
+                      title="Are you sure you want to undo this category?"
+                      callBack={handleUndoCategory}
+                    />
+                    <Chip
+                      sx={{
+                        position: "absolute",
+                        top: "0.5rem",
+                        right: "0.5rem",
+                      }}
+                      color="primary"
+                      label="Undo"
+                      onClick={() => {
+                        setCategoryIdToUndo(category.id);
+                        setOpenRemoveDialog(true);
+                      }}
+                    />
+                    <CategoryIcon
+                      color="primary"
+                      sx={{ fontSize: "2.3rem", mt: "1.5rem" }}
+                    />
+                    <Typography sx={{ my: "1.5rem" }}>
+                      {category.name}
+                    </Typography>
+                    <Typography>
+                      {getProductCount(category.id)} Products
+                    </Typography>
+                  </Paper>
+                </Box>
+              );
+            })}
+          </Box>
+        )}
       </Box>
       <SuccessAlert
         open={openSuccessAlert}
