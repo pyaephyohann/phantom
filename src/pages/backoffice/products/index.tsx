@@ -7,9 +7,10 @@ import { useState } from "react";
 import BackofficeProductCard from "@/components/BackofficeProductCard";
 import { useRouter } from "next/router";
 import SuccessAlert from "@/components/SuccessAlert";
+import ProductSkeleton from "@/components/ProductSkeleton";
 
 const Products = () => {
-  const { products } = useAppSelector(backofficeAppDatas);
+  const { products, isLoading } = useAppSelector(backofficeAppDatas);
 
   const router = useRouter();
 
@@ -43,42 +44,59 @@ const Products = () => {
         </Button>
       </Box>
       <Box>
-        {products.length ? (
-          ""
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              mt: "1rem",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
+            {[
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20,
+            ].map((index) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={index}>
+                  <ProductSkeleton />
+                </Box>
+              );
+            })}
+          </Box>
         ) : (
-          <Typography
-            sx={{ fontSize: "2rem", textAlign: "center", mt: "3rem" }}>
-            Go create your first product
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              mt: "1rem",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
+            {products.map((product) => {
+              return (
+                <Box sx={{ m: "1rem" }} key={product.id}>
+                  <BackofficeProductCard
+                    href={`/backoffice/products/${product.id}`}
+                    name={product.name}
+                    imageUrl={product.imageUrl as string}
+                    price={product.price}
+                    discountPrice={
+                      product.discountPrice ? product.discountPrice : 0
+                    }
+                    genderId={product.genderId}
+                  />
+                </Box>
+              );
+            })}
+          </Box>
         )}
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          mt: "1rem",
-          justifyContent: {
-            xs: "center",
-            sm: "center",
-            md: "flex-start",
-          },
-        }}>
-        {products.map((product) => {
-          return (
-            <Box sx={{ m: "1rem" }} key={product.id}>
-              <BackofficeProductCard
-                href={`/backoffice/products/${product.id}`}
-                name={product.name}
-                imageUrl={product.imageUrl as string}
-                price={product.price}
-                discountPrice={
-                  product.discountPrice ? product.discountPrice : 0
-                }
-                genderId={product.genderId}
-              />
-            </Box>
-          );
-        })}
       </Box>
       <NewProduct
         open={open}

@@ -30,23 +30,20 @@ const EditDiscountedProducts = () => {
           textAlign: "center",
           mt: { md: "1rem" },
         }}
-        variant="h5"
-      >
+        variant="h5">
         Edit Your Discount Price
       </Typography>
       <Box
         sx={{
           display: { xs: "block", sm: "block", md: "flex" },
           mt: { xs: "2rem", sm: "2rem", md: "3rem" },
-        }}
-      >
+        }}>
         <Box
           sx={{
             width: { md: "50%" },
             display: "flex",
             justifyContent: "center",
-          }}
-        >
+          }}>
           <Image
             style={{ borderRadius: "0.5rem" }}
             alt={product.name}
@@ -63,8 +60,7 @@ const EditDiscountedProducts = () => {
             flexDirection: "column",
             alignItems: "center",
             mt: { xs: "2rem", sm: "2rem", md: "1rem" },
-          }}
-        >
+          }}>
           <Typography sx={{ fontSize: "1.2rem" }}>{product.name}</Typography>
           <ProductDiscount productId={Number(productId)} />
         </Box>
