@@ -9,10 +9,12 @@ import backofficeSlice from "./slices/backofficeSlice";
 import gendersSlice from "./slices/gendersSlice";
 import deletedProductsSlice from "./slices/deletedProductsSlice";
 import deletedCategoriesSlice from "./slices/deletedCategoriesSlice";
+import orderSlice from "./slices/orderSlice";
 
 export const store = configureStore({
   reducer: {
     backoffice: backofficeSlice,
+    order: orderSlice,
     users: usersSlice,
     products: productsSlice,
     deletedProducts: deletedProductsSlice,

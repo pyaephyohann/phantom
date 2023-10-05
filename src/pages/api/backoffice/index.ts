@@ -69,15 +69,9 @@ export default async function handler(
   const productsCategories = await prisma.productCategory.findMany({
     where: { isArchived: false },
   });
-  const sizes = await prisma.size.findMany({
-    where: { isArchived: false },
-  });
-  const colors = await prisma.color.findMany({
-    where: { isArchived: false },
-  });
-  const genders = await prisma.gender.findMany({
-    where: { isArchived: false },
-  });
+  const sizes = await prisma.size.findMany();
+  const colors = await prisma.color.findMany();
+  const genders = await prisma.gender.findMany();
 
   res.status(200).json({
     users,

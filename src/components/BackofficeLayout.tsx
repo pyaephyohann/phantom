@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import TopBar from "./TopBar";
-import SideBar from "./SideBar";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { fetchBackofficeData } from "@/store/slices/backofficeSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
+import BackofficeTopBar from "./BackofficeTopBar";
+import BackofficeSideBar from "./BackofficeSideBar";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -35,7 +35,7 @@ const BackofficeLayout = ({ children }: Props) => {
   return (
     <Box>
       <Box sx={{ position: "fixed", top: 0, left: 0, right: 0 }}>
-        <TopBar />
+        <BackofficeTopBar />
       </Box>
       <Box
         sx={{
@@ -45,9 +45,8 @@ const BackofficeLayout = ({ children }: Props) => {
           left: 0,
           bottom: 0,
           right: 0,
-        }}
-      >
-        {data && <SideBar />}
+        }}>
+        {data && <BackofficeSideBar />}
         <Box
           sx={
             isWaveSupportedPage
@@ -62,8 +61,7 @@ const BackofficeLayout = ({ children }: Props) => {
                   height: "100%",
                   overflow: "auto",
                 }
-          }
-        >
+          }>
           {children}
         </Box>
       </Box>
