@@ -16,8 +16,6 @@ const Products = () => {
 
   const [open, setOpen] = useState(false);
 
-  const [successAlertMessage, setSuccessAlertMessage] = useState("");
-
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   return (

@@ -24,7 +24,7 @@ interface Props {
   setOpen: (value: boolean) => void;
 }
 
-const SideBarDrawer = ({ open, setOpen }: Props) => {
+const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
   const { data } = useSession();
   const user = data?.user;
 
@@ -144,4 +144,4 @@ const SideBarDrawer = ({ open, setOpen }: Props) => {
   );
 };
 
-export default SideBarDrawer;
+export default BackofficeSideBarDrawer;

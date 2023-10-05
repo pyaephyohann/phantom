@@ -17,7 +17,7 @@ import { Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
-const SideBar = () => {
+const BackofficeSideBar = () => {
   const sideBarItems = [
     {
       name: "Orders",
@@ -61,15 +61,13 @@ const SideBar = () => {
         p: "1rem",
         borderTopRightRadius: "2rem",
         display: { xs: "none", md: "block" },
-      }}
-    >
+      }}>
       <List>
         {sideBarItems.splice(0, 5).map((item, index) => (
           <Link
             style={{ textDecoration: "none", color: "#fff" }}
             key={item.name}
-            href={item.route}
-          >
+            href={item.route}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
@@ -85,8 +83,7 @@ const SideBar = () => {
           <Link
             style={{ textDecoration: "none", color: "#fff" }}
             key={item.name}
-            href={item.route}
-          >
+            href={item.route}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
@@ -99,16 +96,14 @@ const SideBar = () => {
       <Box sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
         <Button
           onClick={() => signOut({ callbackUrl: "/auth/backoffice/signin" })}
-          variant="text"
-        >
+          variant="text">
           <Typography
             sx={{
               textAlign: "center",
               px: "1.5rem",
               width: "fit-content",
               color: "white",
-            }}
-          >
+            }}>
             Log out
           </Typography>
         </Button>
@@ -117,4 +112,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default BackofficeSideBar;
