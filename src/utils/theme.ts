@@ -13,7 +13,7 @@ export const theme = createTheme({
     },
     info: {
       // yellow
-      main: "#FEFFAC",
+      main: "#fff",
     },
   },
 });
