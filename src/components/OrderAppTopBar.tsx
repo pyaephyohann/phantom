@@ -50,14 +50,18 @@ const OrderAppTopBar = () => {
           </Box>
           <Box>
             <TextField
+              placeholder="Explore for clothings"
+              focused
               color="info"
               sx={{
+                color: "info.main",
                 width: { xs: "15rem", sm: "15rem", md: "20rem" },
               }}
               InputProps={{
                 sx: {
                   borderRadius: "10rem",
                   height: "3rem",
+                  color: "#fff",
                 },
               }}
             />
