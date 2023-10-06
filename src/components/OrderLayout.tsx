@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import OrderAppTopBar from "./OrderAppTopBar";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -24,7 +25,7 @@ const OrderLayout = ({ children }: Props) => {
 
   return (
     <Box>
-      <Box>This is Order Layout</Box>
+      <OrderAppTopBar />
       {children}
     </Box>
   );
