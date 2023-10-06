@@ -3,11 +3,11 @@ import { signIn } from "next-auth/react";
 
 const SignIn = () => {
   return (
-    <Box>
+    <Box sx={{ mt: "3rem" }}>
       <Button
-        onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
+        onClick={() => signIn("google", { callbackUrl: "/" })}
         variant="contained">
-        SignIn with google
+        Sign In with google
       </Button>
     </Box>
   );

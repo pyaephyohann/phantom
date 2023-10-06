@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
   TextField,
   Toolbar,
@@ -11,8 +12,17 @@ import Link from "next/link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState } from "react";
 import OrderAppSideBar from "./OrderAppSideBar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 const OrderAppTopBar = () => {
+  const { data } = useSession();
+
+  const user = data?.user;
+
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,11 +30,13 @@ const OrderAppTopBar = () => {
       <AppBar sx={{ p: "0.5rem" }} position="static">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              onClick={() => setOpen(true)}
-              sx={{ mr: { xs: "0", sm: "0", md: "2rem" } }}>
-              <MenuIcon sx={{ fontSize: "2rem", color: "white" }} />
-            </IconButton>
+            {data && (
+              <IconButton
+                onClick={() => setOpen(true)}
+                sx={{ mr: { xs: "0", sm: "0", md: "2rem" } }}>
+                <MenuIcon sx={{ fontSize: "2rem", color: "white" }} />
+              </IconButton>
+            )}
             <Link style={{ textDecoration: "none", color: "#fff" }} href={"/"}>
               <Typography
                 sx={{
@@ -81,14 +93,31 @@ const OrderAppTopBar = () => {
               </IconButton>
             </Box>
             {/* user photo */}
-            <Box
-              sx={{
-                width: "3rem",
-                height: "3rem",
-                bgcolor: "white",
-                borderRadius: "5rem",
-                display: { xs: "none", sm: "none", md: "block" },
-              }}></Box>
+            {user ? (
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "none", md: "block" },
+                }}>
+                <Image
+                  style={{ borderRadius: "5rem" }}
+                  alt={user.name as string}
+                  src={user.image as string}
+                  width={50}
+                  height={50}
+                />
+              </Box>
+            ) : (
+              <Button
+                onClick={() => router.push("/auth/order/signin")}
+                sx={{
+                  textTransform: "none",
+                  color: "#fff",
+                  fontSize: "1.2rem",
+                }}
+                variant="text">
+                Log In
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

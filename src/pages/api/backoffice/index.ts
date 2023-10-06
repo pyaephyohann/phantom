@@ -13,7 +13,7 @@ export default async function handler(
   const email = user?.email as string;
   const image = user?.image as string;
 
-  const users = await prisma.user.findMany({ where: { isArchived: false } });
+  const users = await prisma.user.findMany();
 
   if (!users.length) {
     const defaultSizeDatas = [
