@@ -9,7 +9,7 @@ const Backoffice = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/backoffice");
+      router.push("/backoffice/products");
     }
     if (status === "unauthenticated") {
       router.push("/auth/backoffice/signin");
