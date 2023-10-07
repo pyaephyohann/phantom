@@ -55,7 +55,7 @@ const Home = () => {
     <Box>
       <Box>
         <Tabs
-          sx={{ mt: "1.5rem" }}
+          sx={{ mt: "7rem" }}
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile

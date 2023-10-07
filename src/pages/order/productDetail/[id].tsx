@@ -40,7 +40,7 @@ const ProductDetail = () => {
           display: "flex",
           p: "1.5rem",
           borderRadius: "2rem",
-          mt: "2rem",
+          mt: "7rem",
         }}>
         <Box sx={{ width: "50%" }}>
           <img
