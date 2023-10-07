@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   IconButton,
+  InputAdornment,
   TextField,
   Toolbar,
   Typography,
@@ -15,6 +16,7 @@ import OrderAppSideBar from "./OrderAppSideBar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import SearchIcon from "@mui/icons-material/Search";
 
 const OrderAppTopBar = () => {
   const { data } = useSession();
@@ -50,7 +52,7 @@ const OrderAppTopBar = () => {
           </Box>
           <Box>
             <TextField
-              placeholder="Explore for clothings"
+              placeholder="Explore clothings"
               focused
               color="info"
               sx={{
@@ -63,6 +65,13 @@ const OrderAppTopBar = () => {
                   height: "3rem",
                   color: "#fff",
                 },
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton>
+                      <SearchIcon color="info" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
           </Box>
