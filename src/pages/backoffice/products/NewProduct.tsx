@@ -230,7 +230,11 @@ const NewProduct = ({ open, setOpen, callBack }: Props) => {
         <Box sx={{ mb: "1.5rem" }}>
           <FileDropZone onSelectFile={onSelectFile} />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{
+            width: "10rem",
+            mx: "auto",
+          }}>
           {selectedFile.length ? (
             <Chip
               label={selectedFile[0].name}
