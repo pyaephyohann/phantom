@@ -11,6 +11,7 @@ import deletedProductsSlice from "./slices/deletedProductsSlice";
 import deletedCategoriesSlice from "./slices/deletedCategoriesSlice";
 import orderSlice from "./slices/orderSlice";
 import filteredProductsSlice from "./slices/filteredProductsSlice";
+import cartSlice from "./slices/cartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     colors: colorsSlice,
     genders: gendersSlice,
     filteredProducts: filteredProductsSlice,
+    cart: cartSlice,
   },
 });
 

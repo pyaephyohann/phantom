@@ -1,24 +1,32 @@
-import { Box, Card, Chip, IconButton, Typography } from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
 import Image from "next/image";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Link from "next/link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Product } from "@prisma/client";
+import Chip from "@mui/material/Chip";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addToCart } from "@/store/slices/cartSlice";
+import { orderAppDatas } from "@/store/slices/orderSlice";
+import { useState } from "react";
+import SuccessAlert from "./SuccessAlert";
 
 interface Props {
-  imageUrl: string;
-  name: string;
-  price: number;
-  discountPrice?: number;
+  product: Product;
   href: string;
 }
 
-const OrderAppProductCard = ({
-  imageUrl,
-  name,
-  price,
-  discountPrice,
-  href,
-}: Props) => {
+const OrderAppProductCard = ({ product, href }: Props) => {
+  const { cart } = useAppSelector(orderAppDatas);
+
+  const productsInCartIds = cart.map((item) => item.id);
+
+  const isInCart = productsInCartIds.includes(product.id);
+
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+
+  const dispatch = useAppDispatch();
+
   return (
     <Card
       sx={{
@@ -28,18 +36,25 @@ const OrderAppProductCard = ({
         position: "relative",
       }}>
       <Link style={{ textDecoration: "none", color: "black" }} href={href}>
-        <Image alt={name} src={imageUrl} width={180} height={180} />
-        <Typography sx={{ mt: "1rem", mb: "0.9rem" }}>{name}</Typography>
+        <Image
+          alt={product.name}
+          src={product.imageUrl as string}
+          width={180}
+          height={180}
+        />
+        <Typography sx={{ mt: "1rem", mb: "0.9rem" }}>
+          {product.name}
+        </Typography>
         <Box>
-          {discountPrice ? (
+          {product.discountPrice ? (
             <Box sx={{ display: "flex" }}>
               <Typography sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
-                {price} Ks
+                {product.price} Ks
               </Typography>
-              <Typography>{discountPrice} Ks</Typography>
+              <Typography>{product.discountPrice} Ks</Typography>
             </Box>
           ) : (
-            <Typography>{price} Ks</Typography>
+            <Typography>{product.price} Ks</Typography>
           )}
         </Box>
       </Link>
@@ -53,13 +68,26 @@ const OrderAppProductCard = ({
         <IconButton>
           <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="primary" />
         </IconButton>
-        <Chip
-          color="primary"
-          clickable
-          icon={<ShoppingCartIcon />}
-          label="Add to cart"
-        />
+        {isInCart ? (
+          <Typography>View cart</Typography>
+        ) : (
+          <Chip
+            onClick={() => {
+              dispatch(addToCart(product));
+              setOpenSuccessAlert(true);
+            }}
+            color="primary"
+            clickable
+            icon={<ShoppingCartIcon />}
+            label="Add to cart"
+          />
+        )}
       </Box>
+      <SuccessAlert
+        open={openSuccessAlert}
+        setOpen={setOpenSuccessAlert}
+        message="Added to cart"
+      />
     </Card>
   );
 };

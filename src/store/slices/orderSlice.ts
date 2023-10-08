@@ -60,6 +60,7 @@ export const selectProductsCategories = (state: RootState) =>
 export const selectSizes = (state: RootState) => state.sizes.items;
 export const selectColors = (state: RootState) => state.colors.items;
 export const selectGenders = (state: RootState) => state.genders.items;
+export const selectCart = (state: RootState) => state.cart.items;
 
 export const orderAppDatas = createSelector(
   [
@@ -71,6 +72,7 @@ export const orderAppDatas = createSelector(
     selectSizes,
     selectColors,
     selectGenders,
+    selectCart,
   ],
   (
     order,
@@ -80,7 +82,8 @@ export const orderAppDatas = createSelector(
     productsCategories,
     sizes,
     colors,
-    genders
+    genders,
+    cart
   ) => {
     return {
       isLoading: order.isLoading,
@@ -91,6 +94,7 @@ export const orderAppDatas = createSelector(
       sizes,
       colors,
       genders,
+      cart,
     };
   }
 );
