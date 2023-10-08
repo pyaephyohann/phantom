@@ -1,24 +1,60 @@
 import OrderAppProductCard from "@/components/OrderAppProductCard";
+import { RootState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderSlice";
 import { getProductsByCategoryId } from "@/utils/client";
 import { Box, Tab, Tabs, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { Product } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const { products, categories, productsCategories } =
     useAppSelector(orderAppDatas);
 
+  const {
+    filteredProductsByColor,
+    filteredProductsBySize,
+    filteredProductsByGender,
+  } = useAppSelector((state: RootState) => state.filteredProducts);
+
   const [value, setValue] = useState(0);
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(1);
 
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const productsFilter = [] as Product[];
+    if (filteredProductsBySize.length) {
+      filteredProductsBySize.forEach((product) => {
+        productsFilter.push(product);
+      });
+    }
+    if (filteredProductsByColor.length) {
+      filteredProductsByColor.forEach((product) => {
+        productsFilter.push(product);
+      });
+    }
+    if (filteredProductsByGender.length) {
+      filteredProductsByGender.forEach((product) => {
+        productsFilter.push(product);
+      });
+    }
+    setFilteredProducts(productsFilter);
+  }, [
+    filteredProductsBySize,
+    filteredProductsByColor,
+    filteredProductsByGender,
+  ]);
+
   const renderProducts = (categoryId: number) => {
-    const validProducts = getProductsByCategoryId(
-      categoryId,
-      products,
-      productsCategories
-    );
+    const validProducts = filteredProducts.length
+      ? getProductsByCategoryId(
+          categoryId,
+          filteredProducts,
+          productsCategories
+        )
+      : getProductsByCategoryId(categoryId, products, productsCategories);
 
     return (
       <Box
