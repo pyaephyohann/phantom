@@ -25,7 +25,9 @@ const OrderLayout = ({ children }: Props) => {
 
   return (
     <Box>
-      <OrderAppTopBar />
+      <Box sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 55 }}>
+        <OrderAppTopBar />
+      </Box>
       {children}
     </Box>
   );
