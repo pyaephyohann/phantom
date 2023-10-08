@@ -57,7 +57,7 @@ const ProductDetail = () => {
               alignItems: "center",
               justifyContent: "flex-end",
             }}>
-            <IconButton sx={{ mr: { xs: "0.5rem", sm: "0.5rem", md: "1rem" } }}>
+            <IconButton sx={{ mr: "1rem" }}>
               <FavoriteBorderIcon sx={{ fontSize: "2.2rem" }} color="primary" />
             </IconButton>
             <Box
@@ -72,13 +72,18 @@ const ProductDetail = () => {
                 userSelect: "none",
               }}>
               <ShoppingCartIcon color="info" />
-              <Typography sx={{ color: "info.main", ml: "0.4rem" }}>
+              <Typography
+                sx={{
+                  color: "info.main",
+                  ml: "0.4rem",
+                  display: { xs: "none", sm: "block" },
+                }}>
                 Add to cart
               </Typography>
             </Box>
           </Box>
           {/* product details */}
-          <Box sx={{ py: "2rem", px: { xs: "2rem", sm: "2rem", md: "3rem" } }}>
+          <Box sx={{ py: "2rem", pl: { xs: "2rem", sm: "2rem", md: "3rem" } }}>
             <Typography
               sx={{ fontSize: { xs: "1.3rem", sm: "1.5rem", md: "1.8rem" } }}>
               {product.name}
