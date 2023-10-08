@@ -6,6 +6,7 @@ interface FilteredProductsState {
   filteredProductsBySize: Product[];
   filteredProductsByColor: Product[];
   filteredProductsByGender: Product[];
+  filteredProductsByText: Product[];
 }
 
 const initialState: FilteredProductsState = {
@@ -13,6 +14,7 @@ const initialState: FilteredProductsState = {
   filteredProductsBySize: [],
   filteredProductsByColor: [],
   filteredProductsByGender: [],
+  filteredProductsByText: [],
 };
 
 export const filteredProductsSlice = createSlice({
@@ -28,6 +30,9 @@ export const filteredProductsSlice = createSlice({
     setFilteredProductsByGender: (state, action: PayloadAction<Product[]>) => {
       state.filteredProductsByGender = action.payload;
     },
+    setFilteredProductsByText: (state, action: PayloadAction<Product[]>) => {
+      state.filteredProductsByText = action.payload;
+    },
   },
 });
 
@@ -35,6 +40,7 @@ export const {
   setFilteredProductsBySize,
   setFilteredProductsByColor,
   setFilteredProductsByGender,
+  setFilteredProductsByText,
 } = filteredProductsSlice.actions;
 
 export default filteredProductsSlice.reducer;

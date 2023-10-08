@@ -15,6 +15,7 @@ const Home = () => {
     filteredProductsByColor,
     filteredProductsBySize,
     filteredProductsByGender,
+    filteredProductsByText,
   } = useAppSelector((state: RootState) => state.filteredProducts);
 
   const [value, setValue] = useState(0);
@@ -40,11 +41,17 @@ const Home = () => {
         productsFilter.push(product);
       });
     }
+    if (filteredProductsByText.length) {
+      filteredProductsByText.forEach((product) => {
+        productsFilter.push(product);
+      });
+    }
     setFilteredProducts(productsFilter);
   }, [
     filteredProductsBySize,
     filteredProductsByColor,
     filteredProductsByGender,
+    filteredProductsByText,
   ]);
 
   const renderProducts = (categoryId: number) => {

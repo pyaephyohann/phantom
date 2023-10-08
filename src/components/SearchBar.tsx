@@ -18,8 +18,8 @@ import {
   setFilteredProductsByColor,
   setFilteredProductsByGender,
   setFilteredProductsBySize,
+  setFilteredProductsByText,
 } from "@/store/slices/filteredProductsSlice";
-import { RootState } from "@/store";
 
 interface ItemsSelectorDefaultValueType {
   id: number;
@@ -75,6 +75,14 @@ const SearchBar = () => {
   return (
     <Box>
       <TextField
+        onChange={(event) => {
+          const filteredProductsByText = products.filter((item) =>
+            item.name
+              .toLowerCase()
+              .includes(event.target.value.toLocaleLowerCase())
+          );
+          dispatch(setFilteredProductsByText(filteredProductsByText));
+        }}
         placeholder="Explore clothings"
         focused
         color="info"
