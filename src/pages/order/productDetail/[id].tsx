@@ -9,6 +9,7 @@ import OrderAppProductCard from "@/components/OrderAppProductCard";
 import { addToCart } from "@/store/slices/cartSlice";
 import { useState } from "react";
 import SuccessAlert from "@/components/SuccessAlert";
+import { generateRandomString } from "@/utils/client";
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const ProductDetail = () => {
 
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
-  const productsInCartIds = cart.map((item) => item.id);
+  const productsInCartIds = cart.map((item) => item.product.id);
 
   const product = products.find(
     (item) => item.id === Number(productId)
@@ -77,7 +78,13 @@ const ProductDetail = () => {
             ) : (
               <Box
                 onClick={() => {
-                  dispatch(addToCart(product));
+                  dispatch(
+                    addToCart({
+                      id: generateRandomString(),
+                      product,
+                      quantity: 1,
+                    })
+                  );
                   setOpenSuccessAlert(true);
                 }}
                 sx={{

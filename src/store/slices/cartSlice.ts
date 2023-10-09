@@ -1,9 +1,15 @@
 import { Product } from "@prisma/client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+interface CartItem {
+  id: string;
+  product: Product;
+  quantity: number;
+}
+
 interface CartState {
   isLoading: boolean;
-  items: Product[];
+  items: CartItem[];
 }
 
 const initialState: CartState = {
@@ -15,7 +21,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<Product>) => {
+    addToCart: (state, action: PayloadAction<CartItem>) => {
       state.items = [...state.items, action.payload];
     },
   },

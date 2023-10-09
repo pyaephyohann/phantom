@@ -10,6 +10,7 @@ import { addToCart } from "@/store/slices/cartSlice";
 import { orderAppDatas } from "@/store/slices/orderSlice";
 import { useState } from "react";
 import SuccessAlert from "./SuccessAlert";
+import { generateRandomString } from "@/utils/client";
 
 interface Props {
   product: Product;
@@ -19,7 +20,7 @@ interface Props {
 const OrderAppProductCard = ({ product, href }: Props) => {
   const { cart } = useAppSelector(orderAppDatas);
 
-  const productsInCartIds = cart.map((item) => item.id);
+  const productsInCartIds = cart.map((item) => item.product.id);
 
   const isInCart = productsInCartIds.includes(product.id);
 
@@ -73,7 +74,13 @@ const OrderAppProductCard = ({ product, href }: Props) => {
         ) : (
           <Chip
             onClick={() => {
-              dispatch(addToCart(product));
+              dispatch(
+                addToCart({
+                  id: generateRandomString(),
+                  product,
+                  quantity: 1,
+                })
+              );
               setOpenSuccessAlert(true);
             }}
             color="primary"
