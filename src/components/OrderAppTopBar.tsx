@@ -66,7 +66,9 @@ const OrderAppTopBar = () => {
                 p: "0.2rem",
                 borderRadius: "5rem",
               }}>
-              <IconButton sx={{ position: "relative" }}>
+              <IconButton
+                onClick={() => router.push("/order/cart")}
+                sx={{ position: "relative" }}>
                 <Typography
                   sx={{
                     position: "absolute",
