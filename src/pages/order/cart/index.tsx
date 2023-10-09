@@ -13,13 +13,19 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { removeFromCart, updateCart } from "@/store/slices/cartSlice";
 import { getCartTotalPrice } from "@/utils/client";
+import { Product, Size } from "@prisma/client";
 
 const Cart = () => {
-  const { cart } = useAppSelector(orderAppDatas);
+  const { cart, sizes } = useAppSelector(orderAppDatas);
 
   const router = useRouter();
 
   const dispatch = useAppDispatch();
+
+  const getSize = (product: Product) => {
+    const size = sizes.find((item) => item.id === product.sizeId) as Size;
+    return size.name;
+  };
 
   useEffect(() => {
     if (!cart.length) {
@@ -90,7 +96,7 @@ const Cart = () => {
                     {cartItem.product.price} Ks
                   </TableCell>
                   <TableCell align="center">
-                    {cartItem.product.sizeId}
+                    {getSize(cartItem.product)}
                   </TableCell>
                   <TableCell align="center">
                     <TextField
