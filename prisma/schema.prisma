@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  name     String
-  email    String
-  password String?
-  imageUrl String?
-  nickname String?
-  genderId Int?
-  gender   Gender? @relation(fields: [genderId], references: [id])
-  isArchived Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String
+  password   String?
+  imageUrl   String?
+  nickname   String?
+  genderId   Int?
+  gender     Gender?  @relation(fields: [genderId], references: [id])
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+  Order      Order[]
 }
 
 model Product {
@@ -26,7 +27,7 @@ model Product {
   name            String
   imageUrl        String?
   price           Int
-  discountPrice Int? @default(0)
+  discountPrice   Int?              @default(0)
   ProductCategory ProductCategory[]
   sizeId          Int
   size            Size              @relation(fields: [sizeId], references: [id])
@@ -34,18 +35,19 @@ model Product {
   color           Color             @relation(fields: [colorId], references: [id])
   genderId        Int
   gender          Gender            @relation(fields: [genderId], references: [id])
-  isArchived Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  isArchived      Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now()) @updatedAt
+  Orderline       Orderline[]
 }
 
 model Category {
   id              Int               @id @default(autoincrement())
   name            String
   ProductCategory ProductCategory[]
-  isArchived Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  isArchived      Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now()) @updatedAt
 }
 
 model ProductCategory {
@@ -54,33 +56,59 @@ model ProductCategory {
   categoryId Int
   product    Product  @relation(fields: [productId], references: [id])
   category   Category @relation(fields: [categoryId], references: [id])
-  isArchived Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model Size {
-  id      Int       @id @default(autoincrement())
-  name    String
-  Product Product[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String
+  Product   Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
 }
 
 model Color {
-  id      Int       @id @default(autoincrement())
-  name    String
-  Product Product[]
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String
+  Product   Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
 }
 
 model Gender {
-  id      Int       @id @default(autoincrement())
-  name    String
-  User    User[]
-  Product Product[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String
+  User      User[]
+  Product   Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id])
+  price       Int
+  address     String
+  phoneNumber Int
+  Orderline   Orderline[]
+}
+
+model Orderline {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  status OrderStatus @default(PENDING)
+  quantity Int @default(1)
+  subTotalPrice Int
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
