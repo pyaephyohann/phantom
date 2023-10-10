@@ -17,6 +17,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
+import { useAppSelector } from "@/store/hooks";
+import { orderAppDatas } from "@/store/slices/orderSlice";
 
 const OrderAppTopBar = () => {
   const { data } = useSession();
@@ -24,6 +26,8 @@ const OrderAppTopBar = () => {
   const user = data?.user;
 
   const router = useRouter();
+
+  const { cart } = useAppSelector(orderAppDatas);
 
   const [open, setOpen] = useState(false);
 
@@ -56,12 +60,15 @@ const OrderAppTopBar = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
               sx={{
+                mt: "0.7rem",
                 bgcolor: "secondary.main",
                 mr: { xs: "0", sm: "0", md: "3rem" },
                 p: "0.2rem",
                 borderRadius: "5rem",
               }}>
-              <IconButton sx={{ position: "relative" }}>
+              <IconButton
+                onClick={() => router.push("/order/cart")}
+                sx={{ position: "relative" }}>
                 <Typography
                   sx={{
                     position: "absolute",
@@ -73,7 +80,7 @@ const OrderAppTopBar = () => {
                     py: "0.1rem",
                     px: "0.5rem",
                   }}>
-                  0
+                  {cart.length}
                 </Typography>
                 <ShoppingCartIcon
                   sx={{

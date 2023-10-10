@@ -1,3 +1,4 @@
+import { CartItem } from "@/store/slices/cartSlice";
 import { Category, Product, ProductCategory } from "@prisma/client";
 
 export const getCategoriesByProductId = (
@@ -20,4 +21,15 @@ export const getProductsByCategoryId = (
     .filter((item) => item.categoryId === categoryId)
     .map((item) => item.productId);
   return products.filter((item) => productIds.includes(item.id));
+};
+
+export const generateRandomString = () => {
+  return (Math.random() + 1).toString(36).substring(7);
+};
+
+export const getCartTotalPrice = (cart: CartItem[]) => {
+  const totalPrice = cart.reduce((prev, curr) => {
+    return (prev += curr.product.price * curr.quantity);
+  }, 0);
+  return totalPrice;
 };

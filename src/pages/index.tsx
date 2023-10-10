@@ -79,12 +79,7 @@ const Home = () => {
           return (
             <Box sx={{ m: "1rem" }} key={product.id}>
               <OrderAppProductCard
-                imageUrl={product.imageUrl as string}
-                name={product.name}
-                price={product.price}
-                discountPrice={
-                  product.discountPrice ? product.discountPrice : 0
-                }
+                product={product}
                 href={`/order/productDetail/${product.id}`}
               />
             </Box>
