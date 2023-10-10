@@ -190,8 +190,19 @@ const Cart = () => {
               sx={{
                 p: "1.3rem",
                 mb: "1rem",
+                position: "relative",
               }}
               key={cartItem.id}>
+              <IconButton
+                onClick={() => dispatch(removeFromCart(cartItem))}
+                sx={{
+                  bgcolor: "primary.main",
+                  position: "absolute",
+                  top: "1rem",
+                  right: "1rem",
+                }}>
+                <DeleteIcon color="info" sx={{ fontSize: "1.5rem" }} />
+              </IconButton>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <img
                   style={{
