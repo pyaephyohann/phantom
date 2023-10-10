@@ -1,7 +1,7 @@
 import OrderAppProductCard from "@/components/OrderAppProductCard";
 import { RootState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { getProductsByCategoryId } from "@/utils/client";
 import { Box, Tab, Tabs, useMediaQuery } from "@mui/material";
 import { Product } from "@prisma/client";

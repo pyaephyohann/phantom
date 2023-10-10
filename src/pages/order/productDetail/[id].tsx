@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { Box, Chip, IconButton, Paper, Typography } from "@mui/material";
 import { Color, Gender, Product, Size } from "@prisma/client";
 import { useRouter } from "next/router";

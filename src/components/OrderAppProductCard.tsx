@@ -7,7 +7,7 @@ import { Product } from "@prisma/client";
 import Chip from "@mui/material/Chip";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { useState } from "react";
 import SuccessAlert from "./SuccessAlert";
 import { generateRandomString } from "@/utils/client";
