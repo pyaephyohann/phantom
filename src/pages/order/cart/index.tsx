@@ -19,7 +19,11 @@ import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { removeFromCart, updateCart } from "@/store/slices/cartSlice";
+import {
+  emptyCart,
+  removeFromCart,
+  updateCart,
+} from "@/store/slices/cartSlice";
 import { getCartTotalPrice } from "@/utils/client";
 import { Product, Size, User } from "@prisma/client";
 import { config } from "@/config";
@@ -77,6 +81,8 @@ const Cart = () => {
     dispatch(addOrder(order));
     dispatch(addOrderlines(orderlines));
     setIsOrdering(false);
+    dispatch(emptyCart());
+    alert("Ordered Successfully");
   };
 
   useEffect(() => {
