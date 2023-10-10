@@ -10,13 +10,27 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { removeFromCart, updateCart } from "@/store/slices/cartSlice";
 import { getCartTotalPrice } from "@/utils/client";
-import { Product, Size } from "@prisma/client";
+import { Product, Size, User } from "@prisma/client";
+import { config } from "@/config";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
-  const { cart, sizes } = useAppSelector(orderAppDatas);
+  const { cart, sizes, users } = useAppSelector(orderAppDatas);
+
+  const { data } = useSession();
+
+  const user = data?.user;
+
+  useEffect(() => {
+    if (user) {
+      const validUser = users.find((item) => item.email === user.email) as User;
+      const userId = validUser.id;
+      setUserInformation({ ...userInformation, userId });
+    }
+  }, [user]);
 
   const router = useRouter();
 
@@ -25,6 +39,27 @@ const Cart = () => {
   const getSize = (product: Product) => {
     const size = sizes.find((item) => item.id === product.sizeId) as Size;
     return size.name;
+  };
+
+  const [userInformation, setUserInformation] = useState({
+    userId: 0,
+    address: "",
+    phoneNumber: 0,
+  });
+
+  const isDisabled =
+    !userInformation.userId ||
+    !userInformation.address ||
+    !userInformation.phoneNumber;
+
+  const handleCreateOrder = async () => {
+    const response = await fetch(`${config.apiBaseUrl}/order/createOrder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cart, userInformation }),
+    });
   };
 
   useEffect(() => {
@@ -107,6 +142,11 @@ const Cart = () => {
                             Number(event.target.value) <= 0
                               ? 1
                               : Number(event.target.value),
+                          subTotal:
+                            Number(event.target.value) <= 0
+                              ? cartItem.product.price
+                              : cartItem.product.price *
+                                Number(event.target.value),
                         };
                         dispatch(updateCart(updatedCartItem));
                       }}
@@ -144,19 +184,28 @@ const Cart = () => {
             alignItems: "center",
           }}>
           <TextField
+            onChange={(event) =>
+              setUserInformation({
+                ...userInformation,
+                address: event.target.value,
+              })
+            }
             sx={{ width: "20rem", mb: "2.5rem" }}
             multiline
             rows={3}
             label="Address"
           />
           <TextField
+            onChange={(event) =>
+              setUserInformation({
+                ...userInformation,
+                phoneNumber: Number(event.target.value),
+              })
+            }
             sx={{ width: "20rem" }}
             type="number"
             label="Phone Number"
           />
-          <Box sx={{ mt: "2.5rem" }}>
-            <Button variant="contained">Save</Button>
-          </Box>
         </Box>
       </Box>
       <Box sx={{ my: "4rem" }}>
@@ -164,7 +213,12 @@ const Cart = () => {
           Order Here!
         </Typography>
         <Box sx={{ width: "fit-content", mx: "auto" }}>
-          <Button variant="contained">Order</Button>
+          <Button
+            onClick={handleCreateOrder}
+            disabled={isDisabled}
+            variant="contained">
+            Order
+          </Button>
         </Box>
       </Box>
     </Box>

@@ -94,6 +94,9 @@ model Order {
   address     String
   phoneNumber Int
   Orderline   Orderline[]
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model Orderline {
@@ -105,6 +108,9 @@ model Orderline {
   status OrderStatus @default(PENDING)
   quantity Int @default(1)
   subTotalPrice Int
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 enum OrderStatus {

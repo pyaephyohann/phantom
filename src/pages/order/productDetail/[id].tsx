@@ -83,6 +83,7 @@ const ProductDetail = () => {
                       id: generateRandomString(),
                       product,
                       quantity: 1,
+                      subTotal: product.price,
                     })
                   );
                   setOpenSuccessAlert(true);

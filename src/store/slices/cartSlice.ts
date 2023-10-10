@@ -5,6 +5,7 @@ export interface CartItem {
   id: string;
   product: Product;
   quantity: number;
+  subTotal: number;
 }
 
 interface CartState {
