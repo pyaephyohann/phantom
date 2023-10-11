@@ -82,7 +82,7 @@ const Cart = () => {
     dispatch(addOrderlines(orderlines));
     setIsOrdering(false);
     dispatch(emptyCart());
-    alert("Ordered Successfully");
+    router.push(`/order/newOrder/${order.id}`);
   };
 
   useEffect(() => {
