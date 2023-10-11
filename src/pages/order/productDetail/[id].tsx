@@ -10,6 +10,7 @@ import { addToCart } from "@/store/slices/cartSlice";
 import { useState } from "react";
 import SuccessAlert from "@/components/SuccessAlert";
 import { generateRandomString } from "@/utils/client";
+import Link from "next/link";
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -74,7 +75,15 @@ const ProductDetail = () => {
               <FavoriteBorderIcon sx={{ fontSize: "2.2rem" }} color="primary" />
             </IconButton>
             {isInCart ? (
-              <Typography>View Cart</Typography>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#FFA1F5",
+                  fontSize: "1.2rem",
+                }}
+                href={"/order/cart"}>
+                View Cart
+              </Link>
             ) : (
               <Box
                 onClick={() => {

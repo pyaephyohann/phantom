@@ -70,7 +70,11 @@ const OrderAppProductCard = ({ product, href }: Props) => {
           <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="primary" />
         </IconButton>
         {isInCart ? (
-          <Typography>View cart</Typography>
+          <Link
+            style={{ textDecoration: "none", color: "#FFA1F5" }}
+            href={"/order/cart"}>
+            View Cart
+          </Link>
         ) : (
           <Chip
             onClick={() => {

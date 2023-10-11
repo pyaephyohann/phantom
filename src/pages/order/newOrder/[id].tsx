@@ -36,7 +36,9 @@ const NewOrder = () => {
   };
 
   useEffect(() => {
-    generateQrCode();
+    if (orderId) {
+      generateQrCode();
+    }
   }, [orderId]);
 
   const [isCopied, setIsCopied] = useState(false);

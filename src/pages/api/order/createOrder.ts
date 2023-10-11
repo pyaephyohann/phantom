@@ -17,10 +17,11 @@ export default async function handler(
       data: {
         userId: userInformation.userId,
         price: getCartTotalPrice(cart),
-        address: userInformation.address,
-        phoneNumber: userInformation.phoneNumber,
+        address: String(userInformation.address),
+        phoneNumber: 0 + userInformation.phoneNumber,
       },
     });
+
     const orderlines = await prisma.$transaction(
       cart.map((item: CartItem) =>
         prisma.orderline.create({
