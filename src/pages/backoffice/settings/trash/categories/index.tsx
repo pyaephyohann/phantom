@@ -87,7 +87,16 @@ const DeletedCategories = () => {
             })}
           </Box>
         ) : (
-          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
             {deletedCategories.map((category) => {
               return (
                 <Box sx={{ m: "1rem" }} key={category.id}>

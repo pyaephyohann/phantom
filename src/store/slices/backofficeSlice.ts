@@ -15,6 +15,8 @@ import { RootState } from "..";
 import { setGenders } from "./gendersSlice";
 import { setDeletedProducts } from "./deletedProductsSlice";
 import { setDeletedCategories } from "./deletedCategoriesSlice";
+import { setOrders } from "./ordersSlice";
+import { setOrderlines } from "./orderlinesSlice";
 
 interface BackofficeState {
   init: boolean;
@@ -42,6 +44,8 @@ export const fetchBackofficeData = createAsyncThunk(
       sizes,
       colors,
       genders,
+      orders,
+      orderlines,
     } = responseJson;
     thunkAPI.dispatch(setUsers(users));
     thunkAPI.dispatch(setProducts(products));
@@ -52,6 +56,8 @@ export const fetchBackofficeData = createAsyncThunk(
     thunkAPI.dispatch(setSizes(sizes));
     thunkAPI.dispatch(setColors(colors));
     thunkAPI.dispatch(setGenders(genders));
+    thunkAPI.dispatch(setOrders(orders));
+    thunkAPI.dispatch(setOrderlines(orderlines));
     thunkAPI.dispatch(setInit(true));
     thunkAPI.dispatch(setIsLoading(false));
   }
@@ -70,6 +76,8 @@ export const selectProductsCategories = (state: RootState) =>
 export const selectSizes = (state: RootState) => state.sizes.items;
 export const selectColors = (state: RootState) => state.colors.items;
 export const selectGenders = (state: RootState) => state.genders.items;
+export const selectOrders = (state: RootState) => state.orders.items;
+export const selectOrderlines = (state: RootState) => state.orderlines.items;
 
 export const backofficeAppDatas = createSelector(
   [
@@ -83,6 +91,8 @@ export const backofficeAppDatas = createSelector(
     selectSizes,
     selectColors,
     selectGenders,
+    selectOrders,
+    selectOrderlines,
   ],
   (
     backoffice,
@@ -94,7 +104,9 @@ export const backofficeAppDatas = createSelector(
     productsCategories,
     sizes,
     colors,
-    genders
+    genders,
+    orders,
+    orderlines
   ) => {
     return {
       isLoading: backoffice.isLoading,
@@ -107,6 +119,8 @@ export const backofficeAppDatas = createSelector(
       sizes,
       colors,
       genders,
+      orders,
+      orderlines,
     };
   }
 );

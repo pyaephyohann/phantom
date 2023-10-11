@@ -60,7 +60,7 @@ const Cart = () => {
   const [userInformation, setUserInformation] = useState({
     userId: 0,
     address: "",
-    phoneNumber: 0,
+    phoneNumber: "",
   });
 
   const isDisabled =
@@ -339,11 +339,10 @@ const Cart = () => {
             onChange={(event) =>
               setUserInformation({
                 ...userInformation,
-                phoneNumber: Number(event.target.value),
+                phoneNumber: event.target.value,
               })
             }
             sx={{ width: "20rem" }}
-            type="number"
             label="Phone Number"
           />
         </Box>

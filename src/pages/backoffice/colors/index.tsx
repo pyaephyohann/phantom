@@ -41,7 +41,17 @@ const Colors = () => {
             })}
           </Box>
         ) : (
-          <Box sx={{ display: "flex", flexWrap: "wrap", mt: "1rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              mt: "1rem",
+              justifyContent: {
+                xs: "center",
+                sm: "center",
+                md: "flex-start",
+              },
+            }}>
             {colors.map((color) => {
               return (
                 <Box sx={{ m: "1rem" }} key={color.id}>

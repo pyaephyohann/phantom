@@ -18,7 +18,7 @@ export default async function handler(
         userId: userInformation.userId,
         price: getCartTotalPrice(cart),
         address: String(userInformation.address),
-        phoneNumber: 0 + userInformation.phoneNumber,
+        phoneNumber: userInformation.phoneNumber,
       },
     });
 

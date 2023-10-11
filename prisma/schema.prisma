@@ -92,7 +92,7 @@ model Order {
   user        User        @relation(fields: [userId], references: [id])
   price       Int
   address     String
-  phoneNumber Int
+  phoneNumber String
   Orderline   Orderline[]
   isArchived Boolean  @default(false)
   createdAt  DateTime @default(now())
