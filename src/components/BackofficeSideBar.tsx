@@ -12,7 +12,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import AnimationIcon from "@mui/icons-material/Animation";
 import PaletteIcon from "@mui/icons-material/Palette";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const BackofficeSideBar = () => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <AddShoppingCartIcon sx={{ color: "#fff" }} />,
+      icon: <ShoppingCartIcon sx={{ color: "#fff" }} />,
       route: "/backoffice/orders",
     },
     {

@@ -283,7 +283,6 @@ const Order = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-
                       mt: "1.5rem",
                     }}>
                     <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
@@ -345,7 +344,7 @@ const Order = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      mt: "1.2rem",
+                      mt: "1.5rem",
                     }}>
                     <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
                       Status

@@ -1,10 +1,10 @@
 import { Box, Card, Divider, Typography } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
 
 interface Props {
   orderId: number;
-  userName: String;
+  userName?: String;
   productQuantity: number;
   price: number;
   date: string;
@@ -27,9 +27,17 @@ const OrderCard = ({
           p: "1.5rem",
           borderRadius: "0.5rem",
         }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
           <Typography>Order {orderId}</Typography>
-          <AddShoppingCartIcon color="primary" />
+          <ShoppingCartIcon
+            sx={{ bgcolor: "primary.main", p: "0.5rem", borderRadius: "5rem" }}
+            color="info"
+          />
         </Box>
         <Divider sx={{ my: "0.8rem", bgcolor: "info.main" }} />
         <Typography sx={{ my: "0.8rem" }}>{userName}</Typography>
