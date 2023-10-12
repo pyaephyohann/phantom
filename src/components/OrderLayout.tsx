@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchOrderAppData } from "@/store/slices/orderSlice";
+import { fetchOrderAppData } from "@/store/slices/orderAppSlice";
 import { Box } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ interface Props {
 
 const OrderLayout = ({ children }: Props) => {
   const { data } = useSession();
-  const init = useAppSelector((state) => state.order.init);
+  const init = useAppSelector((state) => state.orderApp.init);
   const router = useRouter();
 
   const dispatch = useAppDispatch();

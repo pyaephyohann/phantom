@@ -72,6 +72,8 @@ export default async function handler(
   const sizes = await prisma.size.findMany();
   const colors = await prisma.color.findMany();
   const genders = await prisma.gender.findMany();
+  const orders = await prisma.order.findMany();
+  const orderlines = await prisma.orderline.findMany();
 
   res.status(200).json({
     users,
@@ -83,5 +85,7 @@ export default async function handler(
     sizes,
     colors,
     genders,
+    orders,
+    orderlines,
   });
 }

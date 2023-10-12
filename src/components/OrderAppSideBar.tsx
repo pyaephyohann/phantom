@@ -34,14 +34,14 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
 
   const sideBarItems = [
     {
-      name: "Your Orders",
+      name: "My Orders",
       icon: <ArticleIcon sx={{ color: "#fff" }} />,
-      route: "/order/yourOrders",
+      route: "/order/myOrders",
     },
     {
-      name: "Favourite",
+      name: "Wish List",
       icon: <FavoriteIcon sx={{ color: "#fff" }} />,
-      route: "/order/favourite",
+      route: "/order/wishList",
     },
     {
       name: "Account",

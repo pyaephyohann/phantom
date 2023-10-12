@@ -7,7 +7,7 @@ import { Product } from "@prisma/client";
 import Chip from "@mui/material/Chip";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { useState } from "react";
 import SuccessAlert from "./SuccessAlert";
 import { generateRandomString } from "@/utils/client";
@@ -70,7 +70,11 @@ const OrderAppProductCard = ({ product, href }: Props) => {
           <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="primary" />
         </IconButton>
         {isInCart ? (
-          <Typography>View cart</Typography>
+          <Link
+            style={{ textDecoration: "none", color: "#FFA1F5" }}
+            href={"/order/cart"}>
+            View Cart
+          </Link>
         ) : (
           <Chip
             onClick={() => {
@@ -79,6 +83,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
                   id: generateRandomString(),
                   product,
                   quantity: 1,
+                  subTotal: product.price,
                 })
               );
               setOpenSuccessAlert(true);

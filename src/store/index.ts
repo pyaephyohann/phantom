@@ -9,14 +9,16 @@ import backofficeSlice from "./slices/backofficeSlice";
 import gendersSlice from "./slices/gendersSlice";
 import deletedProductsSlice from "./slices/deletedProductsSlice";
 import deletedCategoriesSlice from "./slices/deletedCategoriesSlice";
-import orderSlice from "./slices/orderSlice";
+import orderSlice from "./slices/orderAppSlice";
 import filteredProductsSlice from "./slices/filteredProductsSlice";
 import cartSlice from "./slices/cartSlice";
+import orderlinesSlice from "./slices/orderlinesSlice";
+import ordersSlice from "./slices/ordersSlice";
 
 export const store = configureStore({
   reducer: {
     backoffice: backofficeSlice,
-    order: orderSlice,
+    orderApp: orderSlice,
     users: usersSlice,
     products: productsSlice,
     deletedProducts: deletedProductsSlice,
@@ -28,6 +30,8 @@ export const store = configureStore({
     genders: gendersSlice,
     filteredProducts: filteredProductsSlice,
     cart: cartSlice,
+    orders: ordersSlice,
+    orderlines: orderlinesSlice,
   },
 });
 

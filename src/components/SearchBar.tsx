@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import ItemsSelectorToFilter from "./ItemsSelectorToFilter";
 import {
   setFilteredProductsByColor,

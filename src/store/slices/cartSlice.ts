@@ -5,6 +5,7 @@ export interface CartItem {
   id: string;
   product: Product;
   quantity: number;
+  subTotal: number;
 }
 
 interface CartState {
@@ -32,9 +33,13 @@ export const cartSlice = createSlice({
         item.id === action.payload.id ? action.payload : item
       );
     },
+    emptyCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addToCart, removeFromCart, updateCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateCart, emptyCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

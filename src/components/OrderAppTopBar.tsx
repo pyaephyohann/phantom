@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { useAppSelector } from "@/store/hooks";
-import { orderAppDatas } from "@/store/slices/orderSlice";
+import { orderAppDatas } from "@/store/slices/orderAppSlice";
 
 const OrderAppTopBar = () => {
   const { data } = useSession();
