@@ -220,85 +220,83 @@ const Cart = () => {
                   alt={cartItem.product.name}
                 />
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mt: "1.5rem",
-                }}>
-                <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
-                  Product:
-                </Typography>
-                <Typography>{cartItem.product.name}</Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  my: "1.2rem",
-                }}>
-                <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
-                  Price:
-                </Typography>
-                <Typography>{cartItem.product.price} Ks</Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  my: "1.2rem",
-                }}>
-                <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
-                  Size:
-                </Typography>
-                <Typography>{getSize(cartItem.product)}</Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  my: "1.2rem",
-                }}>
-                <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
-                  Quantity:
-                </Typography>
-                <TextField
-                  onChange={(event) => {
-                    const updatedCartItem = {
-                      ...cartItem,
-                      quantity:
-                        Number(event.target.value) <= 0
-                          ? 1
-                          : Number(event.target.value),
-                      subTotal:
-                        Number(event.target.value) <= 0
-                          ? cartItem.product.price
-                          : cartItem.product.price * Number(event.target.value),
-                    };
-                    dispatch(updateCart(updatedCartItem));
-                  }}
-                  type="number"
-                  sx={{ width: "6rem" }}
-                  defaultValue={cartItem.quantity}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mt: "1.2rem",
-                }}>
-                <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
-                  Subtotal:
-                </Typography>
-                <Typography>
-                  {cartItem.product.price * cartItem.quantity} Ks
-                </Typography>
+              <Box sx={{ width: "fit-content", mx: "auto" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mt: "1.5rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Product:
+                  </Typography>
+                  <Typography>{cartItem.product.name}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    my: "1.2rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Price:
+                  </Typography>
+                  <Typography>{cartItem.product.price} Ks</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    my: "1.2rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Size:
+                  </Typography>
+                  <Typography>{getSize(cartItem.product)}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    my: "1.2rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Quantity:
+                  </Typography>
+                  <TextField
+                    onChange={(event) => {
+                      const updatedCartItem = {
+                        ...cartItem,
+                        quantity:
+                          Number(event.target.value) <= 0
+                            ? 1
+                            : Number(event.target.value),
+                        subTotal:
+                          Number(event.target.value) <= 0
+                            ? cartItem.product.price
+                            : cartItem.product.price *
+                              Number(event.target.value),
+                      };
+                      dispatch(updateCart(updatedCartItem));
+                    }}
+                    type="number"
+                    sx={{ width: "6rem" }}
+                    defaultValue={cartItem.quantity}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mt: "1.2rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Subtotal:
+                  </Typography>
+                  <Typography>
+                    {cartItem.product.price * cartItem.quantity} Ks
+                  </Typography>
+                </Box>
               </Box>
             </Card>
           );

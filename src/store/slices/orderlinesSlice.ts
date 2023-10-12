@@ -21,9 +21,15 @@ export const orderlinesSlice = createSlice({
     addOrderlines: (state, action: PayloadAction<Orderline[]>) => {
       action.payload.forEach((item) => state.items.push(item));
     },
+    updateOrderline: (state, action: PayloadAction<Orderline>) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
   },
 });
 
-export const { setOrderlines, addOrderlines } = orderlinesSlice.actions;
+export const { setOrderlines, addOrderlines, updateOrderline } =
+  orderlinesSlice.actions;
 
 export default orderlinesSlice.reducer;

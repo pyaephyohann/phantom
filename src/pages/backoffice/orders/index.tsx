@@ -1,9 +1,10 @@
 import OrderCard from "@/components/OrderCard";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
-import { Box } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { User } from "@prisma/client";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 const Orders = () => {
   const { orders, orderlines, users } = useAppSelector(orderAppDatas);
@@ -21,7 +22,7 @@ const Orders = () => {
     <Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", sm: "flex", md: "flex" },
           flexWrap: "wrap",
           justifyContent: {
             xs: "center",
@@ -38,8 +39,35 @@ const Orders = () => {
                 productQuantity={getProductQuantity(order.id)}
                 price={order.price}
                 date={dayjs(order.createdAt).format("DD.MM.YYYY")}
+                href={`/backoffice/orders/${order.id}`}
               />
             </Box>
+          );
+        })}
+      </Box>
+      <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
+        {orders.map((order) => {
+          return (
+            <Link
+              style={{ textDecoration: "none" }}
+              href={`/backoffice/orders/${order.id}`}>
+              <Card
+                sx={{
+                  display: "flex",
+                  width: "90%",
+                  justifyContent: "space-between",
+                  py: "0.8rem",
+                  px: "1.2rem",
+                  mb: "2rem",
+                  mx: "auto",
+                }}>
+                <Typography>Order {order.id}</Typography>
+                <Typography>{order.price} Ks</Typography>
+                <Typography>
+                  {dayjs(order.createdAt).format("DD.MM.YYYY")}
+                </Typography>
+              </Card>
+            </Link>
           );
         })}
       </Box>
