@@ -38,14 +38,6 @@ const Cart = () => {
 
   const user = data?.user;
 
-  useEffect(() => {
-    if (user) {
-      const validUser = users.find((item) => item.email === user.email) as User;
-      const userId = validUser.id;
-      setUserInformation({ ...userInformation, userId });
-    }
-  }, [user]);
-
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -58,15 +50,12 @@ const Cart = () => {
   const [isOrdering, setIsOrdering] = useState(false);
 
   const [userInformation, setUserInformation] = useState({
-    userId: 0,
+    userEmail: user?.email,
     address: "",
     phoneNumber: "",
   });
 
-  const isDisabled =
-    !userInformation.userId ||
-    !userInformation.address ||
-    !userInformation.phoneNumber;
+  const isDisabled = !userInformation.address || !userInformation.phoneNumber;
 
   const handleCreateOrder = async () => {
     setIsOrdering(true);
@@ -351,7 +340,13 @@ const Cart = () => {
         </Typography>
         <Box sx={{ width: "fit-content", mx: "auto" }}>
           <Button
-            onClick={handleCreateOrder}
+            onClick={() => {
+              if (user) {
+                handleCreateOrder();
+              } else {
+                router.push("/auth/order/signin");
+              }
+            }}
             disabled={isDisabled}
             variant="contained">
             {isOrdering ? (

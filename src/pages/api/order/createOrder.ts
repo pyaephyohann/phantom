@@ -13,9 +13,16 @@ export default async function handler(
     const { cart, userInformation } = req.body;
     const isValid = cart.length && userInformation;
     if (!isValid) return res.status(400).send("Bad Request");
+
+    const existingUser = await prisma.user.findFirst({
+      where: { email: userInformation.userEmail },
+    });
+
+    if (!existingUser) return res.status(404).send("User not found");
+
     const order = await prisma.order.create({
       data: {
-        userId: userInformation.userId,
+        userId: existingUser.id,
         price: getCartTotalPrice(cart),
         address: String(userInformation.address),
         phoneNumber: userInformation.phoneNumber,

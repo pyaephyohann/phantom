@@ -55,6 +55,12 @@ const OrderAppTopBar = () => {
               </Typography>
             </Link>
           </Box>
+          <Button
+            variant="text"
+            color="info"
+            onClick={() => signOut({ callbackUrl: "/auth/order/signin" })}>
+            Sign Out
+          </Button>
           <Box>
             <SearchBar />
           </Box>
@@ -68,7 +74,7 @@ const OrderAppTopBar = () => {
                 borderRadius: "5rem",
               }}>
               <IconButton
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={() => router.push("/order/cart")}
                 sx={{ position: "relative" }}>
                 <Typography
                   sx={{
@@ -114,7 +120,7 @@ const OrderAppTopBar = () => {
                   fontSize: "1.2rem",
                 }}
                 variant="text">
-                Log In
+                Sign In
               </Button>
             )}
           </Box>

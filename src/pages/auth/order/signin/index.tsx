@@ -5,7 +5,7 @@ const SignIn = () => {
   return (
     <Box sx={{ mt: "7rem" }}>
       <Button
-        onClick={() => signIn("google", { callbackUrl: "/" })}
+        onClick={() => signIn("google", { callbackUrl: "/order/cart" })}
         variant="contained">
         Sign In with google
       </Button>
