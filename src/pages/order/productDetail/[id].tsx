@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { Box, Chip, IconButton, Paper, Typography } from "@mui/material";
-import { Color, Gender, Product, Size } from "@prisma/client";
+import { Color, Gender, Product, Size, User } from "@prisma/client";
 import { useRouter } from "next/router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -11,19 +11,43 @@ import { useState } from "react";
 import SuccessAlert from "@/components/SuccessAlert";
 import { generateRandomString } from "@/utils/client";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { config } from "@/config";
+import {
+  addToWishLists,
+  removeFromWishLists,
+} from "@/store/slices/wishListsSlice";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ProductDetail = () => {
   const router = useRouter();
   const productId = router.query.id;
 
-  const { products, sizes, colors, genders, cart } =
+  const { products, sizes, colors, genders, cart, wishLists, users } =
     useAppSelector(orderAppDatas);
 
   const dispatch = useAppDispatch();
 
+  const { data } = useSession();
+
+  const user = data?.user;
+
+  const currentUser = data?.user
+    ? (users.find((item) => item.email === user?.email) as User)
+    : undefined;
+
+  const [successAlertMessage, setSuccessAlertMessage] = useState("");
+
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   const productsInCartIds = cart.map((item) => item.product.id);
+
+  const isInWishList = (productId: number, userId: number) => {
+    const wishList = wishLists.find(
+      (item) => item.userId === userId && item.productId === productId
+    );
+    return wishList ? true : false;
+  };
 
   const product = products.find(
     (item) => item.id === Number(productId)
@@ -44,6 +68,36 @@ const ProductDetail = () => {
   const color = colors.find((item) => item.id === product.colorId) as Color;
 
   const gender = genders.find((item) => item.id === product.genderId) as Gender;
+
+  const handleAddToWishList = async (productId: number, userId: number) => {
+    const response = await fetch(`${config.apiBaseUrl}/order/wishLists`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, userId }),
+    });
+    const newWishList = await response.json();
+    dispatch(addToWishLists(newWishList));
+    setSuccessAlertMessage("Added To Wish List");
+    setOpenSuccessAlert(true);
+  };
+
+  const handleRemoveFromWishLists = async (
+    productId: number,
+    userId: number
+  ) => {
+    await fetch(`${config.apiBaseUrl}/order/wishLists`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, userId }),
+    });
+    dispatch(removeFromWishLists({ productId, userId }));
+    setSuccessAlertMessage("Removed From Wish List");
+    setOpenSuccessAlert(true);
+  };
 
   return (
     <Box>
@@ -71,9 +125,41 @@ const ProductDetail = () => {
               alignItems: "center",
               justifyContent: "flex-end",
             }}>
-            <IconButton sx={{ mr: "1rem" }}>
-              <FavoriteBorderIcon sx={{ fontSize: "2.2rem" }} color="primary" />
-            </IconButton>
+            {currentUser ? (
+              <Box>
+                {isInWishList(product.id, currentUser.id) ? (
+                  <IconButton
+                    sx={{ mr: "1rem" }}
+                    onClick={() => {
+                      handleRemoveFromWishLists(product.id, currentUser.id);
+                    }}>
+                    <FavoriteIcon sx={{ fontSize: "2.2rem" }} color="primary" />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    sx={{ mr: "1rem" }}
+                    onClick={() => {
+                      handleAddToWishList(product.id, currentUser.id);
+                    }}>
+                    <FavoriteBorderIcon
+                      sx={{ fontSize: "2.2rem" }}
+                      color="primary"
+                    />
+                  </IconButton>
+                )}
+              </Box>
+            ) : (
+              <IconButton
+                sx={{ mr: "1rem" }}
+                onClick={() => {
+                  router.push("/auth/order/signin");
+                }}>
+                <FavoriteBorderIcon
+                  sx={{ fontSize: "2.2rem" }}
+                  color="primary"
+                />
+              </IconButton>
+            )}
             {isInCart ? (
               <Link
                 style={{
@@ -198,7 +284,7 @@ const ProductDetail = () => {
       <SuccessAlert
         open={openSuccessAlert}
         setOpen={setOpenSuccessAlert}
-        message="Added to cart"
+        message={successAlertMessage}
       />
     </Box>
   );

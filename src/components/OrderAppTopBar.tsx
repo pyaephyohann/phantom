@@ -19,6 +19,7 @@ import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
+import { signOut } from "next-auth/react";
 
 const OrderAppTopBar = () => {
   const { data } = useSession();
@@ -67,7 +68,7 @@ const OrderAppTopBar = () => {
                 borderRadius: "5rem",
               }}>
               <IconButton
-                onClick={() => router.push("/order/cart")}
+                onClick={() => signOut({ callbackUrl: "/" })}
                 sx={{ position: "relative" }}>
                 <Typography
                   sx={{

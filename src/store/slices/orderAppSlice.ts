@@ -15,6 +15,7 @@ import { RootState } from "..";
 import { setGenders } from "./gendersSlice";
 import { setOrders } from "./ordersSlice";
 import { setOrderlines } from "./orderlinesSlice";
+import { setWishLists } from "./wishListsSlice";
 
 interface OrderAppState {
   init: boolean;
@@ -42,6 +43,7 @@ export const fetchOrderAppData = createAsyncThunk(
       genders,
       orders,
       orderlines,
+      wishLists,
     } = responseJson;
     thunkAPI.dispatch(setUsers(users));
     thunkAPI.dispatch(setProducts(products));
@@ -52,6 +54,7 @@ export const fetchOrderAppData = createAsyncThunk(
     thunkAPI.dispatch(setGenders(genders));
     thunkAPI.dispatch(setOrders(orders));
     thunkAPI.dispatch(setOrderlines(orderlines));
+    thunkAPI.dispatch(setWishLists(wishLists));
     thunkAPI.dispatch(setInit(true));
     thunkAPI.dispatch(setIsLoading(false));
   }
@@ -69,6 +72,7 @@ export const selectGenders = (state: RootState) => state.genders.items;
 export const selectCart = (state: RootState) => state.cart.items;
 export const selectOrders = (state: RootState) => state.orders.items;
 export const selectOrderlines = (state: RootState) => state.orderlines.items;
+export const selectWishLists = (state: RootState) => state.wishLists.items;
 
 export const orderAppDatas = createSelector(
   [
@@ -83,6 +87,7 @@ export const orderAppDatas = createSelector(
     selectCart,
     selectOrders,
     selectOrderlines,
+    selectWishLists,
   ],
   (
     orderApp,
@@ -95,7 +100,8 @@ export const orderAppDatas = createSelector(
     genders,
     cart,
     orders,
-    orderlines
+    orderlines,
+    wishLists
   ) => {
     return {
       isLoading: orderApp.isLoading,
@@ -109,6 +115,7 @@ export const orderAppDatas = createSelector(
       cart,
       orders,
       orderlines,
+      wishLists,
     };
   }
 );
