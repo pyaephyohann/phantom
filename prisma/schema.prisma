@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   name       String
   email      String
   password   String?
   imageUrl   String?
   nickname   String?
   genderId   Int?
-  gender     Gender?  @relation(fields: [genderId], references: [id])
-  isArchived Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  gender     Gender?    @relation(fields: [genderId], references: [id])
+  isArchived Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
   Order      Order[]
+  WishList   WishList[]
 }
 
 model Product {
@@ -39,6 +40,7 @@ model Product {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now()) @updatedAt
   Orderline       Orderline[]
+  WishList        WishList[]
 }
 
 model Category {
@@ -94,23 +96,33 @@ model Order {
   address     String
   phoneNumber String
   Orderline   Orderline[]
-  isArchived Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  isArchived  Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
 }
 
 model Orderline {
+  id            Int         @id @default(autoincrement())
+  productId     Int
+  product       Product     @relation(fields: [productId], references: [id])
+  orderId       Int
+  order         Order       @relation(fields: [orderId], references: [id])
+  status        OrderStatus @default(PENDING)
+  quantity      Int         @default(1)
+  subTotalPrice Int
+  isArchived    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+}
+
+model WishList {
   id        Int     @id @default(autoincrement())
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
   productId Int
   product   Product @relation(fields: [productId], references: [id])
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id])
-  status OrderStatus @default(PENDING)
-  quantity Int @default(1)
-  subTotalPrice Int
-  isArchived Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
 }
 
 enum OrderStatus {

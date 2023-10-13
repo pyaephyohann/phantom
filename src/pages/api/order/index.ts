@@ -7,26 +7,27 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  if (!session) return res.status(401).send("Unauthorized");
-  const user = session.user;
+  const user = session?.user ? session.user : undefined;
   const name = user?.name as string;
   const email = user?.email as string;
   const image = user?.image as string;
 
-  const userFromDB = await prisma.user.findFirst({
-    where: {
-      email,
-    },
-  });
-
-  if (!userFromDB) {
-    await prisma.user.create({
-      data: {
-        name,
+  if (user) {
+    const userFromDB = await prisma.user.findFirst({
+      where: {
         email,
-        imageUrl: image,
       },
     });
+
+    if (!userFromDB) {
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          imageUrl: image,
+        },
+      });
+    }
   }
 
   const users = await prisma.user.findMany();
@@ -42,8 +43,9 @@ export default async function handler(
   const sizes = await prisma.size.findMany();
   const colors = await prisma.color.findMany();
   const genders = await prisma.gender.findMany();
-  const orders = await prisma.order.findMany();
-  const orderlines = await prisma.orderline.findMany();
+  const orders = user ? await prisma.order.findMany() : [];
+  const orderlines = user ? await prisma.orderline.findMany() : [];
+  const wishLists = user ? await prisma.wishList.findMany() : [];
   return res.status(200).send({
     users,
     products,
@@ -54,5 +56,6 @@ export default async function handler(
     genders,
     orders,
     orderlines,
+    wishLists,
   });
 }

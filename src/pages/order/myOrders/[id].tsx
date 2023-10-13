@@ -150,8 +150,8 @@ const Order = () => {
           <Typography>{order.price} Ks</Typography>
         </Box>
         <Box sx={{ mb: "2rem" }}>
-          <Typography sx={{ mb: "0.8rem", fontSize: "1.4rem" }}>
-            Ordered Date
+          <Typography sx={{ mb: "0.5rem", fontSize: "1.4rem" }}>
+            Date
           </Typography>
           <Typography>{dayjs(order.createdAt).format("DD.MM.YYYY")}</Typography>
         </Box>

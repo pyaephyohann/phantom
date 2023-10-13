@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 
 const SignIn = () => {
   return (
-    <Box sx={{ mt: "3rem" }}>
+    <Box sx={{ mt: "7rem" }}>
       <Button
         onClick={() => signIn("google", { callbackUrl: "/" })}
         variant="contained">

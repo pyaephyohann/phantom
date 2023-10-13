@@ -18,10 +18,10 @@ const OrderLayout = ({ children }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (data && !init) {
+    if (!init) {
       dispatch(fetchOrderAppData());
     }
-  }, [data, dispatch, init]);
+  }, [dispatch, init]);
 
   return (
     <Box>
