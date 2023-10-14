@@ -24,7 +24,7 @@ const WishList = () => {
 
   return (
     <Box sx={{ mt: "7rem" }}>
-      <Box>
+      <Box sx={{ mb: "1rem" }}>
         {wishListedProducts.length ? (
           <Typography variant="h5" sx={{ textAlign: "center" }}>
             Your Wish List

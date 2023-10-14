@@ -14,7 +14,7 @@ import Link from "next/link";
 import ArticleIcon from "@mui/icons-material/Article";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import SettingsIcon from "@mui/icons-material/Settings";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -49,9 +49,9 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
       route: "/order/account",
     },
     {
-      name: "Settings",
-      icon: <SettingsIcon sx={{ color: "#fff" }} />,
-      route: "/order/settings",
+      name: "Contact Us",
+      icon: <ContactMailIcon sx={{ color: "#fff" }} />,
+      route: "/order/contactUs",
     },
   ];
 
