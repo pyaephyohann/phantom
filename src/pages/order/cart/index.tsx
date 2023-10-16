@@ -38,6 +38,8 @@ const Cart = () => {
 
   const user = data?.user;
 
+  const currentUser = users.find((item) => item.email === user?.email);
+
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -55,6 +57,14 @@ const Cart = () => {
     phoneNumber: "",
   });
 
+  const hasCurrentUserAddressAndPhoneNumber = () => {
+    if (currentUser?.address && currentUser.phoneNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const isDisabled = !userInformation.address || !userInformation.phoneNumber;
 
   const handleCreateOrder = async () => {
@@ -64,7 +74,16 @@ const Cart = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ cart, userInformation }),
+      body: JSON.stringify({
+        cart,
+        userInformation: hasCurrentUserAddressAndPhoneNumber()
+          ? {
+              userEmail: user?.email,
+              address: currentUser?.address,
+              phoneNumber: currentUser?.phoneNumber,
+            }
+          : userInformation,
+      }),
     });
     const { order, orderlines } = await response.json();
     dispatch(addOrder(order));
@@ -299,41 +318,49 @@ const Cart = () => {
           <Typography>{getCartTotalPrice(cart)} Ks</Typography>
         </Box>
       </Box>
-      <Box sx={{ mt: "4rem" }}>
-        <Typography
-          sx={{ textAlign: "center", fontSize: "1.8rem", mb: "4rem" }}>
-          Please Let us know your informations before order!
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}>
-          <TextField
-            onChange={(event) =>
-              setUserInformation({
-                ...userInformation,
-                address: event.target.value,
-              })
-            }
-            sx={{ width: "20rem", mb: "2.5rem" }}
-            multiline
-            rows={3}
-            label="Address"
-          />
-          <TextField
-            onChange={(event) =>
-              setUserInformation({
-                ...userInformation,
-                phoneNumber: event.target.value,
-              })
-            }
-            sx={{ width: "20rem" }}
-            label="Phone Number"
-          />
+      {hasCurrentUserAddressAndPhoneNumber() ? (
+        ""
+      ) : (
+        <Box sx={{ mt: "4rem" }}>
+          <Typography
+            sx={{
+              textAlign: "center",
+              fontSize: "1.8rem",
+              mb: "3rem",
+            }}>
+            Please let's us know your information before order!
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}>
+            <TextField
+              onChange={(event) =>
+                setUserInformation({
+                  ...userInformation,
+                  address: event.target.value,
+                })
+              }
+              sx={{ width: "20rem", mb: "2.5rem" }}
+              multiline
+              rows={3}
+              label="Address"
+            />
+            <TextField
+              onChange={(event) =>
+                setUserInformation({
+                  ...userInformation,
+                  phoneNumber: event.target.value,
+                })
+              }
+              sx={{ width: "20rem" }}
+              label="Phone Number"
+            />
+          </Box>
         </Box>
-      </Box>
+      )}
       <Box sx={{ my: "4rem" }}>
         <Typography sx={{ textAlign: "center", mb: "2rem" }} variant="h5">
           Order Here!
@@ -347,7 +374,9 @@ const Cart = () => {
                 router.push("/auth/order/signin");
               }
             }}
-            disabled={isDisabled}
+            disabled={
+              hasCurrentUserAddressAndPhoneNumber() ? false : isDisabled
+            }
             variant="contained">
             {isOrdering ? (
               <CircularProgress sx={{ color: "info.main" }} />

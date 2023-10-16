@@ -55,12 +55,6 @@ const OrderAppTopBar = () => {
               </Typography>
             </Link>
           </Box>
-          <Button
-            variant="text"
-            color="info"
-            onClick={() => signOut({ callbackUrl: "/auth/order/signin" })}>
-            Sign Out
-          </Button>
           <Box>
             <SearchBar />
           </Box>

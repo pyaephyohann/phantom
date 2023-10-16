@@ -72,7 +72,10 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
             <ArrowBackIosNewIcon color="primary" />
           </IconButton>
         </Box>
-        <Link style={{ textDecoration: "none", color: "#fff" }} href={"/"}>
+        <Link
+          onClick={() => setOpen(false)}
+          style={{ textDecoration: "none", color: "#fff" }}
+          href={"/"}>
           <Typography
             sx={{
               fontFamily: "'Dancing Script', cursive",

@@ -7,6 +7,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 const Account = () => {
   const { data } = useSession();
@@ -156,6 +157,24 @@ const Account = () => {
             ""
           )}
         </Box>
+      </Box>
+      <Box
+        sx={{
+          mt: "3rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mb: "3rem",
+        }}>
+        <Typography sx={{ mb: "1.5rem" }} variant="h5">
+          You want to log out?
+        </Typography>
+        <Button
+          onClick={() => signOut({ callbackUrl: "/auth/order/signin" })}
+          variant="contained"
+          sx={{ textTransform: "none" }}>
+          Log out
+        </Button>
       </Box>
       <SuccessAlert
         open={openSuccessAlert}

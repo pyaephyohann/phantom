@@ -17,7 +17,7 @@ const NewOrder = () => {
 
   const [isGeneratingQrCode, setIsGeneratingQrCode] = useState(false);
 
-  const qrCodeData = `localhost:3000/order/yourOrders/${orderId}`;
+  const qrCodeData = `localhost:3000/order/myOrders/${orderId}`;
 
   const qrCodeFileName = `shwemyintmolfashionshoporder${orderId}.png`;
 
