@@ -31,6 +31,7 @@ const BackofficeTopBar = () => {
   const id = open ? "simple-popover" : undefined;
 
   const getTitle = () => {
+    if (router.pathname.includes("orders")) return "Orders";
     if (router.pathname === "/backoffice/products/[id]") return "Edit Product";
     if (router.pathname === "/backoffice/products/discountedProducts/[id]")
       return "Edit DiscountedProducts";
@@ -77,7 +78,10 @@ const BackofficeTopBar = () => {
             )}
             <Box>
               <Link
-                style={{ textDecoration: "none", color: "#fff" }}
+                style={{
+                  textDecoration: "none",
+                  color: "#fff",
+                }}
                 href={"/backoffice"}>
                 <Typography
                   sx={{

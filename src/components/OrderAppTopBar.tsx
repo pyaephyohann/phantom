@@ -32,6 +32,8 @@ const OrderAppTopBar = () => {
 
   const [open, setOpen] = useState(false);
 
+  const isSigninPage = router.pathname.includes("/signin");
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -127,6 +129,7 @@ const OrderAppTopBar = () => {
                   textTransform: "none",
                   color: "#fff",
                   fontSize: "1.2rem",
+                  display: { xs: "none", sm: "none", md: "block" },
                 }}
                 variant="text">
                 Sign In
