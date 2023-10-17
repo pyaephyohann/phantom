@@ -15,5 +15,14 @@ export const theme = createTheme({
       // yellow
       main: "#fff",
     },
+    success: {
+      main: "#00DFA2",
+    },
+    warning: {
+      main: "#FF6000",
+    },
+    error: {
+      main: "#FE0000",
+    },
   },
 });

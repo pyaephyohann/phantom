@@ -1,5 +1,5 @@
 import { CartItem } from "@/store/slices/cartSlice";
-import { Category, Product, ProductCategory } from "@prisma/client";
+import { Category, Orderline, Product, ProductCategory } from "@prisma/client";
 
 export const getCategoriesByProductId = (
   productId: string,
@@ -36,4 +36,19 @@ export const getCartTotalPrice = (cart: CartItem[]) => {
     }
   }, 0);
   return totalPrice;
+};
+
+export const getOrderlinesByOrderId = (
+  orderId: number,
+  orderlines: Orderline[]
+) => {
+  return orderlines.filter((item) => item.orderId === orderId);
+};
+
+export const getOrderlineStatus = (
+  orderId: number,
+  orderlines: Orderline[]
+) => {
+  const validOrderlines = getOrderlinesByOrderId(orderId, orderlines);
+  return validOrderlines.map((item) => item.status);
 };

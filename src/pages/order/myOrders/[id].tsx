@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { Box, Card, Typography } from "@mui/material";
-import { Order, Product, Size, User } from "@prisma/client";
+import { Order, OrderStatus, Product, Size, User } from "@prisma/client";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 
@@ -132,6 +132,57 @@ const Order = () => {
                     Subtotal:
                   </Typography>
                   <Typography>{orderline.subTotalPrice} Ks</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mt: "1.2rem",
+                  }}>
+                  <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
+                    Status:
+                  </Typography>
+                  <Box>
+                    {orderline.status === OrderStatus.PENDING && (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography>Pending</Typography>
+                        <Box
+                          sx={{
+                            bgcolor: "warning.main",
+                            width: "0.8rem",
+                            height: "0.8rem",
+                            borderRadius: "5rem",
+                            ml: "1rem",
+                          }}></Box>
+                      </Box>
+                    )}
+                    {orderline.status === OrderStatus.REJECTED && (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography>Rejected</Typography>
+                        <Box
+                          sx={{
+                            bgcolor: "error.main",
+                            width: "0.8rem",
+                            height: "0.8rem",
+                            borderRadius: "5rem",
+                            ml: "1rem",
+                          }}></Box>
+                      </Box>
+                    )}
+                    {orderline.status === OrderStatus.ACCEPTED && (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography>Accepted</Typography>
+                        <Box
+                          sx={{
+                            bgcolor: "success.main",
+                            width: "0.8rem",
+                            height: "0.8rem",
+                            borderRadius: "5rem",
+                            ml: "1rem",
+                          }}></Box>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
               </Box>
             </Card>

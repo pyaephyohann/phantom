@@ -1,6 +1,8 @@
 import OrderCard from "@/components/OrderCard";
+import OrderCardMobile from "@/components/OrderCardMobile";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
+import { getOrderlineStatus } from "@/utils/client";
 import { Box, Card, Typography } from "@mui/material";
 import { User } from "@prisma/client";
 import dayjs from "dayjs";
@@ -40,6 +42,7 @@ const Orders = () => {
                 price={order.price}
                 date={dayjs(order.createdAt).format("DD.MM.YYYY")}
                 href={`/backoffice/orders/${order.id}`}
+                orderlineStatus={getOrderlineStatus(order.id, orderlines)}
               />
             </Box>
           );
@@ -48,26 +51,11 @@ const Orders = () => {
       <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
         {orders.map((order) => {
           return (
-            <Link
-              style={{ textDecoration: "none" }}
-              href={`/backoffice/orders/${order.id}`}>
-              <Card
-                sx={{
-                  display: "flex",
-                  width: "90%",
-                  justifyContent: "space-between",
-                  py: "0.8rem",
-                  px: "1.2rem",
-                  mb: "2rem",
-                  mx: "auto",
-                }}>
-                <Typography>Order {order.id}</Typography>
-                <Typography>{order.price} Ks</Typography>
-                <Typography>
-                  {dayjs(order.createdAt).format("DD.MM.YYYY")}
-                </Typography>
-              </Card>
-            </Link>
+            <OrderCardMobile
+              order={order}
+              orderlineStatus={getOrderlineStatus(order.id, orderlines)}
+              href={`/backoffice/orders/${order.id}`}
+            />
           );
         })}
       </Box>

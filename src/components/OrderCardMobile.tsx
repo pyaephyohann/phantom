@@ -1,27 +1,15 @@
-import { Box, Card, Divider, Typography } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Box, Card, Typography } from "@mui/material";
+import { Order, OrderStatus } from "@prisma/client";
+import dayjs from "dayjs";
 import Link from "next/link";
-import { OrderStatus } from "@prisma/client";
 
 interface Props {
-  orderId: number;
-  userName?: String;
-  productQuantity: number;
-  price: number;
-  date: string;
-  href: string;
+  order: Order;
   orderlineStatus: OrderStatus[];
+  href: string;
 }
 
-const OrderCard = ({
-  orderId,
-  userName,
-  productQuantity,
-  price,
-  date,
-  href,
-  orderlineStatus,
-}: Props) => {
+const OrderCardMobile = ({ order, orderlineStatus, href }: Props) => {
   const getStatus = () => {
     if (orderlineStatus.includes(OrderStatus.PENDING)) {
       return "Pending";
@@ -36,30 +24,13 @@ const OrderCard = ({
     <Link style={{ textDecoration: "none" }} href={href}>
       <Card
         sx={{
-          width: "11rem",
-          p: "1.5rem",
-          borderRadius: "0.5rem",
+          width: "90%",
+          py: "1.2rem",
+          px: "1.2rem",
+          mb: "2rem",
+          mx: "auto",
         }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}>
-          <Typography>Order {orderId}</Typography>
-          <ShoppingCartIcon
-            sx={{ bgcolor: "primary.main", p: "0.5rem", borderRadius: "5rem" }}
-            color="info"
-          />
-        </Box>
-        <Divider sx={{ my: "0.8rem", bgcolor: "info.main" }} />
-        <Typography sx={{ my: "0.8rem" }}>{userName}</Typography>
-        <Typography sx={{ my: "0.8rem" }}>
-          {productQuantity} Products
-        </Typography>
-        <Typography sx={{ my: "0.8rem" }}>{price} Ks</Typography>
-        <Typography sx={{ my: "0.8rem" }}>{date}</Typography>
-        <Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: "1.2rem" }}>
           {getStatus() === "Pending" && (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography>Pending</Typography>
@@ -100,9 +71,14 @@ const OrderCard = ({
             </Box>
           )}
         </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography>Order {order.id}</Typography>
+          <Typography>{order.price} Ks</Typography>
+          <Typography>{dayjs(order.createdAt).format("DD.MM.YYYY")}</Typography>
+        </Box>
       </Card>
     </Link>
   );
 };
 
-export default OrderCard;
+export default OrderCardMobile;
