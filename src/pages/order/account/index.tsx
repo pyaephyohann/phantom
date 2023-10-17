@@ -3,7 +3,13 @@ import { config } from "@/config";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { updateUser } from "@/store/slices/usersSlice";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -25,6 +31,10 @@ const Account = () => {
 
   const [successAlertMessage, setSuccessAlertMessage] = useState("");
 
+  const [isUpdatingAddress, setIsUpdatingAddress] = useState(false);
+
+  const [isUpdatingPhoneNumber, setIsUpdatingPhoneNumber] = useState(false);
+
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
   const isDisabledAddressButton = !address;
@@ -32,6 +42,7 @@ const Account = () => {
   const isDisabledPhoneNumberButton = !phoneNumber;
 
   const handleUpdateAddress = async () => {
+    setIsUpdatingAddress(true);
     const response = await fetch(`${config.apiBaseUrl}/order/users/address`, {
       method: "POST",
       headers: {
@@ -47,10 +58,12 @@ const Account = () => {
       setSuccessAlertMessage("Added Address");
     }
     setOpenSuccessAlert(true);
+    setIsUpdatingAddress(false);
     setAddress("");
   };
 
   const handleUpdatePhoneNumber = async () => {
+    setIsUpdatingPhoneNumber(true);
     const response = await fetch(
       `${config.apiBaseUrl}/order/users/phoneNumber`,
       {
@@ -69,6 +82,7 @@ const Account = () => {
       setSuccessAlertMessage("Added Phone Number");
     }
     setOpenSuccessAlert(true);
+    setIsUpdatingPhoneNumber(false);
     setPhoneNumber("");
   };
 
@@ -112,7 +126,13 @@ const Account = () => {
               disabled={isDisabledAddressButton}
               onClick={handleUpdateAddress}
               variant="contained">
-              {currentUser.address ? "Update" : "Add"}
+              {isUpdatingAddress ? (
+                <CircularProgress color="info" />
+              ) : currentUser.address ? (
+                "Update"
+              ) : (
+                "Add"
+              )}
             </Button>
           ) : (
             ""
@@ -151,7 +171,13 @@ const Account = () => {
               disabled={isDisabledPhoneNumberButton}
               onClick={handleUpdatePhoneNumber}
               variant="contained">
-              {currentUser.phoneNumber ? "Update" : "Add"}
+              {isUpdatingPhoneNumber ? (
+                <CircularProgress color="info" />
+              ) : currentUser.phoneNumber ? (
+                "Update"
+              ) : (
+                "Add"
+              )}
             </Button>
           ) : (
             ""
