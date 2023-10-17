@@ -161,7 +161,19 @@ const Cart = () => {
                   </TableCell>
                   <TableCell align="center">{cartItem.product.name}</TableCell>
                   <TableCell align="center">
-                    {cartItem.product.price} Ks
+                    {cartItem.product.discountPrice ? (
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
+                          {cartItem.product.price} Ks
+                        </Typography>
+                        <Typography>
+                          {cartItem.product.discountPrice} Ks
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <Typography>{cartItem.product.price} Ks</Typography>
+                    )}
                   </TableCell>
                   <TableCell align="center">
                     {getSize(cartItem.product)}
@@ -177,7 +189,12 @@ const Cart = () => {
                               : Number(event.target.value),
                           subTotal:
                             Number(event.target.value) <= 0
-                              ? cartItem.product.price
+                              ? cartItem.product.discountPrice
+                                ? cartItem.product.discountPrice
+                                : cartItem.product.price
+                              : cartItem.product.discountPrice
+                              ? cartItem.product.discountPrice *
+                                Number(event.target.value)
                               : cartItem.product.price *
                                 Number(event.target.value),
                         };
@@ -189,7 +206,15 @@ const Cart = () => {
                     />
                   </TableCell>
                   <TableCell align="center">
-                    {cartItem.product.price * cartItem.quantity} Ks
+                    {cartItem.product.discountPrice ? (
+                      <Typography>
+                        {cartItem.product.discountPrice * cartItem.quantity} Ks
+                      </Typography>
+                    ) : (
+                      <Typography>
+                        {cartItem.product.price * cartItem.quantity} Ks
+                      </Typography>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -249,7 +274,21 @@ const Cart = () => {
                   <Typography sx={{ mr: "1rem", fontSize: "1.1rem" }}>
                     Price:
                   </Typography>
-                  <Typography>{cartItem.product.price} Ks</Typography>
+                  <Typography>
+                    {cartItem.product.discountPrice ? (
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
+                          {cartItem.product.price} Ks
+                        </Typography>
+                        <Typography>
+                          {cartItem.product.discountPrice} Ks
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <Typography>{cartItem.product.price} Ks</Typography>
+                    )}
+                  </Typography>
                 </Box>
                 <Box
                   sx={{
@@ -281,7 +320,12 @@ const Cart = () => {
                             : Number(event.target.value),
                         subTotal:
                           Number(event.target.value) <= 0
-                            ? cartItem.product.price
+                            ? cartItem.product.discountPrice
+                              ? cartItem.product.discountPrice
+                              : cartItem.product.price
+                            : cartItem.product.discountPrice
+                            ? cartItem.product.discountPrice *
+                              Number(event.target.value)
                             : cartItem.product.price *
                               Number(event.target.value),
                       };
@@ -302,7 +346,15 @@ const Cart = () => {
                     Subtotal:
                   </Typography>
                   <Typography>
-                    {cartItem.product.price * cartItem.quantity} Ks
+                    {cartItem.product.discountPrice ? (
+                      <Typography>
+                        {cartItem.product.discountPrice * cartItem.quantity} Ks
+                      </Typography>
+                    ) : (
+                      <Typography>
+                        {cartItem.product.price * cartItem.quantity} Ks
+                      </Typography>
+                    )}
                   </Typography>
                 </Box>
               </Box>

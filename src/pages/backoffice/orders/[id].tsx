@@ -222,7 +222,24 @@ const Order = () => {
                       {getProduct(orderline.productId).name}
                     </TableCell>
                     <TableCell align="center">
-                      {getProduct(orderline.productId).price} Ks
+                      {getProduct(orderline.productId).discountPrice ? (
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            sx={{
+                              textDecoration: "line-through",
+                              mr: "0.5rem",
+                            }}>
+                            {getProduct(orderline.productId).price} Ks
+                          </Typography>
+                          <Typography>
+                            {getProduct(orderline.productId).discountPrice} Ks
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Typography>
+                          {getProduct(orderline.productId).price} Ks
+                        </Typography>
+                      )}
                     </TableCell>
                     <TableCell align="center">
                       {getSize(getProduct(orderline.productId).sizeId).name}
@@ -302,7 +319,24 @@ const Order = () => {
                       Price:
                     </Typography>
                     <Typography>
-                      {getProduct(orderline.productId).price} Ks
+                      {getProduct(orderline.productId).discountPrice ? (
+                        <Box sx={{ display: "flex" }}>
+                          <Typography
+                            sx={{
+                              textDecoration: "line-through",
+                              mr: "0.5rem",
+                            }}>
+                            {getProduct(orderline.productId).price} Ks
+                          </Typography>
+                          <Typography>
+                            {getProduct(orderline.productId).discountPrice} Ks
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Typography>
+                          {getProduct(orderline.productId).price} Ks
+                        </Typography>
+                      )}
                     </Typography>
                   </Box>
                   <Box
@@ -383,7 +417,7 @@ const Order = () => {
           <Typography>{order.price} Ks</Typography>
         </Box>
       </Box>
-      <Box sx={{ mb: "3rem" }}>
+      <Box sx={{ mb: "5rem" }}>
         <Typography sx={{ mb: "2rem", fontSize: "1.8rem" }}>
           Customer Informations
         </Typography>

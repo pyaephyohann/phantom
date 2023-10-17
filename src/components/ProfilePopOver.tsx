@@ -3,11 +3,13 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 interface Props {
-  open: boolean;
-  setOpen: (value: boolean) => void;
+  id: any;
+  open: any;
+  anchorEl: any;
+  handleClose: any;
 }
 
-const ProfilePopOver = ({ open, setOpen }: Props) => {
+const ProfilePopOver = ({ id, open, anchorEl, handleClose }: Props) => {
   const { data } = useSession();
 
   const user = data?.user;
@@ -15,16 +17,16 @@ const ProfilePopOver = ({ open, setOpen }: Props) => {
   return (
     <Popover
       sx={{ mt: "3.5rem" }}
+      id={id}
       open={open}
-      onClose={() => setOpen(false)}
+      anchorEl={anchorEl}
+      onClose={handleClose}
       anchorOrigin={{
-        vertical: "bottom",
+        vertical: "top",
         horizontal: "right",
-      }}
-    >
+      }}>
       <Box sx={{ p: "1rem", width: "20rem" }}>
         {/* show user */}
-
         {user && (
           <Box>
             {/* show user image and name */}
