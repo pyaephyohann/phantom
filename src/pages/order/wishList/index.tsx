@@ -1,4 +1,5 @@
 import OrderAppProductCard from "@/components/OrderAppProductCard";
+import ProductSkeleton from "@/components/ProductSkeleton";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { Box, Typography } from "@mui/material";
@@ -8,7 +9,8 @@ import { useSession } from "next-auth/react";
 const WishList = () => {
   const { data } = useSession();
 
-  const { users, wishLists, products } = useAppSelector(orderAppDatas);
+  const { users, wishLists, products, isLoading } =
+    useAppSelector(orderAppDatas);
 
   const user = users.find((item) => item.email === data?.user?.email) as User;
 
@@ -19,6 +21,7 @@ const WishList = () => {
   const wishListedProducts = products.filter(
     (product) =>
       wishListProductIds.includes(product.id) &&
+      user &&
       wishListUserIds.includes(user.id)
   );
 
@@ -35,27 +38,52 @@ const WishList = () => {
           </Typography>
         )}
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: {
-            xs: "center",
-            sm: "center",
-            md: "flex-start",
-          },
-        }}>
-        {wishListedProducts.map((product) => {
-          return (
-            <Box sx={{ m: "1rem" }}>
-              <OrderAppProductCard
-                product={product}
-                href={`/order/productDetail/${product.id}`}
-              />
-            </Box>
-          );
-        })}
-      </Box>
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            mt: "1rem",
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "flex-start",
+            },
+          }}>
+          {[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20,
+          ].map((index) => {
+            return (
+              <Box sx={{ m: "1rem" }} key={index}>
+                <ProductSkeleton />
+              </Box>
+            );
+          })}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "flex-start",
+            },
+          }}>
+          {wishListedProducts.map((product) => {
+            return (
+              <Box sx={{ m: "1rem" }}>
+                <OrderAppProductCard
+                  product={product}
+                  href={`/order/productDetail/${product.id}`}
+                />
+              </Box>
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 };
