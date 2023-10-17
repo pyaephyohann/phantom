@@ -93,6 +93,20 @@ const OrderAppProductCard = ({ product, href }: Props) => {
         borderRadius: "0.5rem",
         position: "relative",
       }}>
+      {product.discountPrice ? (
+        <Chip
+          sx={{
+            position: "absolute",
+            top: "0.5rem",
+            right: "0.5rem",
+            color: "white",
+          }}
+          label="Discount"
+          color="secondary"
+        />
+      ) : (
+        ""
+      )}
       <Link style={{ textDecoration: "none", color: "black" }} href={href}>
         <Image
           alt={product.name}

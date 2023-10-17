@@ -1,7 +1,7 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Box, IconButton } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -17,7 +17,18 @@ const BackofficeTopBar = () => {
   const user = data?.user;
   const [open, setOpen] = useState(false);
 
-  const [openProfile, setOpenProfile] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openProfile = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const getTitle = () => {
     if (router.pathname === "/backoffice/products/[id]") return "Edit Product";
@@ -91,20 +102,26 @@ const BackofficeTopBar = () => {
             ""
           )}
           {user ? (
-            <Image
-              onClick={() => setOpenProfile(true)}
-              alt={user.name as string}
-              src={user.image as string}
-              width={50}
-              height={50}
-              style={{ borderRadius: "5rem", cursor: "pointer" }}
-            />
+            <Button onClick={handleClick}>
+              <Image
+                alt={user.name as string}
+                src={user.image as string}
+                width={50}
+                height={50}
+                style={{ borderRadius: "5rem", cursor: "pointer" }}
+              />
+            </Button>
           ) : (
             <Typography></Typography>
           )}
         </Toolbar>
       </AppBar>
-      <ProfilePopOver open={openProfile} setOpen={setOpenProfile} />
+      <ProfilePopOver
+        id={id}
+        open={openProfile}
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };

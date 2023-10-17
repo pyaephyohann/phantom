@@ -19,7 +19,7 @@ import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
-import { signOut } from "next-auth/react";
+import ProfilePopOver from "./ProfilePopOver";
 
 const OrderAppTopBar = () => {
   const { data } = useSession();
@@ -31,6 +31,19 @@ const OrderAppTopBar = () => {
   const { cart } = useAppSelector(orderAppDatas);
 
   const [open, setOpen] = useState(false);
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openProfile = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   return (
     <Box>
@@ -97,13 +110,15 @@ const OrderAppTopBar = () => {
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
                 }}>
-                <Image
-                  style={{ borderRadius: "5rem" }}
-                  alt={user.name as string}
-                  src={user.image as string}
-                  width={50}
-                  height={50}
-                />
+                <Button onClick={handleClick}>
+                  <Image
+                    style={{ borderRadius: "5rem" }}
+                    alt={user.name as string}
+                    src={user.image as string}
+                    width={50}
+                    height={50}
+                  />
+                </Button>
               </Box>
             ) : (
               <Button
@@ -121,6 +136,12 @@ const OrderAppTopBar = () => {
         </Toolbar>
       </AppBar>
       <OrderAppSideBar open={open} setOpen={setOpen} />
+      <ProfilePopOver
+        id={id}
+        open={openProfile}
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };

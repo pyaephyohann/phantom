@@ -25,6 +25,9 @@ const MyOrders = () => {
 
   return (
     <Box sx={{ mt: "7rem", px: "2rem" }}>
+      <Typography sx={{ textAlign: "center", mb: "1rem" }} variant="h5">
+        My Orders
+      </Typography>
       <Box
         sx={{
           display: { xs: "none", sm: "flex", md: "flex" },

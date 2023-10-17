@@ -29,7 +29,11 @@ export const generateRandomString = () => {
 
 export const getCartTotalPrice = (cart: CartItem[]) => {
   const totalPrice = cart.reduce((prev, curr) => {
-    return (prev += curr.product.price * curr.quantity);
+    if (curr.product.discountPrice) {
+      return (prev += curr.product.discountPrice * curr.quantity);
+    } else {
+      return (prev += curr.product.price * curr.quantity);
+    }
   }, 0);
   return totalPrice;
 };
