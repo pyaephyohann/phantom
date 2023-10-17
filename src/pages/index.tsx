@@ -1,14 +1,16 @@
 import OrderAppProductCard from "@/components/OrderAppProductCard";
+import OrderCardSkeleton from "@/components/OrderCardSkeleton";
+import ProductSkeleton from "@/components/ProductSkeleton";
 import { RootState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { getProductsByCategoryId } from "@/utils/client";
-import { Box, Tab, Tabs, useMediaQuery } from "@mui/material";
+import { Box, Skeleton, Tab, Tabs, useMediaQuery } from "@mui/material";
 import { Product } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const { products, categories, productsCategories } =
+  const { products, categories, productsCategories, isLoading } =
     useAppSelector(orderAppDatas);
 
   const {
@@ -90,39 +92,94 @@ const Home = () => {
   };
 
   return (
-    <Box>
-      <Box>
-        <Tabs
-          sx={{ mt: "7rem" }}
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
-          value={value}
-          onChange={(event, value) => {
-            setValue(value);
+    <Box sx={{ mt: "7rem" }}>
+      {isLoading ? (
+        <Box>
+          <Box
+            sx={{
+              px: "1rem",
+              display: { xs: "none", sm: "none", md: "block" },
+            }}>
+            <Skeleton
+              animation="wave"
+              variant="rounded"
+              width={1000}
+              height={50}
+            />
+          </Box>
+          <Box
+            sx={{
+              px: "2rem",
+              display: { xs: "block", sm: "block", md: "none" },
+            }}>
+            <Skeleton
+              animation="wave"
+              variant="rounded"
+              width={300}
+              height={50}
+            />
+          </Box>
+        </Box>
+      ) : (
+        <Box>
+          <Tabs
+            variant="scrollable"
+            scrollButtons
+            allowScrollButtonsMobile
+            value={value}
+            onChange={(event, value) => {
+              setValue(value);
+            }}>
+            {categories.map((category) => {
+              return (
+                <Tab
+                  sx={{ textTransform: "none", fontSize: "1.1rem" }}
+                  key={category.id}
+                  disabled={
+                    getProductsByCategoryId(
+                      category.id,
+                      products,
+                      productsCategories
+                    ).length
+                      ? false
+                      : true
+                  }
+                  label={category.name}
+                  onClick={() => setSelectedCategoryId(category.id)}
+                />
+              );
+            })}
+          </Tabs>
+        </Box>
+      )}
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            mt: "1rem",
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "flex-start",
+            },
           }}>
-          {categories.map((category) => {
+          {[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20,
+          ].map((index) => {
             return (
-              <Tab
-                sx={{ textTransform: "none", fontSize: "1.1rem" }}
-                key={category.id}
-                disabled={
-                  getProductsByCategoryId(
-                    category.id,
-                    products,
-                    productsCategories
-                  ).length
-                    ? false
-                    : true
-                }
-                label={category.name}
-                onClick={() => setSelectedCategoryId(category.id)}
-              />
+              <Box sx={{ m: "1rem" }} key={index}>
+                <ProductSkeleton />
+              </Box>
             );
           })}
-        </Tabs>
-      </Box>
-      <Box>{renderProducts(selectedCategoryId)}</Box>
+        </Box>
+      ) : (
+        <Box>
+          <Box>{renderProducts(selectedCategoryId)}</Box>
+        </Box>
+      )}
     </Box>
   );
 };
