@@ -34,6 +34,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           action: "read",
           expires: "01-01-2100",
         });
+
         return res.status(200).send({ url });
       } catch (error) {
         console.error("Error generating and uploading QR code:", error);

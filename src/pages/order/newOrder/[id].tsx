@@ -1,11 +1,5 @@
 import { config } from "@/config";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
@@ -17,7 +11,7 @@ const NewOrder = () => {
 
   const [isGeneratingQrCode, setIsGeneratingQrCode] = useState(false);
 
-  const qrCodeData = `localhost:3000/order/yourOrders/${orderId}`;
+  const qrCodeData = `localhost:3000/order/myOrders/${orderId}`;
 
   const qrCodeFileName = `shwemyintmolfashionshoporder${orderId}.png`;
 
