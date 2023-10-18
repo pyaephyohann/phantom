@@ -11,7 +11,7 @@ const NewOrder = () => {
 
   const [isGeneratingQrCode, setIsGeneratingQrCode] = useState(false);
 
-  const qrCodeData = `localhost:3000/order/myOrders/${orderId}`;
+  const qrCodeData = `https://shwemyintmol.vercel.app/order/myOrders/${orderId}`;
 
   const qrCodeFileName = `shwemyintmolfashionshoporder${orderId}.png`;
 

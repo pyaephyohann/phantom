@@ -11,9 +11,7 @@ interface Props {
 }
 
 const OrderLayout = ({ children }: Props) => {
-  const { data } = useSession();
   const init = useAppSelector((state) => state.orderApp.init);
-  const router = useRouter();
 
   const dispatch = useAppDispatch();
 

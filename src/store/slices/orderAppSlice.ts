@@ -45,6 +45,7 @@ export const fetchOrderAppData = createAsyncThunk(
       orderlines,
       wishLists,
     } = responseJson;
+    console.log(responseJson);
     thunkAPI.dispatch(setUsers(users));
     thunkAPI.dispatch(setProducts(products));
     thunkAPI.dispatch(setCategories(categories));
