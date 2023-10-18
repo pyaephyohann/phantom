@@ -63,10 +63,10 @@ const NewOrder = () => {
               p: "1rem",
               borderRadius: "1rem",
             }}>
-            <Typography sx={{ mr: "1.3rem", color: "info.main" }} variant="h5">
+            <CircularProgress color="info" />
+            <Typography sx={{ ml: "1.3rem", color: "info.main" }} variant="h5">
               Generating QR Code
             </Typography>
-            <CircularProgress color="info" />
           </Box>
         ) : (
           <Box

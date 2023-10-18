@@ -145,12 +145,16 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
           </List>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", mt: "3rem" }}>
-          <IconButton>
-            <FacebookIcon color="info" sx={{ fontSize: "2rem" }} />
-          </IconButton>
-          <IconButton sx={{ mx: "1rem" }}>
-            <TelegramIcon color="info" sx={{ fontSize: "2rem" }} />
-          </IconButton>
+          <a href="https://www.facebook.com/shwemyintmolmm">
+            <IconButton>
+              <FacebookIcon color="info" sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </a>
+          <a href="https://www.instagram.com/pyaephyohan0807/">
+            <IconButton sx={{ mx: "1rem" }}>
+              <TelegramIcon color="info" sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </a>
           <IconButton>
             <InstagramIcon color="info" sx={{ fontSize: "2rem" }} />
           </IconButton>

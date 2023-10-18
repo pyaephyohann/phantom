@@ -14,7 +14,7 @@ export default async function handler(
     const newProductPrice = price ? price : 0;
     const newProductImage = imageUrl
       ? imageUrl
-      : "https://i.pinimg.com/236x/50/6e/dd/506eddb8f3d3e511c470f87d5880b6e3.jpg";
+      : "https://scontent.frgn11-1.fna.fbcdn.net/v/t39.30808-6/286843911_118603337535501_3144343036939119739_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHxskNaT_UIIOsrTbUmyJ1m2QTBzaQl7HnZBMHNpCXseTCye12KSBAd6wk6ZoDsDNvhm1KtjFvMPSik5JEy7y1U&_nc_ohc=iJoaXgB__Y8AX_gHhzb&_nc_ht=scontent.frgn11-1.fna&oh=00_AfAi8o20_BD2CVNO9G4HGS7LjzSaTmHkmeH-j2kzMjgIFg&oe=653520C7";
     const newProduct = await prisma.product.create({
       data: {
         name,

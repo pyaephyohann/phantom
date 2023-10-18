@@ -58,6 +58,7 @@ const Orders = () => {
               sm: "center",
               md: "flex-start",
             },
+            mb: "2rem",
           }}>
           {orders.map((order) => {
             return (
@@ -100,7 +101,8 @@ const Orders = () => {
           })}
         </Box>
       ) : (
-        <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
+        <Box
+          sx={{ display: { xs: "block", sm: "none", md: "none", mb: "2rem" } }}>
           {orders.map((order) => {
             return (
               <Box key={order.id}>
