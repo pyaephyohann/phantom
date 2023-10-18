@@ -24,7 +24,7 @@ interface Props {
   callBack: () => void;
 }
 
-const AddNewProduct = ({
+const AddProduct = ({
   open,
   setOpen,
   joinedProducts,
@@ -35,16 +35,19 @@ const AddNewProduct = ({
 
   const dispatch = useAppDispatch();
 
-  const joinedProductIds = joinedProducts.map((item) => item.id);
+  const joinedProductIds =
+    joinedProducts && joinedProducts.map((item) => item.id);
 
   const unJoinedProducts = products.filter(
     (item) => !joinedProductIds.includes(item.id)
   );
 
-  const mappedUnjoinedProducts = unJoinedProducts.map((product) => ({
-    id: product.id,
-    name: product.name,
-  }));
+  const mappedUnjoinedProducts =
+    unJoinedProducts &&
+    unJoinedProducts.map((product) => ({
+      id: product.id,
+      name: product.name,
+    }));
 
   const [isAdding, setIsAdding] = useState(false);
 
@@ -96,4 +99,4 @@ const AddNewProduct = ({
   );
 };
 
-export default AddNewProduct;
+export default AddProduct;

@@ -46,6 +46,8 @@ const EditCategory = () => {
 
   const [openAddProduct, setOpenAddProduct] = useState(false);
 
+  const [productIdToRemove, setProductIdToRemove] = useState(0);
+
   const [isUpdating, setIsUpdating] = useState(false);
 
   const validProducts = getProductsByCategoryId(
@@ -76,16 +78,18 @@ const EditCategory = () => {
     setOpenSuccessAlert(true);
   };
 
-  const handleRemoveProduct = async (productId: number) => {
+  const handleRemoveProduct = async () => {
     await fetch(`${config.apiBaseUrl}/backoffice/categories/removeProduct`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ productId, categoryId: Number(categoryId) }),
+      body: JSON.stringify({
+        productId: productIdToRemove,
+        categoryId: Number(categoryId),
+      }),
     });
     dispatch(fetchProductsCategories());
-
     setSuccessAlertMessage("Removed Successfully");
     setOpenSuccessAlert(true);
   };
@@ -236,6 +240,7 @@ const EditCategory = () => {
                     )}
                   </Box>
                 </Box>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -253,19 +258,20 @@ const EditCategory = () => {
                     color="primary"
                     label="Remove"
                     onClick={() => {
+                      setProductIdToRemove(product.id);
                       setRemoveDialogMessage(
                         `Are you sure you want to remove ${product.name} from this category`
                       );
                       setOpenRemoveDialog(true);
                     }}
                   />
+                  <RemoveDialog
+                    open={openRemoveDialog}
+                    setOpen={setOpenRemoveDialog}
+                    title={removeDialogMessage}
+                    callBack={handleRemoveProduct}
+                  />
                 </Box>
-                <RemoveDialog
-                  open={openRemoveDialog}
-                  setOpen={setOpenRemoveDialog}
-                  title={removeDialogMessage}
-                  callBack={() => handleRemoveProduct(product.id)}
-                />
               </Card>
             </Box>
           );

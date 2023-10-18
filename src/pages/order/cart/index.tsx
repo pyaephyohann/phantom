@@ -380,7 +380,7 @@ const Cart = () => {
               fontSize: "1.8rem",
               mb: "3rem",
             }}>
-            Please let's us know your information before order!
+            Please lets us know your information before order!
           </Typography>
           <Box
             sx={{
