@@ -88,7 +88,7 @@ const SearchBar = () => {
         color="info"
         sx={{
           color: "info.main",
-          width: { xs: "10rem", sm: "15rem", md: "20rem" },
+          width: { xs: "13rem", sm: "15rem", md: "20rem" },
         }}
         InputProps={{
           sx: {
