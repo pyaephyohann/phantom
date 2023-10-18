@@ -50,7 +50,12 @@ const OrderAppTopBar = () => {
   return (
     <Box>
       <AppBar sx={{ p: "0.5rem" }} position="static">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            pl: { xs: "0", sm: "0.5rem", md: "0.5rem" },
+          }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {data && (
               <IconButton
