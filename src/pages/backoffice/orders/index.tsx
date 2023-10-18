@@ -25,6 +25,18 @@ const Orders = () => {
 
   return (
     <Box>
+      <Box>
+        {orders.length ? (
+          ""
+        ) : (
+          <Typography sx={{ textAlign: "center" }} variant="h5">
+            You dont have any orders yet!
+          </Typography>
+        )}
+      </Box>
+      <Typography sx={{ textAlign: "center" }} variant="h5">
+        You dont have any orders yet!
+      </Typography>
       {isLoading ? (
         <Box
           sx={{
