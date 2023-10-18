@@ -104,11 +104,13 @@ const MyOrders = () => {
         <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
           {orders.map((order) => {
             return (
-              <OrderCardMobile
-                order={order}
-                orderlineStatus={getOrderlineStatus(order.id, orderlines)}
-                href={`/order/myOrders/${order.id}`}
-              />
+              <Box key={order.id}>
+                <OrderCardMobile
+                  order={order}
+                  orderlineStatus={getOrderlineStatus(order.id, orderlines)}
+                  href={`/order/myOrders/${order.id}`}
+                />
+              </Box>
             );
           })}
         </Box>

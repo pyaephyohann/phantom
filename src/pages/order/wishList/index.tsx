@@ -74,7 +74,7 @@ const WishList = () => {
           }}>
           {wishListedProducts.map((product) => {
             return (
-              <Box sx={{ m: "1rem" }}>
+              <Box key={product.id} sx={{ m: "1rem" }}>
                 <OrderAppProductCard
                   product={product}
                   href={`/order/productDetail/${product.id}`}
