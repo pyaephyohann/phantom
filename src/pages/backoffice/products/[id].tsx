@@ -211,7 +211,7 @@ const EditProducts = () => {
                 );
                 setOpenDeleteDialog(true);
               }}
-              sx={{ bgcolor: "primary.main" }}>
+              sx={{ bgcolor: "secondary.main" }}>
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>

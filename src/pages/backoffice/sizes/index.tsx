@@ -59,7 +59,7 @@ const Sizes = () => {
                     name={size.name}
                     icon={
                       <AnimationIcon
-                        color="primary"
+                        color="secondary"
                         sx={{ fontSize: "2.3rem" }}
                       />
                     }

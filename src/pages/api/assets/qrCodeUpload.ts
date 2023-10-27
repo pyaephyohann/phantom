@@ -3,10 +3,10 @@ import * as qrcode from "qrcode";
 import * as admin from "firebase-admin";
 
 if (!admin.apps.length) {
-  const serviceAccount = require("./shwe-myint-mol-production-firebase-adminsdk-zs9wa-9a32d67b92.json");
+  const serviceAccount = require("./phantom-4351b-firebase-adminsdk-n70hw-474769039e.json");
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "shwe-myint-mol-production.appspot.com",
+    storageBucket: "phantom-4351b.appspot.com",
   });
 }
 

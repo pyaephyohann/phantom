@@ -6,7 +6,7 @@ const Settings = () => {
   const settingItems = [
     {
       name: "Trash",
-      icon: <DeleteSweepIcon sx={{ color: "#fff" }} />,
+      icon: <DeleteSweepIcon sx={{ color: "#F2BE22" }} />,
       href: "/backoffice/settings/trash",
     },
   ];
@@ -18,8 +18,7 @@ const Settings = () => {
           <Link
             style={{ textDecoration: "none" }}
             href={item.href}
-            key={item.name}
-          >
+            key={item.name}>
             <Box
               key={item.name}
               sx={{
@@ -30,8 +29,7 @@ const Settings = () => {
                 borderRadius: "0.5rem",
                 m: "1rem",
                 width: "10rem",
-              }}
-            >
+              }}>
               {item.icon}
               <Typography sx={{ ml: "0.8rem", color: "#fff" }}>
                 {item.name}

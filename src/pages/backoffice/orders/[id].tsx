@@ -129,7 +129,7 @@ const Order = () => {
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "flex-end", my: "0.5rem" }}>
         <IconButton onClick={handleClick}>
-          <BoltIcon sx={{ fontSize: "2rem" }} color="primary" />
+          <BoltIcon sx={{ fontSize: "2rem" }} color="secondary" />
         </IconButton>
         <Popover
           sx={{ width: "200rem" }}

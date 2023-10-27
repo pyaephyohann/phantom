@@ -59,7 +59,7 @@ const Colors = () => {
                     name={color.name}
                     icon={
                       <PaletteIcon
-                        color="primary"
+                        color="secondary"
                         sx={{ fontSize: "2.3rem" }}
                       />
                     }

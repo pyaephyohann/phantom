@@ -31,32 +31,32 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <ShoppingCartIcon sx={{ color: "#fff" }} />,
+      icon: <ShoppingCartIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/orders",
     },
     {
       name: "Products",
-      icon: <InventoryIcon sx={{ color: "#fff" }} />,
+      icon: <InventoryIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/products",
     },
     {
       name: "Categories",
-      icon: <CategoryIcon sx={{ color: "#fff" }} />,
+      icon: <CategoryIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/categories",
     },
     {
       name: "Sizes",
-      icon: <AnimationIcon sx={{ color: "#fff" }} />,
+      icon: <AnimationIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/sizes",
     },
     {
       name: "Colors",
-      icon: <PaletteIcon sx={{ color: "#fff" }} />,
+      icon: <PaletteIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/colors",
     },
     {
       name: "Settings",
-      icon: <SettingsIcon sx={{ color: "#fff" }} />,
+      icon: <SettingsIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/settings",
     },
   ];
@@ -69,26 +69,26 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
           bgcolor: "primary.main",
           color: "text.primary",
           px: "1rem",
-          pt: "1.2rem",
+          pt: "1.5rem",
         }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            pb: "0.5rem",
+            pb: "1rem",
           }}>
           {user && (
             <Image
               style={{ borderRadius: "5rem" }}
               src={user.image as string}
               alt={user.name as string}
-              width={40}
-              height={40}
+              width={50}
+              height={50}
             />
           )}
           <IconButton onClick={() => setOpen(false)}>
-            <CancelIcon sx={{ fontSize: "1.8rem", color: "white" }} />
+            <CancelIcon sx={{ fontSize: "2rem", color: "secondary.main" }} />
           </IconButton>
         </Box>
         <List>

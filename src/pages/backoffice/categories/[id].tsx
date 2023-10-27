@@ -248,14 +248,16 @@ const EditCategory = () => {
                     mt: "1rem",
                   }}>
                   <Chip
-                    color="primary"
+                    sx={{ color: "info.main" }}
+                    color="secondary"
                     label="Edit"
                     onClick={() => {
                       router.push(`/backoffice/products/${product.id}`);
                     }}
                   />
                   <Chip
-                    color="primary"
+                    sx={{ color: "info.main" }}
+                    color="secondary"
                     label="Remove"
                     onClick={() => {
                       setProductIdToRemove(product.id);

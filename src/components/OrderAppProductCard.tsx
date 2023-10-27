@@ -109,6 +109,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
       )}
       <Link style={{ textDecoration: "none", color: "black" }} href={href}>
         <Image
+          style={{ borderRadius: "0.5rem" }}
           alt={product.name}
           src={product.imageUrl as string}
           width={180}
@@ -144,7 +145,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
                 onClick={() => {
                   handleRemoveFromWishLists(product.id, currentUser.id);
                 }}>
-                <FavoriteIcon sx={{ fontSize: "1.8rem" }} color="primary" />
+                <FavoriteIcon sx={{ fontSize: "1.8rem" }} color="secondary" />
               </IconButton>
             ) : (
               <IconButton
@@ -153,7 +154,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
                 }}>
                 <FavoriteBorderIcon
                   sx={{ fontSize: "1.8rem" }}
-                  color="primary"
+                  color="secondary"
                 />
               </IconButton>
             )}
@@ -163,17 +164,18 @@ const OrderAppProductCard = ({ product, href }: Props) => {
             onClick={() => {
               router.push("/auth/order/signin");
             }}>
-            <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="primary" />
+            <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="secondary" />
           </IconButton>
         )}
         {isInCart ? (
           <Link
-            style={{ textDecoration: "none", color: "#FFA1F5" }}
+            style={{ textDecoration: "none", color: "#FCE22A" }}
             href={"/order/cart"}>
             View Cart
           </Link>
         ) : (
           <Chip
+            sx={{ color: "info.main" }}
             onClick={() => {
               dispatch(
                 addToCart({
@@ -186,9 +188,9 @@ const OrderAppProductCard = ({ product, href }: Props) => {
               setSuccessAlertMessage("Added to cart");
               setOpenSuccessAlert(true);
             }}
-            color="primary"
+            color="secondary"
             clickable
-            icon={<ShoppingCartIcon />}
+            icon={<ShoppingCartIcon color="info" />}
             label="Add to cart"
           />
         )}

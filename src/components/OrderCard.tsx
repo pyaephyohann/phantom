@@ -48,7 +48,11 @@ const OrderCard = ({
           }}>
           <Typography>Order {orderId}</Typography>
           <ShoppingCartIcon
-            sx={{ bgcolor: "primary.main", p: "0.5rem", borderRadius: "5rem" }}
+            sx={{
+              bgcolor: "secondary.main",
+              p: "0.5rem",
+              borderRadius: "5rem",
+            }}
             color="info"
           />
         </Box>

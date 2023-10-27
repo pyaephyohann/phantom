@@ -70,8 +70,9 @@ const OrderAppTopBar = () => {
                   fontFamily: "'Dancing Script', cursive",
                   fontSize: "2rem",
                   display: { xs: "none", sm: "none", md: "block" },
+                  color: "secondary.main",
                 }}>
-                Shwe Myint Mol
+                Phantom
               </Typography>
             </Link>
           </Box>

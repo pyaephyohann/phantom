@@ -57,7 +57,7 @@ const NewOrder = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              bgcolor: "primary.main",
+              bgcolor: "secondary.main",
               width: "fit-content",
               mx: "auto",
               p: "1rem",
@@ -72,7 +72,7 @@ const NewOrder = () => {
           <Box
             sx={{
               p: "1.5rem",
-              bgcolor: "primary.main",
+              bgcolor: "secondary.main",
               width: "fit-content",
               mx: "auto",
               borderRadius: "1.5rem",
@@ -89,7 +89,7 @@ const NewOrder = () => {
                 fontSize: "1.3rem",
                 mt: "1rem",
               }}>
-              Shwe Myint Mol
+              Phantom
             </Typography>
           </Box>
         )}
@@ -105,7 +105,7 @@ const NewOrder = () => {
         <Box
           sx={{
             width: "15rem",
-            bgcolor: "primary.main",
+            bgcolor: "secondary.main",
             borderRadius: "1rem",
             mx: "auto",
             p: "0.6rem",

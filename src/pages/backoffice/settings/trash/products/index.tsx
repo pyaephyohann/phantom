@@ -170,6 +170,8 @@ const DeletedProducts = () => {
                         mt: "1rem",
                       }}>
                       <Button
+                        sx={{ color: "info.main" }}
+                        color="secondary"
                         onClick={() => {
                           setProductIdToUndo(product.id);
                           setOpenRemoveDialog(true);

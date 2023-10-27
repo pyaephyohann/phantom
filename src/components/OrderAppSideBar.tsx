@@ -35,22 +35,22 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
   const sideBarItems = [
     {
       name: "My Orders",
-      icon: <ArticleIcon sx={{ color: "#fff" }} />,
+      icon: <ArticleIcon sx={{ color: "#F2BE22" }} />,
       route: "/order/myOrders",
     },
     {
       name: "Wish List",
-      icon: <FavoriteIcon sx={{ color: "#fff" }} />,
+      icon: <FavoriteIcon sx={{ color: "#F2BE22" }} />,
       route: "/order/wishList",
     },
     {
       name: "Account",
-      icon: <AccountBoxIcon sx={{ color: "#fff" }} />,
+      icon: <AccountBoxIcon sx={{ color: "#F2BE22" }} />,
       route: "/order/account",
     },
     {
       name: "Contact Us",
-      icon: <ContactMailIcon sx={{ color: "#fff" }} />,
+      icon: <ContactMailIcon sx={{ color: "#F2BE22" }} />,
       route: "/order/contactUs",
     },
   ];
@@ -68,7 +68,7 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <IconButton
             onClick={() => setOpen(false)}
-            sx={{ p: "0.5rem", bgcolor: "#fff" }}>
+            sx={{ p: "0.5rem", bgcolor: "#F2BE22" }}>
             <ArrowBackIosNewIcon color="primary" />
           </IconButton>
         </Box>
@@ -81,8 +81,10 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
               fontFamily: "'Dancing Script', cursive",
               fontSize: "2rem",
               mt: "1.5rem",
+              textAlign: "center",
+              color: "secondary.main",
             }}>
-            Shwe Myint Mol
+            Phantom
           </Typography>
         </Link>
         {/* user */}
@@ -147,17 +149,17 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
         <Box sx={{ display: "flex", justifyContent: "center", mt: "3rem" }}>
           <a href="https://www.facebook.com/shwemyintmolmm">
             <IconButton>
-              <FacebookIcon color="info" sx={{ fontSize: "2rem" }} />
+              <FacebookIcon color="secondary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
 
           <IconButton sx={{ mx: "1rem" }}>
-            <TelegramIcon color="info" sx={{ fontSize: "2rem" }} />
+            <TelegramIcon color="secondary" sx={{ fontSize: "2rem" }} />
           </IconButton>
 
           <a href="https://www.instagram.com/pyaephyohan0807/">
             <IconButton>
-              <InstagramIcon color="info" sx={{ fontSize: "2rem" }} />
+              <InstagramIcon color="secondary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
         </Box>

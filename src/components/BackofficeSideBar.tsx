@@ -21,32 +21,32 @@ const BackofficeSideBar = () => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <ShoppingCartIcon sx={{ color: "#fff" }} />,
+      icon: <ShoppingCartIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/orders",
     },
     {
       name: "Products",
-      icon: <InventoryIcon sx={{ color: "#fff" }} />,
+      icon: <InventoryIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/products",
     },
     {
       name: "Categories",
-      icon: <CategoryIcon sx={{ color: "#fff" }} />,
+      icon: <CategoryIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/categories",
     },
     {
       name: "Sizes",
-      icon: <AnimationIcon sx={{ color: "#fff" }} />,
+      icon: <AnimationIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/sizes",
     },
     {
       name: "Colors",
-      icon: <PaletteIcon sx={{ color: "#fff" }} />,
+      icon: <PaletteIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/colors",
     },
     {
       name: "Settings",
-      icon: <SettingsIcon sx={{ color: "#fff" }} />,
+      icon: <SettingsIcon sx={{ color: "#F2BE22" }} />,
       route: "/backoffice/settings",
     },
   ];

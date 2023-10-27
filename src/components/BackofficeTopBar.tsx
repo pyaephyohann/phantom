@@ -80,7 +80,7 @@ const BackofficeTopBar = () => {
               <Link
                 style={{
                   textDecoration: "none",
-                  color: "#fff",
+                  color: "#F2BE22",
                 }}
                 href={"/backoffice"}>
                 <Typography
@@ -88,7 +88,7 @@ const BackofficeTopBar = () => {
                     fontFamily: "'Dancing Script', cursive",
                     fontSize: "2rem",
                   }}>
-                  Shwe Myint Mol
+                  Phantom
                 </Typography>
               </Link>
             </Box>

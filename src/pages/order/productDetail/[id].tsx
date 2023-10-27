@@ -133,7 +133,10 @@ const ProductDetail = () => {
                     onClick={() => {
                       handleRemoveFromWishLists(product.id, currentUser.id);
                     }}>
-                    <FavoriteIcon sx={{ fontSize: "2.2rem" }} color="primary" />
+                    <FavoriteIcon
+                      sx={{ fontSize: "2.2rem" }}
+                      color="secondary"
+                    />
                   </IconButton>
                 ) : (
                   <IconButton
@@ -143,7 +146,7 @@ const ProductDetail = () => {
                     }}>
                     <FavoriteBorderIcon
                       sx={{ fontSize: "2.2rem" }}
-                      color="primary"
+                      color="secondary"
                     />
                   </IconButton>
                 )}
@@ -156,7 +159,7 @@ const ProductDetail = () => {
                 }}>
                 <FavoriteBorderIcon
                   sx={{ fontSize: "2.2rem" }}
-                  color="primary"
+                  color="secondary"
                 />
               </IconButton>
             )}
@@ -164,7 +167,7 @@ const ProductDetail = () => {
               <Link
                 style={{
                   textDecoration: "none",
-                  color: "#FFA1F5",
+                  color: "#F2BE22",
                   fontSize: "1.2rem",
                 }}
                 href={"/order/cart"}>
@@ -184,7 +187,7 @@ const ProductDetail = () => {
                   setOpenSuccessAlert(true);
                 }}
                 sx={{
-                  bgcolor: "primary.main",
+                  bgcolor: "secondary.main",
                   width: "fit-content",
                   borderRadius: "1rem",
                   p: "0.8rem",

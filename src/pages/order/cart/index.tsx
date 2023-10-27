@@ -148,7 +148,7 @@ const Cart = () => {
                   <TableCell align="center">
                     <IconButton
                       onClick={() => dispatch(removeFromCart(cartItem))}
-                      sx={{ bgcolor: "primary.main" }}>
+                      sx={{ bgcolor: "secondary.main" }}>
                       <DeleteIcon color="info" sx={{ fontSize: "2rem" }} />
                     </IconButton>
                   </TableCell>
@@ -235,7 +235,7 @@ const Cart = () => {
               <IconButton
                 onClick={() => dispatch(removeFromCart(cartItem))}
                 sx={{
-                  bgcolor: "primary.main",
+                  bgcolor: "secondary.main",
                   position: "absolute",
                   top: "1rem",
                   right: "1rem",

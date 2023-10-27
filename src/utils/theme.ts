@@ -3,16 +3,13 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   palette: {
     primary: {
-      // pink
-      main: "#FFA1F5",
+      main: "#242424",
       contrastText: "#fff",
     },
     secondary: {
-      // green
-      main: "#00DFA2",
+      main: "#F2BE22",
     },
     info: {
-      // yellow
       main: "#fff",
     },
     success: {
