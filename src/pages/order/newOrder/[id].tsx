@@ -11,9 +11,9 @@ const NewOrder = () => {
 
   const [isGeneratingQrCode, setIsGeneratingQrCode] = useState(false);
 
-  const qrCodeData = `https://shwemyintmol.vercel.app/order/myOrders/${orderId}`;
+  const qrCodeData = `https://phantom-murex.vercel.app/order/myOrders/${orderId}`;
 
-  const qrCodeFileName = `shwemyintmolfashionshoporder${orderId}.png`;
+  const qrCodeFileName = `phantomorder${orderId}.png`;
 
   const generateQrCode = async () => {
     setIsGeneratingQrCode(true);
