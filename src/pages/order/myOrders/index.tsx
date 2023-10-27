@@ -6,7 +6,6 @@ import { useAppSelector } from "@/store/hooks";
 import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { getOrderlineStatus } from "@/utils/client";
 import { Box, Card, Typography } from "@mui/material";
-import { User } from "@prisma/client";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 
@@ -102,7 +101,7 @@ const MyOrders = () => {
         </Box>
       ) : (
         <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
-          {orders.map((order) => {
+          {currentUserOrders.map((order) => {
             return (
               <Box key={order.id}>
                 <OrderCardMobile
