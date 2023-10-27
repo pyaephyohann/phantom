@@ -3,11 +3,21 @@ import { orderAppDatas } from "@/store/slices/orderAppSlice";
 import { Box, Card, Typography } from "@mui/material";
 import { Order, OrderStatus, Product, Size, User } from "@prisma/client";
 import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Order = () => {
+  const { data } = useSession();
+
   const router = useRouter();
   const orderId = router.query.id;
+
+  useEffect(() => {
+    if (!data) {
+      router.push("/auth/order/signin");
+    }
+  }, [data]);
 
   const { orders, orderlines, users, sizes, products } =
     useAppSelector(orderAppDatas);

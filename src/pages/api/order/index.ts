@@ -43,7 +43,13 @@ export default async function handler(
   const sizes = await prisma.size.findMany();
   const colors = await prisma.color.findMany();
   const genders = await prisma.gender.findMany();
-  const orders = user ? await prisma.order.findMany() : [];
+  const orders = user
+    ? await prisma.order.findMany({
+        orderBy: {
+          id: "desc",
+        },
+      })
+    : [];
   const orderlines = user ? await prisma.orderline.findMany() : [];
   const wishLists = user ? await prisma.wishList.findMany() : [];
   return res.status(200).send({

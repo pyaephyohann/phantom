@@ -17,7 +17,7 @@ const MyOrders = () => {
   const { orders, users, orderlines, isLoading } =
     useAppSelector(orderAppDatas);
 
-  const currentUser = users.find((item) => item.email === user?.email) as User;
+  const currentUser = user && users.find((item) => item.email === user?.email);
 
   const currentUserOrders = orders.filter(
     (order) => currentUser && order.userId === currentUser.id
