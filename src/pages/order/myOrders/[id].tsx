@@ -9,18 +9,26 @@ import { useEffect } from "react";
 
 const Order = () => {
   const { data } = useSession();
-
   const router = useRouter();
   const orderId = router.query.id;
+
+  const { orders, orderlines, users, sizes, products } =
+    useAppSelector(orderAppDatas);
 
   useEffect(() => {
     if (!data) {
       router.push("/auth/order/signin");
     }
+    const currentUser = users.find((user) => user.email === data?.user?.email);
+    if (currentUser) {
+      const isCurrentUsersOrder = orders.find(
+        (order) => order.userId === currentUser.id
+      );
+      if (!isCurrentUsersOrder) {
+        router.push("/");
+      }
+    }
   }, [data]);
-
-  const { orders, orderlines, users, sizes, products } =
-    useAppSelector(orderAppDatas);
 
   const order = orders.find((item) => item.id === Number(orderId)) as Order;
 
