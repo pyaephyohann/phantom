@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 const Order = () => {
   const { data } = useSession();
+  const user = data?.user;
   const router = useRouter();
   const orderId = router.query.id;
 
@@ -16,7 +17,7 @@ const Order = () => {
     useAppSelector(orderAppDatas);
 
   useEffect(() => {
-    if (!data) {
+    if (!user) {
       router.push("/auth/order/signin");
     }
     const currentUser = users.find((user) => user.email === data?.user?.email);
