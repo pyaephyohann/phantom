@@ -10,14 +10,20 @@ import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <SessionProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </SessionProvider>
-      </ThemeProvider>
-    </Provider>
+    <>
+      <Head>
+        <title>Phantom</title>
+        <link rel="icon" href="favicon.png"></link>
+      </Head>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <SessionProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </SessionProvider>
+        </ThemeProvider>
+      </Provider>
+    </>
   );
 }
