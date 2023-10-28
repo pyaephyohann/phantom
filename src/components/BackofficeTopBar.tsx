@@ -87,6 +87,7 @@ const BackofficeTopBar = () => {
                   sx={{
                     fontFamily: "'Dancing Script', cursive",
                     fontSize: "2rem",
+                    color: "primary.main",
                   }}>
                   Phantom
                 </Typography>

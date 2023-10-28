@@ -76,7 +76,8 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            pb: "1rem",
+            pb: "1.5rem",
+            pt: "1.2rem",
           }}>
           {user && (
             <Image

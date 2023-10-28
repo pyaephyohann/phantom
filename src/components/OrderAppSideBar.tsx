@@ -63,7 +63,6 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
           bgcolor: "secondary.main",
           color: "#fff",
           px: "2rem",
-          pt: "1.2rem",
         }}>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <IconButton
