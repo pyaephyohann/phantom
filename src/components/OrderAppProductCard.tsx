@@ -92,6 +92,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
         px: "1.5rem",
         borderRadius: "0.5rem",
         position: "relative",
+        bgcolor: "background.paper",
       }}>
       {product.discountPrice ? (
         <Chip
@@ -102,7 +103,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
             color: "white",
           }}
           label="Discount"
-          color="secondary"
+          color="primary"
         />
       ) : (
         ""
@@ -115,10 +116,10 @@ const OrderAppProductCard = ({ product, href }: Props) => {
           width={180}
           height={180}
         />
-        <Typography sx={{ mt: "1rem", mb: "0.9rem" }}>
+        <Typography sx={{ mt: "1rem", mb: "0.9rem", color: "info.main" }}>
           {product.name}
         </Typography>
-        <Box>
+        <Box sx={{ color: "info.main" }}>
           {product.discountPrice ? (
             <Box sx={{ display: "flex" }}>
               <Typography sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
@@ -145,7 +146,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
                 onClick={() => {
                   handleRemoveFromWishLists(product.id, currentUser.id);
                 }}>
-                <FavoriteIcon sx={{ fontSize: "1.8rem" }} color="secondary" />
+                <FavoriteIcon sx={{ fontSize: "1.8rem" }} color="primary" />
               </IconButton>
             ) : (
               <IconButton
@@ -154,7 +155,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
                 }}>
                 <FavoriteBorderIcon
                   sx={{ fontSize: "1.8rem" }}
-                  color="secondary"
+                  color="primary"
                 />
               </IconButton>
             )}
@@ -164,7 +165,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
             onClick={() => {
               router.push("/auth/order/signin");
             }}>
-            <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="secondary" />
+            <FavoriteBorderIcon sx={{ fontSize: "1.8rem" }} color="primary" />
           </IconButton>
         )}
         {isInCart ? (
@@ -188,7 +189,7 @@ const OrderAppProductCard = ({ product, href }: Props) => {
               setSuccessAlertMessage("Added to cart");
               setOpenSuccessAlert(true);
             }}
-            color="secondary"
+            color="primary"
             clickable
             icon={<ShoppingCartIcon color="info" />}
             label="Add to cart"

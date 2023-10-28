@@ -70,7 +70,7 @@ const Categories = () => {
                     name={category.name}
                     icon={
                       <CategoryIcon
-                        color="secondary"
+                        color="primary"
                         sx={{ fontSize: "2.3rem" }}
                       />
                     }

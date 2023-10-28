@@ -72,7 +72,7 @@ const EditSize = () => {
           <Typography sx={{ fontSize: "1.3rem", mr: "0.7rem" }}>
             Edit your size
           </Typography>
-          <EditIcon />
+          <EditIcon color="primary" />
         </Box>
         <TextField
           onChange={(event) => setName(event.target.value)}

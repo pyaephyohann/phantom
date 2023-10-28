@@ -27,8 +27,7 @@ const BackofficeProductCard = ({
           px: "1.5rem",
           borderRadius: "0.5rem",
           position: "relative",
-        }}
-      >
+        }}>
         {discountPrice ? (
           <Chip
             sx={{
@@ -38,7 +37,7 @@ const BackofficeProductCard = ({
               color: "white",
             }}
             label="Discount"
-            color="secondary"
+            color="primary"
           />
         ) : (
           ""
@@ -56,8 +55,7 @@ const BackofficeProductCard = ({
             {discountPrice ? (
               <Box sx={{ display: "flex" }}>
                 <Typography
-                  sx={{ textDecoration: "line-through", mr: "0.5rem" }}
-                >
+                  sx={{ textDecoration: "line-through", mr: "0.5rem" }}>
                   {price} Ks
                 </Typography>
                 <Typography>{discountPrice} Ks</Typography>

@@ -31,32 +31,32 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
   const sideBarItems = [
     {
       name: "Orders",
-      icon: <ShoppingCartIcon sx={{ color: "#F2BE22" }} />,
+      icon: <ShoppingCartIcon color="primary" />,
       route: "/backoffice/orders",
     },
     {
       name: "Products",
-      icon: <InventoryIcon sx={{ color: "#F2BE22" }} />,
+      icon: <InventoryIcon color="primary" />,
       route: "/backoffice/products",
     },
     {
       name: "Categories",
-      icon: <CategoryIcon sx={{ color: "#F2BE22" }} />,
+      icon: <CategoryIcon color="primary" />,
       route: "/backoffice/categories",
     },
     {
       name: "Sizes",
-      icon: <AnimationIcon sx={{ color: "#F2BE22" }} />,
+      icon: <AnimationIcon color="primary" />,
       route: "/backoffice/sizes",
     },
     {
       name: "Colors",
-      icon: <PaletteIcon sx={{ color: "#F2BE22" }} />,
+      icon: <PaletteIcon color="primary" />,
       route: "/backoffice/colors",
     },
     {
       name: "Settings",
-      icon: <SettingsIcon sx={{ color: "#F2BE22" }} />,
+      icon: <SettingsIcon color="primary" />,
       route: "/backoffice/settings",
     },
   ];
@@ -66,7 +66,7 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
       <Box
         sx={{
           height: "100vh",
-          bgcolor: "primary.main",
+          bgcolor: "secondary.main",
           color: "text.primary",
           px: "1rem",
           pt: "1.5rem",
@@ -88,7 +88,7 @@ const BackofficeSideBarDrawer = ({ open, setOpen }: Props) => {
             />
           )}
           <IconButton onClick={() => setOpen(false)}>
-            <CancelIcon sx={{ fontSize: "2rem", color: "secondary.main" }} />
+            <CancelIcon sx={{ fontSize: "2rem", color: "primary.main" }} />
           </IconButton>
         </Box>
         <List>

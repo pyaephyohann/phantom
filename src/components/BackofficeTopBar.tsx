@@ -55,7 +55,7 @@ const BackofficeTopBar = () => {
 
   return (
     <Box>
-      <AppBar sx={{ p: "0.5rem", bgcolor: "primary.main" }} position="static">
+      <AppBar sx={{ p: "0.5rem", bgcolor: "secondary.main" }} position="static">
         <Toolbar
           sx={{
             display: "flex",

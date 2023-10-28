@@ -22,11 +22,11 @@ const FileDropZoneForProductUpdate = ({ onSelectFile }: Props) => {
     <div {...getRootProps()}>
       <input {...getInputProps()} />
       {isDragActive ? (
-        <IconButton sx={{ bgcolor: "secondary.main", mr: "5rem" }}>
+        <IconButton sx={{ bgcolor: "primary.main", mr: "5rem" }}>
           <EditIcon sx={{ color: "#fff" }} />
         </IconButton>
       ) : (
-        <IconButton sx={{ bgcolor: "secondary.main", mr: "5rem" }}>
+        <IconButton sx={{ bgcolor: "primary.main", mr: "5rem" }}>
           <EditIcon sx={{ color: "#fff" }} />
         </IconButton>
       )}

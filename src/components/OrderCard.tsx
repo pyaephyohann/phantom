@@ -49,7 +49,7 @@ const OrderCard = ({
           <Typography>Order {orderId}</Typography>
           <ShoppingCartIcon
             sx={{
-              bgcolor: "secondary.main",
+              bgcolor: "primary.main",
               p: "0.5rem",
               borderRadius: "5rem",
             }}

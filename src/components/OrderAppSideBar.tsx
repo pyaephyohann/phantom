@@ -60,7 +60,7 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
       <Box
         sx={{
           height: "100vh",
-          bgcolor: "primary.main",
+          bgcolor: "secondary.main",
           color: "#fff",
           px: "2rem",
           pt: "1.2rem",
@@ -69,7 +69,7 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
           <IconButton
             onClick={() => setOpen(false)}
             sx={{ p: "0.5rem", bgcolor: "#F2BE22" }}>
-            <ArrowBackIosNewIcon color="primary" />
+            <ArrowBackIosNewIcon color="secondary" />
           </IconButton>
         </Box>
         <Link
@@ -82,7 +82,7 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
               fontSize: "2rem",
               mt: "1.5rem",
               textAlign: "center",
-              color: "secondary.main",
+              color: "primary.main",
             }}>
             Phantom
           </Typography>
@@ -149,17 +149,17 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
         <Box sx={{ display: "flex", justifyContent: "center", mt: "3rem" }}>
           <a href="https://www.facebook.com/profile.php?id=100048688099795">
             <IconButton>
-              <FacebookIcon color="secondary" sx={{ fontSize: "2rem" }} />
+              <FacebookIcon color="primary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
           <a href="https://github.com/pyaephyohann">
             <IconButton sx={{ mx: "1rem" }}>
-              <GitHubIcon color="secondary" sx={{ fontSize: "2rem" }} />
+              <GitHubIcon color="primary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
           <a href="https://www.instagram.com/pyaephyohan0807/">
             <IconButton>
-              <InstagramIcon color="secondary" sx={{ fontSize: "2rem" }} />
+              <InstagramIcon color="primary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
         </Box>
