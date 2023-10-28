@@ -17,7 +17,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TelegramIcon from "@mui/icons-material/Telegram";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -147,16 +147,16 @@ const OrderAppSideBar = ({ open, setOpen }: Props) => {
           </List>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", mt: "3rem" }}>
-          <a href="https://www.facebook.com/shwemyintmolmm">
+          <a href="https://www.facebook.com/profile.php?id=100048688099795">
             <IconButton>
               <FacebookIcon color="secondary" sx={{ fontSize: "2rem" }} />
             </IconButton>
           </a>
-
-          <IconButton sx={{ mx: "1rem" }}>
-            <TelegramIcon color="secondary" sx={{ fontSize: "2rem" }} />
-          </IconButton>
-
+          <a href="https://github.com/pyaephyohann">
+            <IconButton sx={{ mx: "1rem" }}>
+              <GitHubIcon color="secondary" sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </a>
           <a href="https://www.instagram.com/pyaephyohan0807/">
             <IconButton>
               <InstagramIcon color="secondary" sx={{ fontSize: "2rem" }} />
