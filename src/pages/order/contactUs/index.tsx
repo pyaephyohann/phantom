@@ -6,18 +6,18 @@ import EmailIcon from "@mui/icons-material/Email";
 const ContactUs = () => {
   const contactDatas = [
     {
-      icon: <LocationOnIcon sx={{ fontSize: "2rem" }} color="secondary" />,
+      icon: <LocationOnIcon sx={{ fontSize: "2rem" }} color="primary" />,
       title: "Address",
       content:
         "No(27), Thirimon (5th) Street, Bayint Naung, Mayangone Township, Yangon, Myanmar.",
     },
     {
-      icon: <LocalPhoneIcon sx={{ fontSize: "2rem" }} color="secondary" />,
+      icon: <LocalPhoneIcon sx={{ fontSize: "2rem" }} color="primary" />,
       title: "Phone",
       content: "+959757814509, +959682760037",
     },
     {
-      icon: <EmailIcon sx={{ fontSize: "2rem" }} color="secondary" />,
+      icon: <EmailIcon sx={{ fontSize: "2rem" }} color="primary" />,
       title: "Email",
       content: "pyaephyohan2200@gmail.com",
     },

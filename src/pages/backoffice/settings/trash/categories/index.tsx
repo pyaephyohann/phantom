@@ -123,7 +123,7 @@ const DeletedCategories = () => {
                         right: "0.5rem",
                         color: "info.main",
                       }}
-                      color="secondary"
+                      color="primary"
                       label="Undo"
                       onClick={() => {
                         setCategoryIdToUndo(category.id);

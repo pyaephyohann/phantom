@@ -126,7 +126,7 @@ const EditCategory = () => {
           <Typography sx={{ fontSize: "1.3rem", mr: "0.5rem" }}>
             Edit Category Name
           </Typography>
-          <ModeEditOutlineIcon />
+          <ModeEditOutlineIcon color="primary" />
         </Box>
         <TextField
           onChange={(event) => setUpdatedCategoryName(event.target.value)}
@@ -198,7 +198,7 @@ const EditCategory = () => {
                       color: "white",
                     }}
                     label="Discount"
-                    color="secondary"
+                    color="primary"
                   />
                 ) : (
                   ""
@@ -249,7 +249,7 @@ const EditCategory = () => {
                   }}>
                   <Chip
                     sx={{ color: "info.main" }}
-                    color="secondary"
+                    color="primary"
                     label="Edit"
                     onClick={() => {
                       router.push(`/backoffice/products/${product.id}`);
@@ -257,7 +257,7 @@ const EditCategory = () => {
                   />
                   <Chip
                     sx={{ color: "info.main" }}
-                    color="secondary"
+                    color="primary"
                     label="Remove"
                     onClick={() => {
                       setProductIdToRemove(product.id);

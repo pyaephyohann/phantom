@@ -2,7 +2,9 @@ import { Autocomplete, Checkbox, TextField } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const icon = (
+  <CheckBoxOutlineBlankIcon sx={{ color: "info.main" }} fontSize="small" />
+);
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 interface Option {

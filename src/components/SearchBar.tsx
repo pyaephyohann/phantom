@@ -132,7 +132,11 @@ const SearchBar = () => {
               <Typography>Filter with size</Typography>
               <IconButton
                 onClick={() => setOpenSizeCollapse(!openSizeCollapse)}>
-                {openSizeCollapse ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openSizeCollapse ? (
+                  <ExpandLessIcon color="info" />
+                ) : (
+                  <ExpandMoreIcon color="info" />
+                )}
               </IconButton>
             </Box>
             <Collapse in={openSizeCollapse} timeout="auto" unmountOnExit>
@@ -163,7 +167,11 @@ const SearchBar = () => {
               <Typography>Filter with color</Typography>
               <IconButton
                 onClick={() => setOpenColorCollapse(!openColorCollapse)}>
-                {openColorCollapse ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openColorCollapse ? (
+                  <ExpandLessIcon color="info" />
+                ) : (
+                  <ExpandMoreIcon color="info" />
+                )}
               </IconButton>
             </Box>
             <Collapse in={openColorCollapse} timeout="auto" unmountOnExit>
@@ -194,7 +202,11 @@ const SearchBar = () => {
               <Typography>Filter with gender</Typography>
               <IconButton
                 onClick={() => setOpenGenderCollapse(!openGenderCollapse)}>
-                {openGenderCollapse ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openGenderCollapse ? (
+                  <ExpandLessIcon color="info" />
+                ) : (
+                  <ExpandMoreIcon color="info" />
+                )}
               </IconButton>
             </Box>
             <Collapse in={openGenderCollapse} timeout="auto" unmountOnExit>

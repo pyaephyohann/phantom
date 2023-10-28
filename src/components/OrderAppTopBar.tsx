@@ -49,7 +49,7 @@ const OrderAppTopBar = () => {
 
   return (
     <Box>
-      <AppBar sx={{ p: "0.5rem" }} position="static">
+      <AppBar sx={{ p: "0.5rem", bgcolor: "secondary.main" }} position="static">
         <Toolbar
           sx={{
             display: "flex",
@@ -70,7 +70,7 @@ const OrderAppTopBar = () => {
                   fontFamily: "'Dancing Script', cursive",
                   fontSize: "2rem",
                   display: { xs: "none", sm: "none", md: "block" },
-                  color: "secondary.main",
+                  color: "primary.main",
                 }}>
                 Phantom
               </Typography>
@@ -83,7 +83,7 @@ const OrderAppTopBar = () => {
             <Box
               sx={{
                 mt: "0.7rem",
-                bgcolor: "secondary.main",
+                bgcolor: "primary.main",
                 mr: { xs: "0", sm: "0", md: "3rem" },
                 p: "0.2rem",
                 borderRadius: "5rem",
@@ -97,7 +97,7 @@ const OrderAppTopBar = () => {
                     top: "-1rem",
                     right: "-0.3rem",
                     color: "info.main",
-                    bgcolor: "secondary.main",
+                    bgcolor: "primary.main",
                     borderRadius: "5rem",
                     py: "0.1rem",
                     px: "0.5rem",

@@ -178,7 +178,10 @@ const EditProducts = () => {
           mt: "1.8rem",
           mb: "2.5rem",
         }}>
-        <ModeEditOutlineIcon sx={{ fontSize: "1.5rem", mr: "0.5rem" }} />
+        <ModeEditOutlineIcon
+          color="primary"
+          sx={{ fontSize: "1.5rem", mr: "0.5rem" }}
+        />
         <Typography variant="h5">Edit Your Product</Typography>
       </Box>
       <Box sx={{ display: { xs: "block", sm: "block", md: "flex" } }}>
@@ -211,7 +214,7 @@ const EditProducts = () => {
                 );
                 setOpenDeleteDialog(true);
               }}
-              sx={{ bgcolor: "secondary.main" }}>
+              sx={{ bgcolor: "primary.main" }}>
               <DeleteIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>

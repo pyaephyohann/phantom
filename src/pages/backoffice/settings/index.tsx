@@ -23,7 +23,7 @@ const Settings = () => {
               key={item.name}
               sx={{
                 display: "flex",
-                bgcolor: "primary.main",
+                bgcolor: "secondary.main",
                 py: "0.8rem",
                 px: "1rem",
                 borderRadius: "0.5rem",

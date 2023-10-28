@@ -57,7 +57,7 @@ const NewOrder = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              bgcolor: "secondary.main",
+              bgcolor: "primary.main",
               width: "fit-content",
               mx: "auto",
               p: "1rem",
@@ -72,7 +72,7 @@ const NewOrder = () => {
           <Box
             sx={{
               p: "1.5rem",
-              bgcolor: "secondary.main",
+              bgcolor: "primary.main",
               width: "fit-content",
               mx: "auto",
               borderRadius: "1.5rem",
@@ -105,7 +105,7 @@ const NewOrder = () => {
         <Box
           sx={{
             width: "15rem",
-            bgcolor: "secondary.main",
+            bgcolor: "primary.main",
             borderRadius: "1rem",
             mx: "auto",
             p: "0.6rem",
