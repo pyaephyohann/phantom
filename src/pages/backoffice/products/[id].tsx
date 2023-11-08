@@ -30,6 +30,7 @@ import DangerZone from "@/components/DangerZone";
 import ProductDiscount from "@/components/ProductDiscount";
 import Wave from "@/components/Wave";
 import { addDeletedProduct } from "@/store/slices/deletedProductsSlice";
+import WarningAlert from "@/components/WarningAlert";
 
 const EditProducts = () => {
   const router = useRouter();
@@ -57,6 +58,8 @@ const EditProducts = () => {
   const [openInformationAlert, setOpenInformationAlert] = useState(false);
 
   const [informationMessage, setInformationMessage] = useState("");
+
+  const [openWarningAlert, setOpenWarningAlert] = useState(false);
 
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -259,6 +262,9 @@ const EditProducts = () => {
             options={categories}
             defaultValue={mappedValidCategories}
             onChange={(values) => {
+              if (values.length < 1) {
+                return setOpenWarningAlert(true);
+              }
               setSelectedCategoryIsToUpdate(values.map((item) => item.id));
             }}
             label="Categories"
@@ -339,6 +345,11 @@ const EditProducts = () => {
         open={openSuccessAlert}
         setOpen={setOpenSuccessAlert}
         message="Updated Product Successfully"
+      />
+      <WarningAlert
+        open={openWarningAlert}
+        setOpen={setOpenWarningAlert}
+        message="Product must have to connect with at least one category"
       />
     </Box>
   );
