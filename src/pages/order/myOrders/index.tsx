@@ -26,94 +26,55 @@ const MyOrders = () => {
     return orderlines.filter((item) => item.orderId === orderId).length;
   };
 
+  if (isLoading)
+    return (
+      <Box sx={{ mt: "7rem" }}>
+        <Typography sx={{ textAlign: "center", mb: "1rem" }} variant="h5">
+          My Orders
+        </Typography>
+        <OrderCardSkeleton />
+        <OrderCardSkeletonMobile />
+      </Box>
+    );
+
   return (
     <Box sx={{ mt: "7rem", px: "2rem" }}>
       <Typography sx={{ textAlign: "center", mb: "1rem" }} variant="h5">
         My Orders
       </Typography>
-      {isLoading ? (
-        <Box
-          sx={{
-            display: { xs: "none", sm: "none", md: "flex" },
-            flexWrap: "wrap",
-            mt: "1rem",
-            justifyContent: {
-              xs: "center",
-              sm: "center",
-              md: "flex-start",
-            },
-          }}>
-          {[
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-            20,
-          ].map((index) => {
-            return (
-              <Box sx={{ m: "1rem" }} key={index}>
-                <OrderCardSkeleton />
-              </Box>
-            );
-          })}
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: { xs: "none", sm: "flex", md: "flex" },
-            flexWrap: "wrap",
-          }}>
-          {currentUserOrders.map((order) => {
-            return (
-              <Box sx={{ m: "1rem" }} key={order.id}>
-                <OrderCard
-                  orderId={order.id}
-                  productQuantity={getProductQuantity(order.id)}
-                  price={order.price}
-                  date={dayjs(order.createdAt).format("DD.MM.YYYY")}
-                  href={`/order/myOrders/${order.id}`}
-                  orderlineStatus={getOrderlineStatus(order.id, orderlines)}
-                />
-              </Box>
-            );
-          })}
-        </Box>
-      )}
-      {isLoading ? (
-        <Box
-          sx={{
-            display: { xs: "block", sm: "block", md: "none" },
-            flexWrap: "wrap",
-            mt: "1rem",
-            justifyContent: {
-              xs: "center",
-              sm: "center",
-              md: "flex-start",
-            },
-          }}>
-          {[
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-            20,
-          ].map((index) => {
-            return (
-              <Box sx={{ m: "1rem" }} key={index}>
-                <OrderCardSkeletonMobile />
-              </Box>
-            );
-          })}
-        </Box>
-      ) : (
-        <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
-          {currentUserOrders.map((order) => {
-            return (
-              <Box key={order.id}>
-                <OrderCardMobile
-                  order={order}
-                  orderlineStatus={getOrderlineStatus(order.id, orderlines)}
-                  href={`/order/myOrders/${order.id}`}
-                />
-              </Box>
-            );
-          })}
-        </Box>
-      )}
+      <Box
+        sx={{
+          display: { xs: "none", sm: "flex", md: "flex" },
+          flexWrap: "wrap",
+        }}>
+        {currentUserOrders.map((order) => {
+          return (
+            <Box sx={{ m: "1rem" }} key={order.id}>
+              <OrderCard
+                orderId={order.id}
+                productQuantity={getProductQuantity(order.id)}
+                price={order.price}
+                date={dayjs(order.createdAt).format("DD.MM.YYYY")}
+                href={`/order/myOrders/${order.id}`}
+                orderlineStatus={getOrderlineStatus(order.id, orderlines)}
+              />
+            </Box>
+          );
+        })}
+      </Box>
+      <Box sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
+        {currentUserOrders.map((order) => {
+          return (
+            <Box key={order.id}>
+              <OrderCardMobile
+                order={order}
+                orderlineStatus={getOrderlineStatus(order.id, orderlines)}
+                href={`/order/myOrders/${order.id}`}
+              />
+            </Box>
+          );
+        })}
+      </Box>
     </Box>
   );
 };

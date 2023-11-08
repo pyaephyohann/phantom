@@ -25,6 +25,13 @@ const WishList = () => {
       wishListUserIds.includes(user.id)
   );
 
+  if (isLoading)
+    return (
+      <Box sx={{ mt: "7rem" }}>
+        <ProductSkeleton />
+      </Box>
+    );
+
   return (
     <Box sx={{ mt: "7rem" }}>
       <Box sx={{ mb: "1rem" }}>
@@ -38,52 +45,27 @@ const WishList = () => {
           </Typography>
         )}
       </Box>
-      {isLoading ? (
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            mt: "1rem",
-            justifyContent: {
-              xs: "center",
-              sm: "center",
-              md: "flex-start",
-            },
-          }}>
-          {[
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-            20,
-          ].map((index) => {
-            return (
-              <Box sx={{ m: "1rem" }} key={index}>
-                <ProductSkeleton />
-              </Box>
-            );
-          })}
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: {
-              xs: "center",
-              sm: "center",
-              md: "flex-start",
-            },
-          }}>
-          {wishListedProducts.map((product) => {
-            return (
-              <Box key={product.id} sx={{ m: "1rem" }}>
-                <OrderAppProductCard
-                  product={product}
-                  href={`/order/productDetail/${product.id}`}
-                />
-              </Box>
-            );
-          })}
-        </Box>
-      )}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+          },
+        }}>
+        {wishListedProducts.map((product) => {
+          return (
+            <Box key={product.id} sx={{ m: "1rem" }}>
+              <OrderAppProductCard
+                product={product}
+                href={`/order/productDetail/${product.id}`}
+              />
+            </Box>
+          );
+        })}
+      </Box>
     </Box>
   );
 };

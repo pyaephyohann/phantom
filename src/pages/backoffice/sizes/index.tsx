@@ -16,6 +16,13 @@ const Sizes = () => {
 
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
 
+  if (isLoading)
+    return (
+      <Box>
+        <ItemSkeleton />
+      </Box>
+    );
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -26,50 +33,30 @@ const Sizes = () => {
           New Size
         </Button>
       </Box>
-      <Box>
-        {isLoading ? (
-          <Box sx={{ display: "flex", flexWrap: "wrap", mt: "1rem" }}>
-            {[
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20,
-            ].map((index) => {
-              return (
-                <Box sx={{ m: "1rem" }} key={index}>
-                  <ItemSkeleton />
-                </Box>
-              );
-            })}
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              mt: "1rem",
-              justifyContent: {
-                xs: "center",
-                sm: "center",
-                md: "flex-start",
-              },
-            }}>
-            {sizes.map((size) => {
-              return (
-                <Box sx={{ m: "1rem" }} key={size.id}>
-                  <ItemCard
-                    name={size.name}
-                    icon={
-                      <AnimationIcon
-                        color="primary"
-                        sx={{ fontSize: "2.3rem" }}
-                      />
-                    }
-                    href={`/backoffice/sizes/${size.id}`}
-                  />
-                </Box>
-              );
-            })}
-          </Box>
-        )}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          mt: "1rem",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+          },
+        }}>
+        {sizes.map((size) => {
+          return (
+            <Box sx={{ m: "1rem" }} key={size.id}>
+              <ItemCard
+                name={size.name}
+                icon={
+                  <AnimationIcon color="primary" sx={{ fontSize: "2.3rem" }} />
+                }
+                href={`/backoffice/sizes/${size.id}`}
+              />
+            </Box>
+          );
+        })}
       </Box>
       <NewSize
         open={openNewSize}
