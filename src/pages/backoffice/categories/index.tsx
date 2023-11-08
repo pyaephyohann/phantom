@@ -22,6 +22,13 @@ const Categories = () => {
       .length;
   };
 
+  if (isLoading)
+    return (
+      <Box>
+        <ItemSkeleton />
+      </Box>
+    );
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -32,56 +39,31 @@ const Categories = () => {
           New Category
         </Button>
       </Box>
-      <Box>
-        {isLoading ? (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              mt: "1rem",
-            }}>
-            {[
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20,
-            ].map((index) => {
-              return (
-                <Box sx={{ m: "1rem" }} key={index}>
-                  <ItemSkeleton />
-                </Box>
-              );
-            })}
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              mt: "1rem",
-              justifyContent: {
-                xs: "center",
-                sm: "center",
-                md: "flex-start",
-              },
-            }}>
-            {categories.map((category) => {
-              return (
-                <Box sx={{ m: "1rem" }} key={category.id}>
-                  <ItemCard
-                    name={category.name}
-                    icon={
-                      <CategoryIcon
-                        color="primary"
-                        sx={{ fontSize: "2.3rem" }}
-                      />
-                    }
-                    href={`/backoffice/categories/${category.id}`}
-                    subtitle={`${getProductCount(category.id)} Products`}
-                  />
-                </Box>
-              );
-            })}
-          </Box>
-        )}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          mt: "1rem",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+          },
+        }}>
+        {categories.map((category) => {
+          return (
+            <Box sx={{ m: "1rem" }} key={category.id}>
+              <ItemCard
+                name={category.name}
+                icon={
+                  <CategoryIcon color="primary" sx={{ fontSize: "2.3rem" }} />
+                }
+                href={`/backoffice/categories/${category.id}`}
+                subtitle={`${getProductCount(category.id)} Products`}
+              />
+            </Box>
+          );
+        })}
       </Box>
       <NewCategory
         open={open}
